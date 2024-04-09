@@ -6,7 +6,7 @@ import { Menu, MapPin, ChevronDown } from "lucide-react";
 import { Button } from "../ui/button";
 import { useAppContext } from "@/context/AppContext";
 import Hamburger from "./Hamburger";
-import useMediaQuery from "@/hooks/UseMediaQuery";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import DesktopMenu from "./DesktopMenu";
 
 const Navbar = () => {
