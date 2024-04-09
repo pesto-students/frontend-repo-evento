@@ -18,23 +18,23 @@ import Link from "next/link";
 const events = [
   {
     title: "Simba Uproar 2024 | Guwahati",
-    images: [
+    image:
       "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680963/Evento/banners/mc6dexmf8biost4q27h6_qfxsmv.webp",
-    ],
+
     slug: "abcd-xyz",
   },
   {
     title: "Kanan Gill Experience - India Tour 2024 - Guwahati",
-    images: [
+    image:
       "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680962/Evento/banners/dlbitczmy7n2v17uc4xy_g4dhmr.webp",
-    ],
+
     slug: "abcd-xyz",
   },
   {
     title: "Kisi Ko Batana Mat by Anubhav Singh Bassi",
-    images: [
+    image:
       "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680962/Evento/banners/iqwn93dgvkpc8vp8bvml_pv9avu.webp",
-    ],
+
     slug: "abcd-xyz",
   },
 ];

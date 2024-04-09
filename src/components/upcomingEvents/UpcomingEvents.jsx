@@ -6,30 +6,30 @@ import { Button } from "../ui/button";
 const events = [
   {
     title: "AR Rahman Concert for Peace",
-    images: [
+    image:
       "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380561/Evento/thumbnail/atif_aslam_vbrojn.png",
-    ],
+
     slug: "abcd-xyz",
   },
   {
     title: "B Praak Live",
-    images: [
+    image:
       "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380759/Evento/thumbnail/b_praak2_opndqq.webp",
-    ],
+
     slug: "abcd-xyz",
   },
   {
     title: "SANAM Live",
-    images: [
+    image:
       "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380563/Evento/thumbnail/arijit_rjqfpd.jpg",
-    ],
+
     slug: "abcd-xyz",
   },
   {
     title: "Simba Uproar 2024 | Guwahati",
-    images: [
+    image:
       "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380563/Evento/thumbnail/zubin_a5pwbx.png",
-    ],
+
     slug: "abcd-xyz",
   },
 ];

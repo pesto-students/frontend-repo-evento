@@ -12,7 +12,7 @@ const EventCard = ({ event }) => {
             width={480}
             height={360}
             objectFit="cover"
-            src={event.images[0]}
+            src={event.image}
             className="w-full rounded-t-md transition-transform duration-300"
             alt="Event Spotlight"
           />
@@ -43,7 +43,9 @@ const EventCard = ({ event }) => {
             <span className=" text-sm ml-2 font-medium line-clamp-1">
               ACA Stadium, Barsapara
             </span>
-            <span className=" text-xs ml-2 line-clamp-1">ENTRY - Starts From Rs 200</span>
+            <span className=" text-xs ml-2 line-clamp-1">
+              ENTRY - Starts From Rs 200
+            </span>
           </div>
         </div>
       </div>
