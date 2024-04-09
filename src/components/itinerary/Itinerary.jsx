@@ -92,7 +92,7 @@ const Itinerary = () => {
                   <Image
                     width={480}
                     height={360}
-                    src="https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_1316/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1702288015%2Fdhlkrsbpopg5cfpnz23n.jpg"
+                    src="https://res.cloudinary.com/dv68nyejy/image/upload/v1712680962/Evento/banners/iqwn93dgvkpc8vp8bvml_pv9avu.webp"
                     className="w-full object-cover rounded-md mt-4"
                     alt="Event Spotlight"
                   />

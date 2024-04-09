@@ -19,21 +19,21 @@ const events = [
   {
     title: "Simba Uproar 2024 | Guwahati",
     images: [
-      "https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_800/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1706699255%2Fdlbitczmy7n2v17uc4xy.png",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680963/Evento/banners/mc6dexmf8biost4q27h6_qfxsmv.webp",
     ],
     slug: "abcd-xyz",
   },
   {
     title: "Kanan Gill Experience - India Tour 2024 - Guwahati",
     images: [
-      "https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_800/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1700556828%2Fiqwn93dgvkpc8vp8bvml.jpg",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680962/Evento/banners/dlbitczmy7n2v17uc4xy_g4dhmr.webp",
     ],
     slug: "abcd-xyz",
   },
   {
     title: "Kisi Ko Batana Mat by Anubhav Singh Bassi",
     images: [
-      "https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_800/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1707894012%2Fmc6dexmf8biost4q27h6.png",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680962/Evento/banners/iqwn93dgvkpc8vp8bvml_pv9avu.webp",
     ],
     slug: "abcd-xyz",
   },
@@ -48,7 +48,7 @@ export default function EventDetails() {
             <Image
               width={480}
               height={360}
-              src="https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_1316/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1702288015%2Fdhlkrsbpopg5cfpnz23n.jpg"
+              src="https://res.cloudinary.com/dv68nyejy/image/upload/v1712680961/Evento/banners/dhlkrsbpopg5cfpnz23n_zssgfo.webp"
               className="w-full object-cover rounded-md"
               alt="Event Spotlight"
             />
