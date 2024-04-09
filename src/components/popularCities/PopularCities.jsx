@@ -9,50 +9,42 @@ const cities = [
   {
     title: "Mumbai",
     image:
-      "https://i0.wp.com/www.india-briefing.com/news/wp-content/uploads/2013/07/India-Briefing-Economy-of-Mumbai-Indias-Major-Commercial-Hub.jpg?fit=900%2C506&ssl=1",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680372/Evento/cities/India-Briefing-Economy-of-Mumbai-Indias-Major-Commercial-Hub_quxlwl.webp",
   },
   {
     title: "Delhi",
     image:
-      "https://cdn.britannica.com/37/189837-050-F0AF383E/New-Delhi-India-War-Memorial-arch-Sir.jpg",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680372/Evento/cities/New-Delhi-India-War-Memorial-arch-Sir_p2eeqn.webp",
   },
   {
     title: "Bangalore",
     image:
-      "https://www.thehosteller.com/_next/image?url=https%3A%2F%2Fstatic.thehosteller.com%2Fhostel%2Fimages%2FCover%20(1).jpg%2FCover%20(1)-1690261803767.jpg&w=2048&q=75",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680373/Evento/cities/TAL-city-palace-TODOJAIPUR1023-767324cae1a9491696d6a53a96ffc085_lb9lw7.jpg",
   },
   {
     title: "Hyderabad",
     image:
-      "https://static.toiimg.com/photo/msid-92654212,width-96,height-65.cms",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680496/Evento/cities/msid-92654212_width-96_height-65_wnfgml.webp",
   },
   {
     title: "Chennai",
-    image: "https://www.holidify.com/images/bgImages/CHENNAI%20.jpg",
+    image:
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680372/Evento/cities/CHENNAI_e8fokv.jpg",
   },
   {
     title: "Kolkata",
     image:
-      "https://cdn.britannica.com/91/110191-050-7BCFD56B/Victoria-Memorial-Hall-Kolkata-India.jpg",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680373/Evento/cities/Victoria-Memorial-Hall-Kolkata-India_sz5qhj.webp",
   },
   {
     title: "Pune",
     image:
-      "https://cdn.britannica.com/69/146869-050-676DD6B7/Aga-Khan-Palace-Pune-India.jpg",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680372/Evento/cities/Aga-Khan-Palace-Pune-India_amybg1.webp",
   },
   {
     title: "Ahmedabad",
     image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Sheth_Hutheesinh_Temple.jpg/1200px-Sheth_Hutheesinh_Temple.jpg",
-  },
-  {
-    title: "Jaipur",
-    image:
-      "https://www.travelandleisure.com/thmb/P67PtX_g34q6mojlfa5405HdLuw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/TAL-city-palace-TODOJAIPUR1023-767324cae1a9491696d6a53a96ffc085.jpg",
-  },
-  {
-    title: "Lucknow",
-    image: "https://lp-cms-production.imgix.net/2022-03/500pxRF_26117913.jpg",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1712680372/Evento/cities/1200px-Sheth_Hutheesinh_Temple_lgfoiz.jpg",
   },
 ];
 
