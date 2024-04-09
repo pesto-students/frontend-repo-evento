@@ -8,7 +8,7 @@ const Page = () => {
         <div className="h-[400px]"></div>
         <div className="py-12 px-12">
           <div className="text-4xl font-semibold">
-            There's a smarter way to explore events around you!
+            There&apos;s a smarter way to explore events around you!
           </div>
           <div className="text-2xl font-medium mt-10">
             Signup now to explore with{" "}
