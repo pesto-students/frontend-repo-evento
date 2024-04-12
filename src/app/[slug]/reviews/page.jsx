@@ -4,13 +4,12 @@ import RatingStar from "@/components/others/RatingStar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { PenLine } from "lucide-react";
+import { PenLine, Plus } from "lucide-react";
 import React from "react";
 import { totalRatings, reviews } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { HiPlus } from "react-icons/hi";
 
 const Page = () => {
   const { slug } = useParams();
@@ -26,7 +25,7 @@ const Page = () => {
         <div>
           <Link href={`/${slug}/reviews/create`}>
             <Button variant="ghost">
-              <HiPlus className="w-4 h-4 mr-1" />
+              <Plus className="w-4 h-4 mr-1" />
               <span>Write review</span>
             </Button>
           </Link>

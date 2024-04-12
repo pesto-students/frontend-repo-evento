@@ -7,11 +7,16 @@ import { AppWrapper } from "@/context/AppContext";
 import { usePathname } from "next/navigation";
 import React from "react";
 
+Array.prototype.includesOneOf = function (array) {
+  return this.some((item) => array.includes(item));
+};
+
 const AppLayout = ({ children }) => {
   const pathname = usePathname();
+  const excludedPaths = ["/login", "/manage"];
   return (
     <AppWrapper>
-      {pathname === "/login" ? (
+      {excludedPaths.includesOneOf(pathname) ? (
         <>{children}</>
       ) : (
         <>

@@ -3,9 +3,8 @@ import PopularCities from "@/components/popularCities/PopularCities";
 import RecentEvents from "@/components/recentEvents/RecentEvents";
 import Spotlight from "@/components/spotlight/Spotlight";
 import UpcomingEvents from "@/components/upcomingEvents/UpcomingEvents";
-import { Search } from "lucide-react";
+import { Search, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { FaAngleRight } from "react-icons/fa6";
 
 export default function Home() {
   return (
@@ -27,7 +26,7 @@ export default function Home() {
                 <Link href={"/"}>Noida</Link>
               </div>
               <div className="border-l flex items-center gap-1 pl-3 whitespace-nowrap">
-                <FaAngleRight className="w-2" />
+                <ChevronRight className="w-2" />
                 More Cities
               </div>
             </div>

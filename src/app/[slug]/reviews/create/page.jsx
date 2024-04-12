@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import React from "react";
-import { HiArrowLeft, HiStar } from "react-icons/hi";
+import { ChevronLeft, Star } from "lucide-react";
 
 const Page = ({ params }) => {
   const { slug } = params;
@@ -13,7 +13,7 @@ const Page = ({ params }) => {
       <div className="max-w-sm mx-auto mb-5">
         <Link href={`/${slug}/reviews`}>
           <Button variant="secondary">
-            <HiArrowLeft className="mr-1 h-4 w-4" />
+            <ChevronLeft className="mr-1 h-4 w-4" />
             Back
           </Button>
         </Link>
@@ -22,11 +22,11 @@ const Page = ({ params }) => {
         <div className="mb-5">
           <Label htmlFor="title">Ratings</Label>
           <div class="flex items-center mt-2 -ml-1">
-            <HiStar className="w-6 h-6 text-yellow-300 cursor-pointer" />
-            <HiStar className="w-6 h-6 text-yellow-300 cursor-pointer" />
-            <HiStar className="w-6 h-6 text-yellow-300 cursor-pointer" />
-            <HiStar className="w-6 h-6 text-yellow-300 cursor-pointer" />
-            <HiStar className="w-6 h-6 text-yellow-300 cursor-pointer" />
+            <Star className="w-6 h-6 text-yellow-300 cursor-pointer" />
+            <Star className="w-6 h-6 text-yellow-300 cursor-pointer" />
+            <Star className="w-6 h-6 text-yellow-300 cursor-pointer" />
+            <Star className="w-6 h-6 text-yellow-300 cursor-pointer" />
+            <Star className="w-6 h-6 text-yellow-300 cursor-pointer" />
           </div>
         </div>
 

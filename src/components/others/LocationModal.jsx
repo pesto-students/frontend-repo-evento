@@ -5,8 +5,7 @@ import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
-import { HiMagnifyingGlass } from "react-icons/hi2";
-import { LuLocateFixed } from "react-icons/lu";
+import { LocateFixed, Search } from "lucide-react";
 import { useState } from "react";
 
 const cities = [
@@ -60,7 +59,7 @@ export function LocationModal() {
       <DialogContent className="sm:max-w-[425px] lg:min-w-[900px] max-h-full overflow-auto px-0 py-6">
         <div className="mt-5 px-6">
           <div className="relative">
-            <HiMagnifyingGlass className="absolute top-5 left-3 text-gray-500" />
+            <Search className="absolute top-5 left-3 text-gray-500" />
             <Input
               id="name"
               placeholder="Search for your city"
@@ -82,7 +81,7 @@ export function LocationModal() {
         </div>
         <div className="px-6">
           <Button variant="ghost" className="text-primary p-0 hover:bg-inherit">
-            <LuLocateFixed />
+            <LocateFixed />
             <span className="ml-1">Detect my location</span>
           </Button>
         </div>

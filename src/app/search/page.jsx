@@ -3,12 +3,17 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CalendarDays, Flame, MapPin, Star } from "lucide-react";
+import {
+  CalendarDays,
+  Flame,
+  MapPin,
+  Star,
+  Search,
+  ChevronRight,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaAngleRight } from "react-icons/fa6";
-import { HiMagnifyingGlass } from "react-icons/hi2";
 
 const Page = () => {
   const listedEvents = [
@@ -63,7 +68,7 @@ const Page = () => {
   return (
     <section className="max-w-screen-xl mx-auto px-6 mt-12">
       <div className="relative">
-        <HiMagnifyingGlass className="absolute top-5 left-3 text-gray-500" />
+        <Search className="absolute top-5 left-3 text-gray-500" />
         <Input
           id="name"
           placeholder="Find your next concert, comedy show..."
@@ -213,7 +218,7 @@ const Page = () => {
                     <div className="text-sm font-semibold text-primary">
                       View Details
                     </div>
-                    <FaAngleRight className="w-2 ml-1 text-primary" />
+                    <ChevronRight className="w-2 ml-1 text-primary" />
                   </Link>
                 </div>
               </div>

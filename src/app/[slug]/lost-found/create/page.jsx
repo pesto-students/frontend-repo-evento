@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { HiArrowLeft, HiXCircle } from "react-icons/hi";
+import { ChevronLeft, X } from "lucide-react";
 
 function Page({ params }) {
   const [images, setImages] = useState([]);
@@ -36,7 +36,7 @@ function Page({ params }) {
       <div className="max-w-sm mx-auto mb-5">
         <Link href={`/${slug}/lost-found`}>
           <Button variant="secondary">
-            <HiArrowLeft className="mr-1 h-4 w-4" />
+            <ChevronLeft className="mr-1 h-4 w-4" />
             Back
           </Button>
         </Link>
@@ -95,7 +95,7 @@ function Page({ params }) {
                   width={100}
                 />
                 <button onClick={() => removeImage(index)}>
-                  <HiXCircle className="w-5 h-5 absolute text-primary -top-2 -right-2" />
+                  <X className="w-5 h-5 absolute text-primary -top-2 -right-2" />
                 </button>
               </div>
             ))}

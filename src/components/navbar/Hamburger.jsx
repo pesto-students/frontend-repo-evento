@@ -6,18 +6,12 @@ import { Drawer, DrawerClose, DrawerContent } from "@/components/ui/drawer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Command,
-  CommandDialog,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 
-import { Button } from "../ui/button";
-import { HiOutlineUser, HiSearch, HiX } from "react-icons/hi";
+import { User, Search, X } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 
 const Hamburger = () => {
@@ -32,7 +26,7 @@ const Hamburger = () => {
       <DrawerContent className="h-full border-none outline-none w-9/12 rounded-none">
         <DrawerClose>
           <button className="absolute top-1 right-1 p-2">
-            <HiX className="h-4 w-4 fill-white" />
+            <X className="h-4 w-4 fill-white" />
           </button>
         </DrawerClose>
         <div className="bg-gray-900 flex flex-col items-center gap-3 p-4">
@@ -51,7 +45,7 @@ const Hamburger = () => {
               <CommandGroup>
                 <CommandItem>
                   <Link href="/search" className="flex items-center w-full ">
-                    <HiSearch className="w-4 mr-2" />
+                    <Search className="w-4 mr-2" />
                     <span> Search events</span>
                   </Link>
                 </CommandItem>
@@ -59,15 +53,15 @@ const Hamburger = () => {
 
               <CommandGroup className="mt-6">
                 <CommandItem>
-                  <HiOutlineUser className="mr-2 h-4 w-4" />
+                  <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </CommandItem>
                 <CommandItem>
-                  <HiOutlineUser className="mr-2 h-4 w-4" />
+                  <User className="mr-2 h-4 w-4" />
                   <span>Settings</span>
                 </CommandItem>
                 <CommandItem>
-                  <HiOutlineUser className="mr-2 h-4 w-4" />
+                  <User className="mr-2 h-4 w-4" />
                   <span>Logout</span>
                 </CommandItem>
               </CommandGroup>

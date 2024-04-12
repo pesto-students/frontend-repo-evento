@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,14 +15,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FaChevronRight } from "react-icons/fa6";
+import { ChevronRight } from "lucide-react";
 
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
 });
-const LoginForm = () => {
+const LoginForm = ({ setCurrentView }) => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,7 +37,9 @@ const LoginForm = () => {
   return (
     <div className="rounded-lg bg-white shadow-sm w-10/12 lg:w-10/12 xl:w-6/12 max-w-[400px] border">
       <div className="p-6">
-        <div className="mb-6 text-primary font-semibold text-xl">Evento</div>
+        <div className="mb-6 text-primary font-semibold text-xl">
+          Evento Business
+        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
             <FormField
@@ -73,16 +74,12 @@ const LoginForm = () => {
             <Button type="submit" className="w-full">
               Login
             </Button>
-            <Button variant="outline" className="w-full">
-              <FcGoogle className="mr-2" />
-              Login with Google
-            </Button>
           </form>
         </Form>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
           <Link href="#" className="underline">
-            Sign up
+            Create now!
           </Link>
         </div>
       </div>
@@ -91,12 +88,15 @@ const LoginForm = () => {
         <div className="absolute -top-3 bg-white left-4 px-2 font-medium">
           Or sign in as
         </div>
-        <Link href="">
-          <Button variant="ghost" className="hover:bg-inherit pl-0">
-            Event Manager
-            <FaChevronRight className="ml-2" />
-          </Button>
-        </Link>
+
+        <Button
+          onClick={() => setCurrentView("user")}
+          variant="ghost"
+          className="hover:bg-inherit pl-0"
+        >
+          User
+          <ChevronRight className="ml-2" />
+        </Button>
       </div>
     </div>
   );

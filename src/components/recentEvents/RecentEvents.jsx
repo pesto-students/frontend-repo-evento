@@ -1,9 +1,14 @@
 import React from "react";
-import { CalendarDays, History, MapPin, Star } from "lucide-react";
+import {
+  CalendarDays,
+  History,
+  MapPin,
+  Star,
+  ChevronRight,
+} from "lucide-react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { FaAngleRight } from "react-icons/fa6";
 
 const events = [
   {
@@ -86,7 +91,7 @@ const RecentEvents = () => {
                 <div className="text-sm font-semibold text-primary">
                   View Details
                 </div>
-                <FaAngleRight className="w-2 ml-1 text-primary" />
+                <ChevronRight className="w-2 ml-1 text-primary" />
               </Link>
             </div>
           </div>
