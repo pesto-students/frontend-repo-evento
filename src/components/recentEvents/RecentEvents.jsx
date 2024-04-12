@@ -91,7 +91,7 @@ const RecentEvents = () => {
                 <div className="text-sm font-semibold text-primary">
                   View Details
                 </div>
-                <ChevronRight className="w-2 ml-1 text-primary" />
+                <ChevronRight className="w-4 ml-1 text-primary" />
               </Link>
             </div>
           </div>

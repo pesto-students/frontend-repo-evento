@@ -59,7 +59,7 @@ export function LocationModal() {
       <DialogContent className="sm:max-w-[425px] lg:min-w-[900px] max-h-full overflow-auto px-0 py-6">
         <div className="mt-5 px-6">
           <div className="relative">
-            <Search className="absolute top-5 left-3 text-gray-500" />
+            <Search className="absolute w-4 top-[16px] left-3 text-gray-500" />
             <Input
               id="name"
               placeholder="Search for your city"

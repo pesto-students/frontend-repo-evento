@@ -68,7 +68,7 @@ const Page = () => {
   return (
     <section className="max-w-screen-xl mx-auto px-6 mt-12">
       <div className="relative">
-        <Search className="absolute top-5 left-3 text-gray-500" />
+        <Search className="absolute w-4 top-[16px] left-3 text-gray-500" />
         <Input
           id="name"
           placeholder="Find your next concert, comedy show..."
@@ -218,7 +218,7 @@ const Page = () => {
                     <div className="text-sm font-semibold text-primary">
                       View Details
                     </div>
-                    <ChevronRight className="w-2 ml-1 text-primary" />
+                    <ChevronRight className="w-4 ml-1 text-primary" />
                   </Link>
                 </div>
               </div>
