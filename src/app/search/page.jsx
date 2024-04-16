@@ -3,16 +3,9 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  CalendarDays,
-  Flame,
-  MapPin,
-  Star,
-  Search,
-  ChevronRight,
-} from "lucide-react";
+import EventCard from "@/components/user/EventCard";
+import { CalendarDays, Flame, MapPin, Search } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 
 const Page = () => {
@@ -174,54 +167,7 @@ const Page = () => {
 
           <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
             {searchResults.map((event, i) => (
-              <div key={i} className="grid grid-cols-12  gap-6 bg-white">
-                <div className="col-span-12 md:col-span-4">
-                  <Image
-                    width={480}
-                    height={360}
-                    className="object-cover w-full h-full rounded-lg"
-                    src={event.image}
-                    alt={event.title}
-                  />
-                </div>
-                <div className="col-span-12 md:col-span-8 flex flex-col px-3 md:px-0">
-                  <Link href="/">
-                    <h5 className="text-lg font-medium tracking-tight text-content line-clamp-1">
-                      {event.title}
-                    </h5>
-                  </Link>
-                  <div className="mt-4 flex items-center ">
-                    <CalendarDays className="w-4 h-4 text-primary" />
-                    <div className="text-sm ml-2 font-medium line-clamp-1">
-                      1 March, 2024 - 3 March, 2024
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center ">
-                    <MapPin className="w-4 h-4 text-primary" />
-                    <div className="text-sm ml-2 font-medium line-clamp-1 ">
-                      ACA Stadium, Barsapara
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center ">
-                    <div className="flex">
-                      <Star className="w-4 h-4 text-primary fill-primary" />
-                      <Star className="w-4 h-4 text-primary fill-primary" />
-                      <Star className="w-4 h-4 text-primary fill-primary" />
-                      <Star className="w-4 h-4 text-primary fill-primary" />
-                      <Star className="w-4 h-4 text-primary" />
-                    </div>
-                    <div className="text-sm ml-2 font-medium line-clamp-1 ">
-                      23 Reviews
-                    </div>
-                  </div>
-                  <Link href={"/"} className="mt-2 flex items-center">
-                    <div className="text-sm font-semibold text-primary">
-                      View Details
-                    </div>
-                    <ChevronRight className="w-4 ml-1 text-primary" />
-                  </Link>
-                </div>
-              </div>
+              <EventCard event={event} key={i} layout="horizontal" />
             ))}
           </div>
         </>

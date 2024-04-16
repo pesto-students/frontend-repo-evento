@@ -9,7 +9,10 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <section className="bg-gray-100 relative h-[400px] mb-[650px] md:mb-[900px] lg:mb-[200px]">
+      <section className="relative">
+        <div className="bg-cover bg-center h-[400px] mb-[650px] md:mb-[900px] lg:mb-[200px]">
+          <div className="absolute inset-0 bg-muted/50"></div>
+        </div>
         <div className="max-w-screen-xl mx-auto p-6 text-content grid grid-cols-12 gap-6 absolute inset-0">
           <div className="col-span-12 flex gap-3 flex-col lg:flex-row justify-between border-b pb-2">
             <h2 className="text-lg font-semibold text-content mt-12 md:mt-0">
