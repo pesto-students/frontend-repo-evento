@@ -4,6 +4,7 @@ import clsx from "clsx";
 import NextTopLoader from "nextjs-toploader";
 import AppLayout from "@/layouts/AppLayout";
 import Providers from "@/components/others/Providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <NextTopLoader color="#DC2626" showSpinner={false} />
           <AppLayout>{children}</AppLayout>
+          <Toaster />
         </Providers>
       </body>
     </html>
