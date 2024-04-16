@@ -9,7 +9,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Sponsors from "@/components/sponsors/Sponsors";
+import Sponsors from "@/components/user/Sponsors";
 
 const EventOverview = () => {
   return (

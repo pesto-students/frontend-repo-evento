@@ -1,8 +1,8 @@
-import EventsThisWeek from "@/components/eventsThisWeek/EventsThisWeek";
-import PopularCities from "@/components/popularCities/PopularCities";
-import RecentEvents from "@/components/recentEvents/RecentEvents";
-import Spotlight from "@/components/spotlight/Spotlight";
-import UpcomingEvents from "@/components/upcomingEvents/UpcomingEvents";
+import EventsThisWeek from "@/components/user/EventsThisWeek";
+import PopularCities from "@/components/user/PopularCities";
+import RecentEvents from "@/components/user/RecentEvents";
+import Spotlight from "@/components/user/Spotlight";
+import UpcomingEvents from "@/components/user/UpcomingEvents";
 import { Search, ChevronRight } from "lucide-react";
 import Link from "next/link";
 

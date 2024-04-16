@@ -1,4 +1,4 @@
-import Instructions from "@/components/instructions/Instructions";
+import Instructions from "@/components/user/Instructions";
 import React from "react";
 
 const Page = () => {

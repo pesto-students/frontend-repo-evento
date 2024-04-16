@@ -3,6 +3,7 @@ import "./globals.css";
 import clsx from "clsx";
 import NextTopLoader from "nextjs-toploader";
 import AppLayout from "@/layouts/AppLayout";
+import Providers from "@/components/others/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +16,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="no-scrollbar">
       <body className={clsx(inter.className, "text-[14px]")}>
-        <NextTopLoader color="#DC2626" showSpinner={false} />
-        <AppLayout>{children}</AppLayout>
+        <Providers>
+          <NextTopLoader color="#DC2626" showSpinner={false} />
+          <AppLayout>{children}</AppLayout>
+        </Providers>
       </body>
     </html>
   );

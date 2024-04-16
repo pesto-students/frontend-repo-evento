@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import axios from "axios";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,22 +17,38 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+  email: z.string().email(),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters long" }),
 });
+
 const LoginForm = ({ setCurrentView }) => {
+  const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
+      password: "",
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
+  async function onSubmit(values) {
+    try {
+      //   const res = await signIn("credentials", {
+      //     redirect: false,
+      //     email: values.email,
+      //     password: values.password,
+      //   });
+      //   console.log(res);
+      //   router.push("/manager");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -44,7 +61,7 @@ const LoginForm = ({ setCurrentView }) => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
             <FormField
               control={form.control}
-              name="username"
+              name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Please enter your email to continue</FormLabel>

@@ -1,6 +1,6 @@
 import { CalendarClock } from "lucide-react";
 import React from "react";
-import EventCard from "../eventCard/EventCard";
+import EventCard from "./EventCard";
 import { Button } from "../ui/button";
 
 const events = [

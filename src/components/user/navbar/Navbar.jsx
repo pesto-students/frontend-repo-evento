@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React from "react";
 import { Menu, MapPin, ChevronDown } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { useAppContext } from "@/context/AppContext";
 import Hamburger from "./Hamburger";
 import useMediaQuery from "@/hooks/useMediaQuery";

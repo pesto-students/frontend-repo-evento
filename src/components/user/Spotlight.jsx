@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import TagList from "../tagList/TagList";
+import TagList from "./TagList";
 
 const Spotlight = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);

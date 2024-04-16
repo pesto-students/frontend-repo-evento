@@ -1,7 +1,7 @@
-import EventCard from "@/components/eventCard/EventCard";
-import Instructions from "@/components/instructions/Instructions";
-import Itinerary from "@/components/itinerary/Itinerary";
-import Sponsors from "@/components/sponsors/Sponsors";
+import EventCard from "@/components/user/EventCard";
+import Instructions from "@/components/user/Instructions";
+import Itinerary from "@/components/user/Itinerary";
+import Sponsors from "@/components/user/Sponsors";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

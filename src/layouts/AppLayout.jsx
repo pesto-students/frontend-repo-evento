@@ -1,8 +1,8 @@
 "use client";
 
-import Footer from "@/components/footer/Footer";
-import Navbar from "@/components/navbar/Navbar";
-import { LocationModal } from "@/components/others/LocationModal";
+import Footer from "@/components/user/Footer";
+import Navbar from "@/components/user/navbar/Navbar";
+import { LocationModal } from "@/components/user/LocationModal";
 import { AppWrapper } from "@/context/AppContext";
 import { usePathname } from "next/navigation";
 import React from "react";

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import UserLoginForm from "@/components/Auth/UserLoginForm";
-import ManagerLoginForm from "@/components/Manager/Auth/ManagerLoginForm";
+import ManagerLoginForm from "@/components/Auth/ManagerLoginForm";
 
 const AuthView = () => {
   const [currentView, setCurrentView] = useState("user");
