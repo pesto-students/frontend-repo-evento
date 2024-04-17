@@ -41,7 +41,7 @@ const formSchema = z.object({
   categories: z.array(optionSchema).min(1),
 });
 
-const EventDetailsForm = () => {
+const VenueForm = () => {
   const { toast } = useToast();
   const { eventCategories } = useCreateEventContext();
 
@@ -81,8 +81,8 @@ const EventDetailsForm = () => {
     <>
       {isMounted && (
         <>
-          <div className="text-xs">Step 1 of 5</div>
-          <div className="text-lg font-semibold">Event Details</div>
+          <div className="text-xs">Step 3 of 5</div>
+          <div className="text-lg font-semibold">Set Venue & Time</div>
           <div className="mt-12">
             <Form {...form}>
               <form
@@ -221,4 +221,4 @@ const EventDetailsForm = () => {
   );
 };
 
-export default EventDetailsForm;
+export default VenueForm;

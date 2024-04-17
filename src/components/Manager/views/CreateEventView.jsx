@@ -4,6 +4,8 @@ import { useCreateEventContext } from "@/context/manager/CreateEventContext";
 import React from "react";
 import Stepper from "../CreateEvents/Stepper";
 import EventDetailsForm from "../CreateEvents/Forms/EventDetailsForm";
+import BannersForm from "../CreateEvents/Forms/BannersForm";
+import VenueForm from "../CreateEvents/Forms/VenueForm";
 
 const CreateEventView = () => {
   const { activeStep } = useCreateEventContext();
@@ -14,6 +16,8 @@ const CreateEventView = () => {
       </div>
       <div className="col-span-4 text-gray-500">
         {activeStep === 1 && <EventDetailsForm />}
+        {activeStep === 2 && <BannersForm />}
+        {activeStep === 3 && <VenueForm />}
       </div>
     </div>
   );
