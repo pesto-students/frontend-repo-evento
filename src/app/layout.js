@@ -5,6 +5,7 @@ import NextTopLoader from "nextjs-toploader";
 import AppLayout from "@/layouts/AppLayout";
 import Providers from "@/components/others/Providers";
 import { Toaster } from "@/components/ui/toaster";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,9 @@ export default function RootLayout({ children }) {
       <body className={clsx(inter.className, "text-[14px]")}>
         <Providers>
           <NextTopLoader color="#DC2626" showSpinner={false} />
-          <AppLayout>{children}</AppLayout>
+          <AntdRegistry>
+            <AppLayout>{children}</AppLayout>
+          </AntdRegistry>
           <Toaster />
         </Providers>
       </body>

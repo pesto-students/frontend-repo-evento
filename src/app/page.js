@@ -29,7 +29,7 @@ export default function Home() {
                 <Link href={"/"}>Noida</Link>
               </div>
               <div className="border-l flex items-center gap-1 pl-3 whitespace-nowrap">
-                <ChevronRight className="w-2" />
+                <ChevronRight className="w-4 mt-0.5" />
                 More Cities
               </div>
             </div>

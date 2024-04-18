@@ -13,7 +13,7 @@ Array.prototype.includesOneOf = function (array) {
 
 const AppLayout = ({ children }) => {
   const pathname = usePathname();
-  const excludedPaths = ["/login", "/manage"];
+  const excludedPaths = ["/login", "/manager"];
   return (
     <AppWrapper>
       {excludedPaths.includesOneOf(pathname) ? (
@@ -21,7 +21,9 @@ const AppLayout = ({ children }) => {
       ) : (
         <>
           <Navbar />
-          <main className="pt-[65px] pb-16 min-h-screen">{children}</main>
+          <main className="pt-[65px] pb-16 min-h-screen bg-muted/50">
+            {children}
+          </main>
           <Footer />
           <LocationModal />
         </>

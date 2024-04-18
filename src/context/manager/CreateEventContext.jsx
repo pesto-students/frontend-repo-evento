@@ -8,7 +8,7 @@ const CreateEventContext = createContext();
 
 export const CreateEventProvider = ({ children }) => {
   const [eventCategories, setEventCategories] = useState([]);
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(3);
   const [steps, setSteps] = useState([
     {
       id: 1,

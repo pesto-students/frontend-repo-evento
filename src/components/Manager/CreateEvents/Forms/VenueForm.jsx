@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -12,54 +12,37 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+
 import { CirclePlus } from "@/components/others/Icons";
-import { Textarea } from "@/components/ui/textarea";
-import Select from "react-select";
-import { useCreateEventContext } from "@/context/manager/CreateEventContext";
 import { useToast } from "@/components/ui/use-toast";
-
-const style = {
-  control: (base, state) => ({
-    ...base,
-    border:
-      state.isFocused || state.isActive ? "1px solid red" : "1px solid #e5e5e5",
-    boxShadow: "none",
-  }),
-};
-
-const optionSchema = z.object({
-  label: z.string(),
-  value: z.number(),
-});
+import { DatePicker, Input, Button } from "antd";
+import Map, { Marker } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { clsx } from "clsx";
+import { MapPin } from "lucide-react";
 
 const formSchema = z.object({
-  title: z.string().min(1).max(50),
-  organizer: z.string().min(1).max(50),
-  description: z.string().min(1).max(50),
-  categories: z.array(optionSchema).min(1),
+  venue: z.string(),
+  startDate: z.date(),
+  endDate: z.string().min(1).max(50),
 });
 
 const VenueForm = () => {
   const { toast } = useToast();
-  const { eventCategories } = useCreateEventContext();
-
-  // This is a temp fix for the react select package
-  const [isMounted, setIsMounted] = useState(false);
-
-  const categorySelectOptions = eventCategories.map((cat) => ({
-    label: cat.title,
-    value: cat.id,
-  }));
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      categories: [],
+      venue: "",
+      startDate: "",
+      endDate: "",
     },
+  });
+
+  const [viewState, setViewState] = useState({
+    longitude: 91.77634,
+    latitude: 26.184169,
+    zoom: 18,
   });
 
   const onSubmit = (values) => {
@@ -74,149 +57,179 @@ const VenueForm = () => {
     });
   };
 
-  // This is a temp fix for the react select package
-  useEffect(() => setIsMounted(true), []);
-
   return (
     <>
-      {isMounted && (
-        <>
-          <div className="text-xs">Step 3 of 5</div>
-          <div className="text-lg font-semibold">Set Venue & Time</div>
-          <div className="mt-12">
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
-              >
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Event Title</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="title"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Title*</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Type the event title here..."
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+      <div className="text-xs">Step 3 of 5</div>
+      <div className="text-lg font-semibold">Set Venue & Time</div>
+      <div className="mt-12">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="grid grid-cols-6">
+              <div className="col-span-2">
+                <div className="flex gap-2 items-center">
+                  <CirclePlus className="w-4 stroke-primary" />
+                  <span>Venue & Address</span>
                 </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Event Organizer</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="organizer"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Organizer*</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Type the organizer name here..."
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+              </div>
+              <div className="col-span-4">
+                <FormField
+                  control={form.control}
+                  name="venue"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Venue*</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Sarusajai stadium, Guwahati..."
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-6">
+              <div className="col-span-2">
+                <div className="flex gap-2 items-center">
+                  <CirclePlus className="w-4 stroke-primary" />
+                  <span>Start & End Date</span>
                 </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Event Category</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="categories"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Categories</FormLabel>
-                          <FormControl>
-                            <Select
-                              //   defaultValue={[options[0], options[1]]}
-                              value={field.value}
-                              placeholder="Select categories..."
-                              isMulti
-                              options={categorySelectOptions}
-                              className="basic-multi-select"
-                              classNamePrefix="select"
-                              onChange={field.onChange}
-                              styles={style}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+              </div>
+              <div className="col-span-4 grid grid-cols-4 gap-3">
+                <div className="col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="startDate"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col">
+                        <FormLabel>Start Date</FormLabel>
+                        <DatePicker
+                          showTime
+                          use12Hours
+                          format={"YYYY-MM-DD hh:mm"}
+                          onChange={(value, dateString) => {
+                            console.log("Selected Time: ", value);
+                            console.log(
+                              "Formatted Selected Time: ",
+                              dateString
+                            );
+                          }}
+                          onOk={field.onChange}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Event Description</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Description*</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              rows="8"
-                              placeholder="Type the description here..."
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                <div className="col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="endDate"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col">
+                        <FormLabel>End Date</FormLabel>
+                        <DatePicker
+                          showTime
+                          use12Hours
+                          format={"YYYY-MM-DD hh:mm"}
+                          onChange={(value, dateString) => {
+                            console.log("Selected Time: ", value);
+                            console.log(
+                              "Formatted Selected Time: ",
+                              dateString
+                            );
+                          }}
+                          onOk={field.onChange}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2"></div>
-                  <div className="col-span-3">
-                    <Button variant="default" type="submit" size="sm">
-                      Save
-                    </Button>
-                    <Button variant="secondary" size="sm" className="ml-2">
-                      Next
-                    </Button>
-                  </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-6">
+              <div className="col-span-2">
+                <div className="flex gap-2 items-center">
+                  <CirclePlus className="w-4 stroke-primary" />
+                  <span>Entry Fee</span>
                 </div>
-              </form>
-            </Form>
-          </div>
-        </>
-      )}
+              </div>
+              <div className="col-span-4">
+                <FormField
+                  control={form.control}
+                  name="venue"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Minimum entry fee (Start from)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Entry fee" {...field} />
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-6">
+              <div className="col-span-2">
+                <div className="flex gap-2 items-center">
+                  <CirclePlus className="w-4 stroke-primary" />
+                  <span>Location</span>
+                </div>
+              </div>
+              <div className="col-span-4 grid grid-cols-2 gap-6">
+                <div className="col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="location"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Select location</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Entry fee" {...field} />
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="col-span-2 overflow-hidden h-[300px] relative rounded-lg bg-gray-100">
+                  <Map
+                    mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX}
+                    {...viewState}
+                    onMove={(evt) => setViewState(evt.viewState)}
+                    mapStyle="mapbox://styles/mapbox/outdoors-v12"
+                    attributionControl={false}
+                    transitionDuration="200"
+                    onViewportChange={(viewState) => setViewState(viewState)}
+                    reuseMaps
+                  >
+                    <Marker
+                      longitude={91.77634}
+                      latitude={26.184169}
+                      anchor="bottom"
+                    >
+                      <MapPin className="w-8 stroke-black stroke-1 fill-red-600" />
+                    </Marker>
+                  </Map>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-6">
+              <div className="col-span-2"></div>
+              <div className="col-span-3">
+                <Button type="primary" htmlType="submit">
+                  Save
+                </Button>
+                <Button className="ml-2">Next</Button>
+              </div>
+            </div>
+          </form>
+        </Form>
+      </div>
     </>
   );
 };

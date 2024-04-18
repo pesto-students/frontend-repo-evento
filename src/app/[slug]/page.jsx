@@ -146,32 +146,23 @@ export default function EventDetails() {
         </div>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {events.map((item, i) => (
-            <EventCard event={item} key={i} layout="vertical"/>
+            <EventCard event={item} key={i} layout="vertical" />
           ))}
         </div>
       </section>
 
-      <Link
-        href="/abcd-xyz/overview"
-        className="fixed right-6 bg-primary bottom-6 text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center "
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width={24}
-          height={24}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="lucide lucide-circle-arrow-out-up-right"
-        >
-          <path d="M22 12A10 10 0 1 1 12 2" />
-          <path d="M22 2 12 12" />
-          <path d="M16 2h6v6" />
-        </svg>
-      </Link>
+      <div className="fixed z-10 right-6 bottom-6 bg-white text-gray-800 font-medium rounded text-xs p-3 drop-shadow-2xl border">
+        <div className="leading-[22px]">
+          Looks like you are a visitor of the event!
+          <br />
+          Fill free to explore more details!
+        </div>
+        <Link href="/abcd-xyz/overview">
+          <Button className="mt-2 h-8 rounded bg-gray-900 hover:bg-gray">
+            Explore
+          </Button>
+        </Link>
+      </div>
     </>
   );
 }
