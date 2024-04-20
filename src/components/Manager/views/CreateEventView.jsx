@@ -6,6 +6,8 @@ import Stepper from "../CreateEvents/Stepper";
 import EventDetailsForm from "../CreateEvents/Forms/EventDetailsForm";
 import BannersForm from "../CreateEvents/Forms/BannersForm";
 import VenueForm from "../CreateEvents/Forms/VenueForm";
+import EmergencyInfoForm from "../CreateEvents/Forms/EmergencyInfoForm";
+import PaymentForm from "../CreateEvents/Forms/PaymentForm";
 
 const CreateEventView = () => {
   const { activeStep } = useCreateEventContext();
@@ -18,6 +20,8 @@ const CreateEventView = () => {
         {activeStep === 1 && <EventDetailsForm />}
         {activeStep === 2 && <BannersForm />}
         {activeStep === 3 && <VenueForm />}
+        {activeStep === 4 && <EmergencyInfoForm />}
+        {activeStep === 5 && <PaymentForm />}
       </div>
     </div>
   );

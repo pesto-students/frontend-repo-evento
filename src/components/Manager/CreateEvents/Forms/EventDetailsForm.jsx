@@ -36,7 +36,6 @@ const optionSchema = z.object({
 
 const formSchema = z.object({
   title: z.string().min(1).max(50),
-  organizer: z.string().min(1).max(50),
   description: z.string().min(1).max(50),
   categories: z.array(optionSchema).min(1),
 });
@@ -106,32 +105,6 @@ const EventDetailsForm = () => {
                           <FormControl>
                             <Input
                               placeholder="Type the event title here..."
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Event Organizer</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="organizer"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Organizer*</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Type the organizer name here..."
                               {...field}
                             />
                           </FormControl>

@@ -6,6 +6,7 @@ import AppLayout from "@/layouts/AppLayout";
 import Providers from "@/components/others/Providers";
 import { Toaster } from "@/components/ui/toaster";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { ConfigProvider } from "antd";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,15 @@ export default function RootLayout({ children }) {
         <Providers>
           <NextTopLoader color="#DC2626" showSpinner={false} />
           <AntdRegistry>
-            <AppLayout>{children}</AppLayout>
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorPrimary: "#dc2626",
+                },
+              }}
+            >
+              <AppLayout>{children}</AppLayout>
+            </ConfigProvider>
           </AntdRegistry>
           <Toaster />
         </Providers>

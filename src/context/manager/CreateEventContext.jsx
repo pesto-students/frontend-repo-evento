@@ -1,6 +1,13 @@
 "use client";
 
-import { ImageIcon, MapPinned, Ticket } from "lucide-react";
+import {
+  DollarSign,
+  ImageIcon,
+  MapPinned,
+  Phone,
+  Ticket,
+  Trophy,
+} from "lucide-react";
 
 const { createContext, useState, useContext, useEffect } = require("react");
 
@@ -30,6 +37,27 @@ export const CreateEventProvider = ({ children }) => {
       description: "Event venue & date",
       isComplete: false,
       icon: <MapPinned className="w-3.5 text-gray-500" />,
+    },
+    {
+      id: 4,
+      title: "Host & Info",
+      description: "Event organizer & emergency info",
+      isComplete: false,
+      icon: <Phone className="w-3.5 text-gray-500" />,
+    },
+    {
+      id: 5,
+      title: "Payment",
+      description: "Make the Payment",
+      isComplete: false,
+      icon: <DollarSign className="w-3.5 text-gray-500" />,
+    },
+    {
+      id: 6,
+      title: "Finish",
+      description: "Completed",
+      isComplete: false,
+      icon: <Trophy className="w-3.5 text-gray-500" />,
     },
   ]);
 
@@ -62,7 +90,7 @@ export const CreateEventProvider = ({ children }) => {
         setSteps,
         activeStep,
         setActiveStep,
-        eventCategories
+        eventCategories,
       }}
     >
       {children}
