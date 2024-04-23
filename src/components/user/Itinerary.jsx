@@ -64,10 +64,25 @@ const Itinerary = () => {
             <DialogTrigger>
               <div className="p-6 border shadow-sm rounded-lg flex bg-white cursor-pointer">
                 <div className="flex-1">
-                  <h4 className="text-content text-lg font-semibold text-left">
+                  <h4 className="text-content text-lg font-semibold text-left mb-2">
                     {item.title}
                   </h4>
-                  <div className="flex gap-6 text-sm mt-2">
+                  <div className="mb-4 flex gap-3 items-center">
+                    <Image
+                      src="https://res.cloudinary.com/dv68nyejy/image/upload/v1712380759/Evento/thumbnail/b_praak2_opndqq.webp"
+                      alt=""
+                      width={100}
+                      height={100}
+                      className="w-14 h-14 rounded"
+                    />
+                    <p className="text-left line-clamp-3">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Quasi recusandae exercitationem laborum nam, quidem enim
+                      animi eum ab, expedita voluptates neque. Voluptatum a
+                      saepe dolorem ut libero sit atque?
+                    </p>
+                  </div>
+                  <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 text-sm">
                     <div className="flex gap-1 items-center">
                       <Clock className="w-3.5 h-3.5" />
                       <span>
@@ -96,7 +111,7 @@ const Itinerary = () => {
                     className="w-full object-cover rounded-md mt-4"
                     alt="Event Spotlight"
                   />
-                  <p className="mt-4">
+                  <p className="mt-4 text-left">
                     This action cannot be undone. This will permanently delete
                     your account and remove your data from our servers.
                   </p>

@@ -11,7 +11,7 @@ import {
   Siren,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const tabs = [
   {
@@ -58,7 +58,7 @@ export default function RootLayout({ children, params }) {
       {isIncludesPath && (
         <>
           {/* Top nav only for desktops */}
-          <nav className="hidden lg:block w-full fixed bg-white z-20">
+          <nav className="hidden lg:block w-full fixed bg-white z-20 border-b">
             <div className="max-w-screen-xl mx-auto px-6 text-center text-content">
               <ul className="flex flex-wrap gap-6">
                 {tabs.map((item, i) => (

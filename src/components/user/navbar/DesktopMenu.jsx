@@ -9,7 +9,7 @@ const DesktopMenu = () => {
       className="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
       id="navbar-sticky"
     >
-      <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent md:items-center">
+      <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent md:items-center">
         <li>
           <Link
             href="/search"
@@ -36,7 +36,7 @@ const DesktopMenu = () => {
         <li>
           <button
             type="button"
-            className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            className="flex text-sm bg-gray-800 rounded-full md:me-0"
           >
             <span className="sr-only">Open user menu</span>
             <Image
