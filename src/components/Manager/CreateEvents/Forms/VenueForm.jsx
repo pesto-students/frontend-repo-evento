@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/form";
 
 import { CirclePlus } from "@/components/others/Icons";
-import { useToast } from "@/components/ui/use-toast";
-import { DatePicker, Input, Button } from "antd";
+
+import { DatePicker, Input, Button, message } from "antd";
 import Map, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { clsx } from "clsx";
@@ -28,8 +28,7 @@ const formSchema = z.object({
 });
 
 const VenueForm = () => {
-  const { toast } = useToast();
-
+  const [messageApi] = message.useMessage();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,10 +49,9 @@ const VenueForm = () => {
     values = { ...values, categories };
     console.log(values);
     // call api to save data
-    toast({
-      title: "Saved!",
-      description:
-        "Event details are saved. You can proceed to the next step now!",
+    messageApi.open({
+      type: "success",
+      content: "Event details are saved. You can proceed to the next step now!",
     });
   };
 

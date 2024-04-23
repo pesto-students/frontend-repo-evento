@@ -16,9 +16,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CirclePlus } from "@/components/others/Icons";
 import { useDropzone } from "react-dropzone";
-import { useToast } from "@/components/ui/use-toast";
 import { ImageIcon, LoaderCircle } from "lucide-react";
 import Image from "next/image";
+import { message } from "antd";
 
 // Separate component for image upload
 const ImageUpload = ({ onFileUpload, type }) => {
@@ -60,8 +60,7 @@ const ImageUpload = ({ onFileUpload, type }) => {
 };
 
 const BannersForm = () => {
-  const { toast } = useToast();
-
+  const [messageApi] = message.useMessage();
   const [uploadedThumbnail, setUploadedThumbnail] = useState(null);
   const [uploadedBanner, setUploadedBanner] = useState(null);
 
@@ -88,10 +87,9 @@ const BannersForm = () => {
   const onSubmit = (values) => {
     console.log(values);
     // call api to save data
-    toast({
-      title: "Saved!",
-      description:
-        "Event details are saved. You can proceed to the next step now!",
+    messageApi.open({
+      type: "success",
+      content: "Event details are saved. You can proceed to the next step now!",
     });
   };
 

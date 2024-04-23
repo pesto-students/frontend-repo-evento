@@ -12,20 +12,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input, Button } from "antd";
+import { Input, Button, message } from "antd";
 import { CirclePlus } from "@/components/others/Icons";
 import { useCreateEventContext } from "@/context/manager/CreateEventContext";
-import { useToast } from "@/components/ui/use-toast";
-import { Plus, PlusCircle, Search } from "lucide-react";
 
-const style = {
-  control: (base, state) => ({
-    ...base,
-    border:
-      state.isFocused || state.isActive ? "1px solid red" : "1px solid #e5e5e5",
-    boxShadow: "none",
-  }),
-};
+import { Plus, PlusCircle, Search } from "lucide-react";
 
 const optionSchema = z.object({
   label: z.string(),
@@ -40,7 +31,7 @@ const formSchema = z.object({
 });
 
 const EmergencyInfoForm = () => {
-  const { toast } = useToast();
+  const [messageApi] = message.useMessage();
   const { eventCategories } = useCreateEventContext();
 
   // This is a temp fix for the react select package
@@ -65,10 +56,9 @@ const EmergencyInfoForm = () => {
     values = { ...values, categories };
     console.log(values);
     // call api to save data
-    toast({
-      title: "Saved!",
-      description:
-        "Event details are saved. You can proceed to the next step now!",
+    messageApi.open({
+      type: "success",
+      content: "Event details are saved. You can proceed to the next step now!",
     });
   };
 
@@ -191,9 +181,7 @@ const EmergencyInfoForm = () => {
                       />
                     </div>
                     <div className="mt-3">
-                      <Button
-                        icon={<Plus className="w-4 h-4" />}
-                      ></Button>
+                      <Button icon={<Plus className="w-4 h-4" />}></Button>
                     </div>
                   </div>
                 </div>

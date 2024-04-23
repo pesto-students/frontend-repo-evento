@@ -62,7 +62,7 @@ const PaymentForm = () => {
           </div>
           <div className="text-xl font-medium mt-6 text-primary">Rs 299</div>
           <div className="mt-6">
-            <Button type="primary" block>
+            <Button block>
               Select Plan
             </Button>
           </div>
@@ -82,7 +82,7 @@ const PaymentForm = () => {
             </div>
             <div className="text-xl font-medium mt-6 text-primary">Rs 499</div>
             <div className="mt-6">
-              <Button type="primary" block>
+              <Button block>
                 Select Plan
               </Button>
             </div>

@@ -4,7 +4,6 @@ import clsx from "clsx";
 import NextTopLoader from "nextjs-toploader";
 import AppLayout from "@/layouts/AppLayout";
 import Providers from "@/components/others/Providers";
-import { Toaster } from "@/components/ui/toaster";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 
@@ -32,7 +31,6 @@ export default function RootLayout({ children }) {
               <AppLayout>{children}</AppLayout>
             </ConfigProvider>
           </AntdRegistry>
-          <Toaster />
         </Providers>
       </body>
     </html>

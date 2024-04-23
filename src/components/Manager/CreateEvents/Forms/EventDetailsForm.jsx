@@ -18,7 +18,7 @@ import { CirclePlus } from "@/components/others/Icons";
 import { Textarea } from "@/components/ui/textarea";
 import Select from "react-select";
 import { useCreateEventContext } from "@/context/manager/CreateEventContext";
-import { useToast } from "@/components/ui/use-toast";
+import { message } from "antd";
 
 const style = {
   control: (base, state) => ({
@@ -41,7 +41,7 @@ const formSchema = z.object({
 });
 
 const EventDetailsForm = () => {
-  const { toast } = useToast();
+  const [messageApi] = message.useMessage();
   const { eventCategories } = useCreateEventContext();
 
   // This is a temp fix for the react select package
@@ -66,10 +66,9 @@ const EventDetailsForm = () => {
     values = { ...values, categories };
     console.log(values);
     // call api to save data
-    toast({
-      title: "Saved!",
-      description:
-        "Event details are saved. You can proceed to the next step now!",
+    messageApi.open({
+      type: "success",
+      content: "Event details are saved. You can proceed to the next step now!",
     });
   };
 
