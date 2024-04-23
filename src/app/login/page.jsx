@@ -1,6 +1,6 @@
 import React from "react";
 import { Park } from "@/components/others/Illustrations";
-import AuthView from "@/components/Auth/AuthView";
+import AuthView from "@/components/auth/AuthView";
 
 const Page = () => {
   return (

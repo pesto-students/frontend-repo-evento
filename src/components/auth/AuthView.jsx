@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import UserLoginForm from "@/components/Auth/UserLoginForm";
-import ManagerLoginForm from "@/components/Auth/ManagerLoginForm";
+import UserLoginForm from "@/components/auth/UserLoginForm";
+import ManagerLoginForm from "@/components/auth/ManagerLoginForm";
 
 const AuthView = () => {
   const [currentView, setCurrentView] = useState("user");

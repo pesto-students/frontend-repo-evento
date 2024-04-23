@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus } from "lucide-react";
-import EventCard from "@/components/Manager/EventCard";
+import EventCard from "@/components/manager/EventCard";
 import Link from "next/link";
 
 export default function Dashboard() {
