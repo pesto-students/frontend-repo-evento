@@ -57,7 +57,7 @@ const Page = () => {
     },
   ];
 
-  const [searchKeyword, setSearchKeyword] = useState("null");
+  const [searchKeyword, setSearchKeyword] = useState(null);
   return (
     <section className="max-w-screen-xl mx-auto px-6 mt-12">
       <div className="relative">
@@ -89,9 +89,9 @@ const Page = () => {
             {listedEvents.map((item, i) => (
               <div
                 key={i}
-                className="grid grid-cols-12 gap-3 rounded-lg border p-4 mb-3 bg-gray-50 cursor-pointer"
+                className="grid grid-cols-12 gap-3 rounded-lg border p-3 mb-3 bg-white cursor-pointer"
               >
-                <div className="col-span-12 md:col-span-8 flex gap-3 md:gap-6">
+                <div className="col-span-12 md:col-span-8 flex gap-2 md:gap-4">
                   <div>
                     <Image
                       width={480}
@@ -101,7 +101,7 @@ const Page = () => {
                       alt=""
                     />
                   </div>
-                  <div className="flex flex-1 flex-col gap-1">
+                  <div className="flex flex-1 flex-col justify-center gap-1">
                     <div className="font-semibold text-lg line-clamp-1">
                       {item.title}
                     </div>
@@ -122,7 +122,7 @@ const Page = () => {
                   </div>
                 </div>
 
-                <div className="col-span-12 md:col-span-4 flex flex-col">
+                <div className="col-span-12 md:col-span-4 flex flex-col justify-center">
                   <div className="flex items-center ">
                     <CalendarDays className="w-4 h-4 text-primary" />
                     <div className="text-sm ml-2 font-medium line-clamp-1">
