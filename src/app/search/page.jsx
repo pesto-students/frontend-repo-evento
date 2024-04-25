@@ -64,6 +64,7 @@ const Page = () => {
         <Search className="absolute w-4 top-[16px] left-3 text-gray-500" />
         <Input
           id="name"
+          onChange={(e) => setSearchKeyword(e.target.value)}
           placeholder="Find your next concert, comedy show..."
           className="col-span-3 h-14 pl-8"
         />

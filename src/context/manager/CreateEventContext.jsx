@@ -40,8 +40,8 @@ export const CreateEventProvider = ({ children }) => {
     },
     {
       id: 4,
-      title: "Host & Info",
-      description: "Event organizer & emergency info",
+      title: "Host Info",
+      description: "Event organizer info",
       isComplete: false,
       icon: <Phone className="w-3.5 text-gray-500" />,
     },

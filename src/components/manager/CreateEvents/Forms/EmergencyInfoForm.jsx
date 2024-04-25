@@ -32,15 +32,9 @@ const formSchema = z.object({
 
 const EmergencyInfoForm = () => {
   const [messageApi] = message.useMessage();
-  const { eventCategories } = useCreateEventContext();
 
   // This is a temp fix for the react select package
   const [isMounted, setIsMounted] = useState(false);
-
-  const categorySelectOptions = eventCategories.map((cat) => ({
-    label: cat.title,
-    value: cat.id,
-  }));
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -70,7 +64,7 @@ const EmergencyInfoForm = () => {
       {isMounted && (
         <>
           <div className="text-xs">Step 4 of 5</div>
-          <div className="text-lg font-semibold">Host & Emergency Info</div>
+          <div className="text-lg font-semibold">Host Information</div>
           <div className="mt-12">
             <Form {...form}>
               <form
@@ -138,50 +132,6 @@ const EmergencyInfoForm = () => {
                           </FormItem>
                         )}
                       />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Emergency Info</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <div>
-                      <FormField
-                        control={form.control}
-                        name="organizerEmail"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Title*</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Police station" {...field} />
-                            </FormControl>
-                            <FormMessage className="text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3">
-                      <FormField
-                        control={form.control}
-                        name="organizerEmail"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Contact Details*</FormLabel>
-                            <FormControl>
-                              <Input placeholder="123-456-789" {...field} />
-                            </FormControl>
-                            <FormMessage className="text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3">
-                      <Button icon={<Plus className="w-4 h-4" />}></Button>
                     </div>
                   </div>
                 </div>
