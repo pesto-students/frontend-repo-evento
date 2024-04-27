@@ -19,19 +19,14 @@ const Stepper = () => {
               className={clsx(
                 "absolute flex items-center justify-center w-8 h-8 rounded-full -start-4 ring-4 ring-white",
                 {
-                  "bg-green-200": step.isComplete,
-                  "bg-gray-100": !step.isComplete,
-                  "bg-blue-100": activeStep === step.id,
+                  "bg-red-100": activeStep === step.id && !step.isComplete,
+                  "bg-red-500": !!step.isComplete,
+                  "bg-gray-100": !step.isComplete && activeStep !== step.id,
                 }
               )}
             >
               {step.isComplete ? (
-                <Check
-                  className={clsx("w-3.5", {
-                    "text-blue-500": activeStep === step.id,
-                    "text-green-500": activeStep !== step.id,
-                  })}
-                />
+                <Check className={clsx("w-3.5 text-white")} />
               ) : (
                 step.icon
               )}

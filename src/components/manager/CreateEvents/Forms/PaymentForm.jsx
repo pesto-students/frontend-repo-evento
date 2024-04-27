@@ -39,52 +39,90 @@ const PaymentForm = () => {
       <div className="text-xs">Step 4 of 5</div>
       <div className="text-lg font-semibold">Select Package</div>
       <div className="mt-12 flex gap-6">
-        <Card className="shadow w-[280px]">
-          <h2 className="font-semibold text-2xl text-gray-500">Basic</h2>
-          <div className="mt-6 max-w-fit">
-            {lists.map((item, i) => (
-              <div key={i} className="flex gap-2 items-center mb-2">
-                {i < 4 ? (
-                  <div className="bg-green-500 rounded-full flex items-center justify-center w-4 h-4">
-                    <Check className="stroke-white w-3 h-3" />
-                  </div>
-                ) : (
-                  <>
-                    <div className="bg-gray-500 rounded-full flex items-center justify-center w-4 h-4">
-                      <X className="stroke-white w-3 h-3" />
-                    </div>
-                  </>
-                )}
-
-                <div className="flex-1">{item.title}</div>
-              </div>
-            ))}
+        <Card className=" w-[320px]">
+          <div>
+            <h3
+              id="tier-basic"
+              class="text-lg font-semibold leading-8 tracking-tight text-primary"
+            >
+              Basic
+            </h3>
+            <div class="mt-4 flex items-baseline text-3xl font-bold tracking-tight text-gray-900">
+              <span> $25 </span>
+            </div>
+            <p class="mt-6 text-xs leading-2 text-gray-600 dark:text-slate-200">
+              The Basic plan is the perfect starting point for new users. Join
+              now to get a taste of all the features &amp; benefits that Subtxt
+              has to offer.
+            </p>
           </div>
-          <div className="text-xl font-medium mt-6 text-primary">Rs 299</div>
-          <div className="mt-6">
-            <Button block>
-              Select Plan
-            </Button>
+          <div class="flex flex-1 flex-col mt-3">
+            <div class="flex flex-1 flex-col justify-between rounded-lg bg-gray-50 p-3">
+              <ul role="list" class="space-y-3">
+                {lists.map((item, i) => (
+                  <li key={i} class="flex items-center">
+                    {i < 4 ? (
+                      <div className="bg-green-500 rounded-full flex items-center justify-center w-4 h-4">
+                        <Check className="stroke-white w-3 h-3" />
+                      </div>
+                    ) : (
+                      <>
+                        <div className="bg-gray-500 rounded-full flex items-center justify-center w-4 h-4">
+                          <X className="stroke-white w-3 h-3" />
+                        </div>
+                      </>
+                    )}
+
+                    <p class="ml-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                      {item.title}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              <div class="mt-8">
+                <Button block> BUY NOW</Button>
+              </div>
+            </div>
           </div>
         </Card>
+
         <Badge.Ribbon text="Recommended" color="red">
-          <Card className="shadow w-[280px]">
-            <h2 className="font-semibold text-2xl text-gray-500">Premium</h2>
-            <div className="mt-6 max-w-fit">
-              {lists.map((item, i) => (
-                <div key={i} className="flex gap-2 items-center mb-2">
-                  <div className="bg-green-500 rounded-full flex items-center justify-center w-4 h-4">
-                    <Check className="stroke-white w-3 h-3" />
-                  </div>
-                  <div className="flex-1">{item.title}</div>
-                </div>
-              ))}
+          <Card className=" w-[320px]">
+            <div>
+              <h3
+                id="tier-basic"
+                class="text-lg font-semibold leading-8 tracking-tight text-primary"
+              >
+                Premium
+              </h3>
+              <div class="mt-4 flex items-baseline text-3xl font-bold tracking-tight text-gray-900">
+                <span> $50 </span>
+              </div>
+              <p class="mt-6 text-xs leading-2 text-gray-600 dark:text-slate-200">
+                The Basic plan is the perfect starting point for new users. Join
+                now to get a taste of all the features &amp; benefits that
+                Subtxt has to offer.
+              </p>
             </div>
-            <div className="text-xl font-medium mt-6 text-primary">Rs 499</div>
-            <div className="mt-6">
-              <Button block>
-                Select Plan
-              </Button>
+            <div class="flex flex-1 flex-col mt-3">
+              <div class="flex flex-1 flex-col justify-between rounded-lg bg-gray-50 p-3">
+                <ul role="list" class="space-y-3">
+                  {lists.map((item, i) => (
+                    <li key={i} class="flex items-center">
+                      <div className="bg-green-500 rounded-full flex items-center justify-center w-4 h-4">
+                        <Check className="stroke-white w-3 h-3" />
+                      </div>
+
+                      <p class="ml-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                        {item.title}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+                <div class="mt-8">
+                  <Button block> BUY NOW</Button>
+                </div>
+              </div>
             </div>
           </Card>
         </Badge.Ribbon>

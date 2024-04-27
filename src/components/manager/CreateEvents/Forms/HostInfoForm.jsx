@@ -140,9 +140,8 @@ const EmergencyInfoForm = () => {
                   <div className="col-span-2"></div>
                   <div className="col-span-3">
                     <Button type="primary" htmlType="submit">
-                      Save
+                      Next
                     </Button>
-                    <Button className="ml-2">Next</Button>
                   </div>
                 </div>
               </form>

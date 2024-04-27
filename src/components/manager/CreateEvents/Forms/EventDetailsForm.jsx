@@ -177,9 +177,6 @@ const EventDetailsForm = () => {
                   <div className="col-span-2"></div>
                   <div className="col-span-3">
                     <Button variant="default" type="submit" size="sm">
-                      Save
-                    </Button>
-                    <Button variant="secondary" size="sm" className="ml-2">
                       Next
                     </Button>
                   </div>

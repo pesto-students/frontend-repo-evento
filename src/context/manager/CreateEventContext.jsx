@@ -15,13 +15,13 @@ const CreateEventContext = createContext();
 
 export const CreateEventProvider = ({ children }) => {
   const [eventCategories, setEventCategories] = useState([]);
-  const [activeStep, setActiveStep] = useState(3);
+  const [activeStep, setActiveStep] = useState(1);
   const [steps, setSteps] = useState([
     {
       id: 1,
       title: "Event info",
       description: "Title, Category & Description",
-      isComplete: false,
+      isComplete: true,
       icon: <Ticket className="w-3.5 text-gray-500" />,
     },
     {
