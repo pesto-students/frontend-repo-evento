@@ -39,7 +39,7 @@ const PaymentForm = () => {
       <div className="text-xs">Step 4 of 5</div>
       <div className="text-lg font-semibold">Select Package</div>
       <div className="mt-12 flex gap-6">
-        <Card className=" w-[320px]">
+        <Card className=" max-w-[320px]">
           <div>
             <h3
               id="tier-basic"
@@ -87,7 +87,7 @@ const PaymentForm = () => {
         </Card>
 
         <Badge.Ribbon text="Recommended" color="red">
-          <Card className=" w-[320px]">
+          <Card className=" max-w-[320px]">
             <div>
               <h3
                 id="tier-basic"
