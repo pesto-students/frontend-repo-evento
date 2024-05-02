@@ -4,30 +4,35 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus } from "lucide-react";
 import EventCard from "@/components/manager/EventCard";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { NEXT_PUBLIC_API_BASE_URL } from "@/lib/config";
 
 export default function Dashboard() {
-  const events = [
-    {
-      title: "SANAM Live",
-      thumbnail:
-        "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380563/Evento/thumbnail/zubin_a5pwbx.png",
-    },
-    {
-      title: "Simba Uproar 2024 | Guwahati",
-      thumbnail:
-        "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380563/Evento/thumbnail/arijit_rjqfpd.jpg",
-    },
-    {
-      title: "Kanan Gill Experience - India Tour 2024 - Guwahati",
-      thumbnail:
-        "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380562/Evento/thumbnail/b_praak_q2fzsf.jpg",
-    },
-    {
-      title: "Kisi Ko Batana Mat by Anubhav Singh Bassi",
-      thumbnail:
-        "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380561/Evento/thumbnail/atif_aslam_vbrojn.png",
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState([]);
+  const session = useSession();
+
+  const headers = {
+    Authorization: `Bearer ${session?.data?.user?.accessToken}`,
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get(`${NEXT_PUBLIC_API_BASE_URL}/events`, {
+          headers,
+        });
+        setEvents(res.data.data.events);
+        console.log(session);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
   return (
     <>
       <div className="flex items-center">
@@ -58,7 +63,7 @@ export default function Dashboard() {
         </TabsContent>
       </Tabs>
 
-      {events.length === 0 && (
+      {!loading && events.length === 0 && (
         <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
           <div className="flex flex-col items-center gap-1 text-center">
             <h3 className="text-2xl font-bold tracking-tight">

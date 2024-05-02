@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import axios from "axios";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { signInAction } from "@/lib/actions";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -32,24 +32,18 @@ const LoginForm = ({ setCurrentView }) => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "john@mail.com",
+      password: "test123",
     },
   });
 
-  async function onSubmit(values) {
+  const onSubmit = async (values) => {
     try {
-      //   const res = await signIn("credentials", {
-      //     redirect: false,
-      //     email: values.email,
-      //     password: values.password,
-      //   });
-      //   console.log(res);
-      //   router.push("/manager");
+      await signInAction(values.email, values.password, "MANAGER");
     } catch (error) {
-      console.log(error);
+      console.error("Error during sign-in:", error);
     }
-  }
+  };
 
   return (
     <div className="rounded-lg bg-white shadow-sm w-10/12 lg:w-10/12 xl:w-6/12 max-w-[400px] border">

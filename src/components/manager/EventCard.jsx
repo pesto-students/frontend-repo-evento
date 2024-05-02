@@ -12,10 +12,12 @@ const EventCard = ({ event }) => {
           width={480}
           height={360}
           className="object-cover w-full h-full rounded-t-lg"
-          src={event.thumbnail}
+          src={event.thumbnailUrl}
           alt={event.title}
         />
-        <CardTitle className="text-lg px-4">Get freelance work</CardTitle>
+        <CardTitle className="text-lg px-4 line-clamp-2">
+          {event.title}
+        </CardTitle>
         <Badge className="max-w-min absolute left-2 shadow" variant="secondary">
           Basic
         </Badge>
@@ -41,10 +43,10 @@ const EventCard = ({ event }) => {
             </div>
             <div className="flex flex-col">
               <span className=" text-sm ml-2 font-medium line-clamp-1">
-                ACA Stadium, Barsapara
+                {event.venue}
               </span>
               <span className=" text-xs ml-2 line-clamp-1">
-                ENTRY - Starts From Rs 200
+                ENTRY - Starts From Rs {event.entryFee}
               </span>
             </div>
           </div>
