@@ -1,6 +1,6 @@
 import React from "react";
 import { Park } from "@/components/others/Illustrations";
-import AuthView from "@/components/auth/AuthView";
+import LoginForm from "@/components/auth/LoginForm";
 
 const Page = () => {
   return (
@@ -20,7 +20,7 @@ const Page = () => {
         </div>
       </div>
       <div className="col-span-2 lg:col-span-1 py-6 flex justify-center items-center">
-        <AuthView/>
+        <LoginForm />
       </div>
     </main>
   );

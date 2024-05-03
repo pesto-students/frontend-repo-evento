@@ -7,6 +7,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import { SessionProvider } from "next-auth/react";
 import { AppProvider } from "@/context/AppContext";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
             >
               <AppProvider>
                 <AppLayout>{children}</AppLayout>
+                <Toaster />
               </AppProvider>
             </ConfigProvider>
           </AntdRegistry>

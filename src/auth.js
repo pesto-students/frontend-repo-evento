@@ -13,7 +13,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       credentials: {
         email: {},
         password: {},
-        role: {},
       },
       authorize: async (credentials) => {
         try {
@@ -22,7 +21,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             {
               email: credentials.email,
               password: credentials.password,
-              role: credentials.role,
             }
           );
           return res.data.data;
@@ -48,7 +46,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.role = user.user.role;
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
+        token.accessTokenExpiresAt = user.accessTokenExpiresAt;
       }
+
+      // Check if token is expired
+      if (token && Date.now() > token.accessTokenExpiresAt) {
+        try {
+          const res = await refreshAccessToken(token.refreshToken);
+          // Update token with new access token and expiration time
+          token.accessToken = res.data.data.accessToken;
+          token.refreshToken = res.data.data.refreshToken;
+          token.accessTokenExpiresAt = res.data.data.accessTokenExpiresAt;
+        } catch (error) {
+          // Handle token refresh error, maybe redirect to login
+          throw new Error("Failed to refresh token");
+        }
+      }
+
       return token;
     },
 
@@ -61,8 +75,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.email = token.email;
       session.user.accessToken = token.accessToken;
       session.user.refreshToken = token.refreshToken;
+      session.user.accessTokenExpiresAt = token.accessTokenExpiresAt;
 
       return session;
     },
   },
 });
+
+const refreshAccessToken = async (refreshToken) => {
+  return await axios.post(`${NEXT_PUBLIC_API_BASE_URL}/auth/refresh`, {
+    refreshToken,
+  });
+};

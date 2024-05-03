@@ -1,7 +1,7 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Search, Bell } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const DesktopMenu = () => {
   return (
@@ -9,7 +9,7 @@ const DesktopMenu = () => {
       className="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
       id="navbar-sticky"
     >
-      <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent md:items-center">
+      <ul className="flex flex-col px-4 md:p-0 mt-4 font-medium md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent md:items-center">
         <li>
           <Link
             href="/search"
@@ -34,19 +34,9 @@ const DesktopMenu = () => {
           </button>
         </li>
         <li>
-          <button
-            type="button"
-            className="flex text-sm bg-gray-800 rounded-full md:me-0"
-          >
-            <span className="sr-only">Open user menu</span>
-            <Image
-              width={50}
-              height={50}
-              className="w-8 h-8 rounded-full"
-              src="/img/profile-picture-3.jpg"
-              alt="user photo"
-            />
-          </button>
+          <Avatar className="cursor-pointer w-9 h-9">
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
         </li>
       </ul>
     </div>

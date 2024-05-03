@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,9 +14,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signInAction } from "@/lib/actions";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -26,9 +25,7 @@ const formSchema = z.object({
     .min(6, { message: "Password must be at least 6 characters long" }),
 });
 
-const LoginForm = ({ setCurrentView }) => {
-  const router = useRouter();
-
+const LoginForm = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,18 +36,18 @@ const LoginForm = ({ setCurrentView }) => {
 
   const onSubmit = async (values) => {
     try {
-      await signInAction(values.email, values.password, "MANAGER");
+      await signInAction(values.email, values.password);
     } catch (error) {
-      console.error("Error during sign-in:", error);
+      toast("Error in login", {
+        description: error.message,
+      });
     }
   };
 
   return (
     <div className="rounded-lg bg-white shadow-sm w-10/12 lg:w-10/12 xl:w-6/12 max-w-[400px] border">
       <div className="p-6">
-        <div className="mb-6 text-primary font-semibold text-xl">
-          Evento Business
-        </div>
+        <div className="mb-6 text-primary font-semibold text-xl">Evento</div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
             <FormField
@@ -93,21 +90,6 @@ const LoginForm = ({ setCurrentView }) => {
             Create now!
           </Link>
         </div>
-      </div>
-
-      <div className="border-t h-16 flex items-center relative mt-12 p-6">
-        <div className="absolute -top-3 bg-white left-4 px-2 font-medium">
-          Or sign in as
-        </div>
-
-        <Button
-          onClick={() => setCurrentView("user")}
-          variant="ghost"
-          className="hover:bg-inherit pl-0"
-        >
-          User
-          <ChevronRight className="ml-2" />
-        </Button>
       </div>
     </div>
   );

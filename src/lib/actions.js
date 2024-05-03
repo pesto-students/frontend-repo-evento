@@ -2,11 +2,10 @@
 
 import { signIn } from "@/auth";
 
-export const signInAction = async (email, password, role) => {
+export const signInAction = async (email, password) => {
   await signIn("credentials", {
     email,
     password,
-    role,
-    redirectTo: "/manager",
+    redirectTo: "/",
   });
 };
