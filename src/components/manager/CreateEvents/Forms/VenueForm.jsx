@@ -62,106 +62,93 @@ const VenueForm = () => {
       <div className="mt-12">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="grid grid-cols-6">
+            <div>
+              <FormField
+                control={form.control}
+                name="venue"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Venue*</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Sarusajai stadium, Guwahati..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className=" grid grid-cols-4 gap-3">
               <div className="col-span-2">
-                <div className="flex gap-2 items-center">
-                  <CirclePlus className="w-4 stroke-primary" />
-                  <span>Venue & Address</span>
-                </div>
-              </div>
-              <div className="col-span-4">
                 <FormField
                   control={form.control}
-                  name="venue"
+                  name="startDate"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Venue*</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Sarusajai stadium, Guwahati..."
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-xs" />
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Start Date</FormLabel>
+                      <DatePicker
+                        showTime
+                        use12Hours
+                        format={"YYYY-MM-DD hh:mm"}
+                        onChange={(value, dateString) => {
+                          console.log("Selected Time: ", value);
+                          console.log("Formatted Selected Time: ", dateString);
+                        }}
+                        onOk={field.onChange}
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="col-span-2">
+                <FormField
+                  control={form.control}
+                  name="endDate"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>End Date</FormLabel>
+                      <DatePicker
+                        showTime
+                        use12Hours
+                        format={"YYYY-MM-DD hh:mm"}
+                        onChange={(value, dateString) => {
+                          console.log("Selected Time: ", value);
+                          console.log("Formatted Selected Time: ", dateString);
+                        }}
+                        onOk={field.onChange}
+                      />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
             </div>
-            <div className="grid grid-cols-6">
-              <div className="col-span-2">
-                <div className="flex gap-2 items-center">
-                  <CirclePlus className="w-4 stroke-primary" />
-                  <span>Start & End Date</span>
-                </div>
-              </div>
-              <div className="col-span-4 grid grid-cols-4 gap-3">
-                <div className="col-span-2">
-                  <FormField
-                    control={form.control}
-                    name="startDate"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col">
-                        <FormLabel>Start Date</FormLabel>
-                        <DatePicker
-                          showTime
-                          use12Hours
-                          format={"YYYY-MM-DD hh:mm"}
-                          onChange={(value, dateString) => {
-                            console.log("Selected Time: ", value);
-                            console.log(
-                              "Formatted Selected Time: ",
-                              dateString
-                            );
-                          }}
-                          onOk={field.onChange}
-                        />
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="col-span-2">
-                  <FormField
-                    control={form.control}
-                    name="endDate"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col">
-                        <FormLabel>End Date</FormLabel>
-                        <DatePicker
-                          showTime
-                          use12Hours
-                          format={"YYYY-MM-DD hh:mm"}
-                          onChange={(value, dateString) => {
-                            console.log("Selected Time: ", value);
-                            console.log(
-                              "Formatted Selected Time: ",
-                              dateString
-                            );
-                          }}
-                          onOk={field.onChange}
-                        />
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
+            <div>
+              <FormField
+                control={form.control}
+                name="venue"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Minimum entry fee (Start from)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Entry fee" {...field} />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
             </div>
-            <div className="grid grid-cols-6">
-              <div className="col-span-2">
-                <div className="flex gap-2 items-center">
-                  <CirclePlus className="w-4 stroke-primary" />
-                  <span>Entry Fee</span>
-                </div>
-              </div>
-              <div className="col-span-4">
+            <div>
+              <div>
                 <FormField
                   control={form.control}
-                  name="venue"
+                  name="location"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Minimum entry fee (Start from)</FormLabel>
+                      <FormLabel>Select location</FormLabel>
                       <FormControl>
                         <Input placeholder="Entry fee" {...field} />
                       </FormControl>
@@ -170,59 +157,31 @@ const VenueForm = () => {
                   )}
                 />
               </div>
-            </div>
-            <div className="grid grid-cols-6">
-              <div className="col-span-2">
-                <div className="flex gap-2 items-center">
-                  <CirclePlus className="w-4 stroke-primary" />
-                  <span>Location</span>
-                </div>
-              </div>
-              <div className="col-span-4 grid grid-cols-2 gap-6">
-                <div className="col-span-2">
-                  <FormField
-                    control={form.control}
-                    name="location"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Select location</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Entry fee" {...field} />
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="col-span-2 overflow-hidden h-[300px] relative rounded-lg bg-gray-100">
-                  <Map
-                    mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX}
-                    {...viewState}
-                    onMove={(evt) => setViewState(evt.viewState)}
-                    mapStyle="mapbox://styles/mapbox/outdoors-v12"
-                    attributionControl={false}
-                    transitionDuration="200"
-                    onViewportChange={(viewState) => setViewState(viewState)}
-                    reuseMaps
+              <div className="overflow-hidden mt-3 h-[300px] relative rounded-lg bg-gray-100">
+                <Map
+                  mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX}
+                  {...viewState}
+                  onMove={(evt) => setViewState(evt.viewState)}
+                  mapStyle="mapbox://styles/mapbox/outdoors-v12"
+                  attributionControl={false}
+                  transitionDuration="200"
+                  onViewportChange={(viewState) => setViewState(viewState)}
+                  reuseMaps
+                >
+                  <Marker
+                    longitude={91.77634}
+                    latitude={26.184169}
+                    anchor="bottom"
                   >
-                    <Marker
-                      longitude={91.77634}
-                      latitude={26.184169}
-                      anchor="bottom"
-                    >
-                      <MapPin className="w-8 stroke-black stroke-1 fill-red-600" />
-                    </Marker>
-                  </Map>
-                </div>
+                    <MapPin className="w-8 stroke-black stroke-1 fill-red-600" />
+                  </Marker>
+                </Map>
               </div>
             </div>
-            <div className="grid grid-cols-6">
-              <div className="col-span-2"></div>
-              <div className="col-span-3">
-                <Button type="primary" htmlType="submit">
-                  Next
-                </Button>
-              </div>
+            <div>
+              <Button type="primary" htmlType="submit">
+                Next
+              </Button>
             </div>
           </form>
         </Form>

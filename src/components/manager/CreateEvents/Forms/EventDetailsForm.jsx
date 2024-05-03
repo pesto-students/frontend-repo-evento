@@ -87,99 +87,72 @@ const EventDetailsForm = () => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8"
               >
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Event Title</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="title"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Title*</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Type the event title here..."
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Title*</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Type the event title here..."
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Event Category</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="categories"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Categories</FormLabel>
-                          <FormControl>
-                            <Select
-                              //   defaultValue={[options[0], options[1]]}
-                              value={field.value}
-                              placeholder="Select categories..."
-                              isMulti
-                              options={categorySelectOptions}
-                              className="basic-multi-select"
-                              classNamePrefix="select"
-                              onChange={field.onChange}
-                              styles={style}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="categories"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Categories</FormLabel>
+                        <FormControl>
+                          <Select
+                            //   defaultValue={[options[0], options[1]]}
+                            value={field.value}
+                            placeholder="Select categories..."
+                            isMulti
+                            options={categorySelectOptions}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            onChange={field.onChange}
+                            styles={style}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Event Description</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Description*</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              rows="8"
-                              placeholder="Type the description here..."
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description*</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            rows="8"
+                            placeholder="Type the description here..."
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2"></div>
-                  <div className="col-span-3">
-                    <Button variant="default" type="submit" size="sm">
-                      Next
-                    </Button>
-                  </div>
+                <div>
+                  <Button variant="default" type="submit" size="sm">
+                    Next
+                  </Button>
                 </div>
               </form>
             </Form>

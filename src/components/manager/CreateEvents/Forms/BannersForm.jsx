@@ -108,122 +108,95 @@ const BannersForm = () => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8"
               >
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Thumbnail</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="thumbnail"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>
-                            Square size image (800x800 pixels)*
-                          </FormLabel>
-                          <FormControl>
-                            <div className="flex gap-3">
-                              <ImageUpload
-                                onFileUpload={(url) => {
-                                  field.onChange(url);
-                                  setUploadedThumbnail(url);
-                                }}
-                                type="thumbnail"
-                              />
-                              {uploadedThumbnail && (
-                                <Image
-                                  alt=""
-                                  width={200}
-                                  height={200}
-                                  src={uploadedThumbnail}
-                                  className="w-20 h-20 rounded-lg"
-                                />
-                              )}
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Banner</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="banner"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Banner image (1200x800 pixels)*</FormLabel>
-                          <FormControl>
-                            <div className="flex gap-3">
-                              <ImageUpload
-                                onFileUpload={(url) => {
-                                  field.onChange(url);
-                                  setUploadedBanner(url);
-                                }}
-                                type="thumbnail"
-                              />
-                              {uploadedBanner && (
-                                <Image
-                                  alt=""
-                                  width={200}
-                                  height={200}
-                                  src={uploadedBanner}
-                                  className="w-20 h-20 rounded-lg"
-                                />
-                              )}
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Video Link</span>
-                    </div>
-                  </div>
-                  <div className="col-span-4">
-                    <FormField
-                      control={form.control}
-                      name="videoUrl"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Youtube video link*</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="https://www.youtube.com/watch?v=ABCD123XYZ"
-                              {...field}
-                              className="placeholder:text-gray-300"
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="thumbnail"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Square size image (800x800 pixels)*
+                        </FormLabel>
+                        <FormControl>
+                          <div className="flex gap-3">
+                            <ImageUpload
+                              onFileUpload={(url) => {
+                                field.onChange(url);
+                                setUploadedThumbnail(url);
+                              }}
+                              type="thumbnail"
                             />
-                          </FormControl>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                            {uploadedThumbnail && (
+                              <Image
+                                alt=""
+                                width={200}
+                                height={200}
+                                src={uploadedThumbnail}
+                                className="w-20 h-20 rounded-lg"
+                              />
+                            )}
+                          </div>
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2"></div>
-                  <div className="col-span-3">
-                    <Button variant="default" type="submit" size="sm">
-                      Next
-                    </Button>
-                  </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="banner"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Banner image (1200x800 pixels)*</FormLabel>
+                        <FormControl>
+                          <div className="flex gap-3">
+                            <ImageUpload
+                              onFileUpload={(url) => {
+                                field.onChange(url);
+                                setUploadedBanner(url);
+                              }}
+                              type="thumbnail"
+                            />
+                            {uploadedBanner && (
+                              <Image
+                                alt=""
+                                width={200}
+                                height={200}
+                                src={uploadedBanner}
+                                className="w-20 h-20 rounded-lg"
+                              />
+                            )}
+                          </div>
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="videoUrl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Youtube video link*</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="https://www.youtube.com/watch?v=ABCD123XYZ"
+                            {...field}
+                            className="placeholder:text-gray-300"
+                          />
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <Button variant="default" type="submit" size="sm">
+                    Next
+                  </Button>
                 </div>
               </form>
             </Form>

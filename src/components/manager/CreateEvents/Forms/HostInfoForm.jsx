@@ -71,78 +71,67 @@ const EmergencyInfoForm = () => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8"
               >
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2">
-                    <div className="flex gap-2 items-center">
-                      <CirclePlus className="w-4 stroke-primary" />
-                      <span>Organizer</span>
-                    </div>
+                <div>
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name="organizerName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Organizer Name*</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Who is organizing the envent?"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
                   </div>
-                  <div className="col-span-4">
-                    <div>
-                      <FormField
-                        control={form.control}
-                        name="organizerName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Organizer Name*</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Who is organizing the envent?"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3">
-                      <FormField
-                        control={form.control}
-                        name="organizerEmail"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Organizer email*</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Type the email of the event"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3">
-                      <FormField
-                        control={form.control}
-                        name="organizerPhone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Organizer contact*</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Type organizer contact number"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-xs" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                  <div className="mt-3">
+                    <FormField
+                      control={form.control}
+                      name="organizerEmail"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Organizer email*</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Type the email of the event"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="mt-3">
+                    <FormField
+                      control={form.control}
+                      name="organizerPhone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Organizer contact*</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Type organizer contact number"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-6">
-                  <div className="col-span-2"></div>
-                  <div className="col-span-3">
-                    <Button type="primary" htmlType="submit">
-                      Next
-                    </Button>
-                  </div>
+                <div>
+                  <Button type="primary" htmlType="submit">
+                    Next
+                  </Button>
                 </div>
               </form>
             </Form>
