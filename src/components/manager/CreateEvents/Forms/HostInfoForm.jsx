@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input, Button, message } from "antd";
+import { Input, Button, message, Card } from "antd";
 import { CirclePlus } from "@/components/others/Icons";
 import { useCreateEventContext } from "@/context/manager/CreateEventContext";
 
@@ -65,7 +65,7 @@ const EmergencyInfoForm = () => {
         <>
           <div className="text-xs">Step 4 of 5</div>
           <div className="text-lg font-semibold">Host Information</div>
-          <div className="mt-12">
+          <Card className="!mt-12">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -135,7 +135,7 @@ const EmergencyInfoForm = () => {
                 </div>
               </form>
             </Form>
-          </div>
+          </Card>
         </>
       )}
     </>

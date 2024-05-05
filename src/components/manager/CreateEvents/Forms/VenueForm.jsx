@@ -15,7 +15,7 @@ import {
 
 import { CirclePlus } from "@/components/others/Icons";
 
-import { DatePicker, Input, Button, message } from "antd";
+import { DatePicker, Input, Button, message, Card } from "antd";
 import Map, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { clsx } from "clsx";
@@ -59,7 +59,7 @@ const VenueForm = () => {
     <>
       <div className="text-xs">Step 3 of 5</div>
       <div className="text-lg font-semibold">Set Venue & Time</div>
-      <div className="mt-12">
+      <Card className="!mt-12">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div>
@@ -185,7 +185,7 @@ const VenueForm = () => {
             </div>
           </form>
         </Form>
-      </div>
+      </Card>
     </>
   );
 };
