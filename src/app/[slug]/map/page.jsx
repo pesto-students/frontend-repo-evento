@@ -135,9 +135,9 @@ const EventMap = () => {
   };
 
   return (
-    <section className="max-w-screen-xl mx-auto px-6 text-content mt-12">
-      <div className="grid grid-cols-3 gap-6">
-        <div className="col-span-3 lg:col-span-2 overflow-hidden h-[300px] lg:h-[500px] relative rounded-lg bg-gray-100">
+    <section className="max-w-screen-xl mx-auto px-6 text-content mt-12 ">
+      <div className="grid grid-cols-3 gap-6 h-full">
+        <div className="col-span-3 lg:col-span-2 overflow-hidden min-h-[340px] lg:h-[500px] relative rounded-lg bg-gray-100">
           <Map
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX}
             {...viewState}
@@ -195,7 +195,7 @@ const EventMap = () => {
             <RecenterButton className="absolute top-[8px] right-[8px]" />
           </Map>
         </div>
-        <div className="col-span-3 lg:col-span-1 h-[300px] lg:h-[500px]">
+        <div className="col-span-3 lg:col-span-1 h-full lg:h-[500px]">
           <Card className="text-content h-full overflow-auto no-scrollbar">
             <Tabs defaultValue="amenities" className="w-full">
               <CardHeader className="flex flex-row">
