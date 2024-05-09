@@ -13,7 +13,7 @@ import TextArea from "antd/es/input/TextArea";
 import { SaveIcon, UploadIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import FormButtons from "../FormButtons";
+import FormButtons from "./FormButtons";
 
 const props = {
   name: "file",

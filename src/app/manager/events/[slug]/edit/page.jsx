@@ -1,6 +1,7 @@
 // "use client";
-import EditEventDetails from "@/components/manager/EditEvent/Forms/EditEventDetails";
-import EditItinerary from "@/components/manager/EditEvent/Forms/EditItinerary";
+import EditEventDetails from "@/components/manager/EditEvent/EditEventDetails";
+import EditItinerary from "@/components/manager/EditEvent/EditItinerary";
+import EditMap from "@/components/manager/EditEvent/EditMap";
 
 import { Tabs } from "antd";
 
@@ -18,14 +19,14 @@ const items = [
   {
     key: "3",
     label: "Event Map",
-    children: "Content of Tab Pane 3",
+    children: <EditMap />,
   },
 ];
 
 const Page = () => {
   return (
     <>
-      <Tabs defaultActiveKey="1" items={items} />
+      <Tabs defaultActiveKey="3" items={items} />
     </>
   );
 };

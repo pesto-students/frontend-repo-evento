@@ -71,10 +71,6 @@ const LoginForm = ({ setCurrentView }) => {
             <Button type="submit" className="w-full">
               Login
             </Button>
-            <Button variant="outline" className="w-full">
-              {/* <FcGoogle className="mr-2" /> */}
-              Login with Google
-            </Button>
           </form>
         </Form>
         <div className="mt-4 text-center text-sm">
@@ -83,21 +79,6 @@ const LoginForm = ({ setCurrentView }) => {
             Sign up
           </Link>
         </div>
-      </div>
-
-      <div className="border-t h-16 flex items-center relative mt-12 p-6">
-        <div className="absolute -top-3 bg-white left-4 px-2 font-medium">
-          Or sign in as
-        </div>
-
-        <Button
-          onClick={() => setCurrentView("manager")}
-          variant="ghost"
-          className="hover:bg-inherit pl-0"
-        >
-          Event Manager
-          <ChevronRight className="ml-2" />
-        </Button>
       </div>
     </div>
   );

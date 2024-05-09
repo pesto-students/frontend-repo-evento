@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import FormButtons from "../FormButtons";
+import FormButtons from "./FormButtons";
 import { Button, Card, Input, Segmented, Tabs, TimePicker, Upload } from "antd";
 import {
   ClockIcon,

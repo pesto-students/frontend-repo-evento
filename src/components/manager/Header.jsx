@@ -10,7 +10,9 @@ import {
   Package,
   Package2,
   Search,
+  SearchIcon,
   ShoppingCart,
+  User2Icon,
   Users,
 } from "lucide-react";
 
@@ -25,12 +27,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from "next/navigation";
+import { Input } from "antd";
 
 const Header = () => {
-  
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -96,17 +98,11 @@ const Header = () => {
           </nav>
         </SheetContent>
       </Sheet>
-      <div className="w-full flex-1">
-        <form>
-          <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search events..."
-              className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-            />
-          </div>
-        </form>
+      <div className="w-[400px]">
+        <Input
+          placeholder="Search events..."
+          prefix={<SearchIcon className="w-3 h-4 text-gray-400" />}
+        />
       </div>
       <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
         <Bell className="h-4 w-4" />
@@ -126,9 +122,7 @@ const Header = () => {
         <DropdownMenuContent align="end" className="min-w-[240px]">
           <DropdownMenuLabel>
             <div>{"Test"}</div>
-            <div className="text-xs font-light mt-1">
-              {"Test"}
-            </div>
+            <div className="text-xs font-light mt-1">{"Test"}</div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Settings</DropdownMenuItem>
