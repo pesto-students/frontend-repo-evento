@@ -1,9 +1,7 @@
 "use client";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus } from "lucide-react";
-import EventCard from "@/components/manager/EventCard";
+import { PencilIcon, Plus, Trash2Icon } from "lucide-react";
 import Link from "next/link";
-import { Button, Segmented, Table } from "antd";
+import { Button, Segmented, Table, Tag } from "antd";
 import Image from "next/image";
 
 export default function Dashboard() {
@@ -14,9 +12,9 @@ export default function Dashboard() {
       key: "thumbnail",
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
+      title: "Title & Venue",
+      dataIndex: "title_venue",
+      key: "title_venue",
     },
     {
       title: "Start Date",
@@ -29,19 +27,29 @@ export default function Dashboard() {
       key: "endDate",
     },
     {
-      title: "Venue",
-      dataIndex: "venue",
-      key: "venue",
-    },
-    {
       title: "Entry Fee",
       dataIndex: "entryFee",
       key: "entryFee",
     },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      key: "actions",
+    },
   ];
   const events = [
     {
-      title: "SANAM Live",
+      title_venue: (
+        <>
+          <div>Simba Uproar 2024 | Guwahati</div>
+          <div>ACA Stadium Guwahati</div>
+        </>
+      ),
       thumbnail: (
         <Image
           width={100}
@@ -53,11 +61,30 @@ export default function Dashboard() {
       ),
       startDate: "1 March 2024, 3 PM",
       endDate: "3 march 2024",
-      venue: "ACA Stadium Guwahati",
       entryFee: 299,
+      status: <Tag color="green">Active</Tag>,
+      actions: (
+        <div className="flex gap-2">
+          <Link href="/manager/events/slug/edit">
+            <Button
+              type=""
+              icon={<PencilIcon className="w-3 h-3 text-blue-500" />}
+            />
+          </Link>
+          <Button
+            type=""
+            icon={<Trash2Icon className="w-3 h-3 text-red-500" />}
+          />
+        </div>
+      ),
     },
     {
-      title: "Simba Uproar 2024 | Guwahati",
+      title_venue: (
+        <>
+          <div>Simba Uproar 2024 | Guwahati</div>
+          <div>ACA Stadium Guwahati</div>
+        </>
+      ),
       thumbnail: (
         <Image
           width={100}
@@ -69,8 +96,53 @@ export default function Dashboard() {
       ),
       startDate: "1 March 2024",
       endDate: "3 march 2024",
-      venue: "ACA Stadium Guwahati",
       entryFee: 299,
+      status: <Tag color="red">Archived</Tag>,
+      actions: (
+        <div className="flex gap-2">
+          <Button
+            type=""
+            icon={<PencilIcon className="w-3 h-3 text-blue-500" />}
+          />
+          <Button
+            type=""
+            icon={<Trash2Icon className="w-3 h-3 text-red-500" />}
+          />
+        </div>
+      ),
+    },
+    {
+      title_venue: (
+        <>
+          <div>Simba Uproar 2024 | Guwahati</div>
+          <div>ACA Stadium Guwahati</div>
+        </>
+      ),
+      thumbnail: (
+        <Image
+          width={100}
+          height={100}
+          className="w-10 h-10 rounded"
+          alt=""
+          src="https://res.cloudinary.com/dv68nyejy/image/upload/v1712380563/Evento/thumbnail/arijit_rjqfpd.jpg"
+        />
+      ),
+      startDate: "1 March 2024",
+      endDate: "3 march 2024",
+      entryFee: <div className="text-green-600">Free</div>,
+      status: <Tag>Draft</Tag>,
+      actions: (
+        <div className="flex gap-2">
+          <Button
+            type=""
+            icon={<PencilIcon className="w-3 h-3 text-blue-500" />}
+          />
+          <Button
+            type=""
+            icon={<Trash2Icon className="w-3 h-3 text-red-500" />}
+          />
+        </div>
+      ),
     },
   ];
   return (
@@ -80,7 +152,7 @@ export default function Dashboard() {
       </div>
       <div className="flex justify-between">
         <Segmented
-          options={["Active", "Draft", "Archieved"]}
+          options={["All", "Active", "Draft", "Archieved"]}
           onChange={(value) => {
             console.log(value); // string
           }}
@@ -89,7 +161,7 @@ export default function Dashboard() {
           <Button icon={<Plus className="h-3 w-3" />}>Create</Button>
         </Link>
       </div>
-      <Table dataSource={events} columns={columns} />;
+      <Table dataSource={events} columns={columns} />
       {events.length === 0 && (
         <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
           <div className="flex flex-col items-center gap-1 text-center">
