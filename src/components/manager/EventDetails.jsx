@@ -1,4 +1,4 @@
-import { Card, Collapse, Tag } from "antd";
+import { Card, Collapse, Table, Tag } from "antd";
 import {
   CalendarDays,
   MapPinned,
@@ -7,7 +7,7 @@ import {
 import Image from "next/image";
 import React from "react";
 
-const Sponsors = () => {
+const EventDetails = () => {
   const sponsors = [
     {
       imageUrl:
@@ -21,86 +21,6 @@ const Sponsors = () => {
     },
   ];
   return (
-    <div className="grid grid-cols-3 gap-6">
-      {sponsors.map((item, i) => (
-        <div key={i} className="flex flex-col">
-          <Image
-            width={480}
-            height={360}
-            src={item.imageUrl}
-            className="w-full flex-1 rounded-md"
-            alt="Event Spotlight"
-          />
-          <div className="py-2">
-            <a href="#" target="_blank">
-              <div className="flex gap-2">
-                <SquareArrowOutUpRightIcon className="w-3" />
-                <span> {item.link}</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const Instructions = () => {
-  return (
-    <ul className="space-y-1 list-disc list-inside">
-      <li>Please carry a valid ID proof along with you. </li>
-      <li>
-        No refunds on purchased ticket are possible, even in case of any
-        rescheduling.
-      </li>
-      <li>
-        Security procedures, including frisking remain the right of the
-        management.
-      </li>
-      <li>
-        No dangerous or potentially hazardous objects including but not limited
-        to weapons, knives, guns, fireworks, helmets, lazer devices, bottles,
-        musical instruments will be allowed in the venue and may be ejected with
-        or without the owner from the venue.
-      </li>
-    </ul>
-  );
-};
-
-const Emergency = () => {
-  return (
-    <div className="flex flex-col gap-2">
-      <div>
-        <h5 className="font-semibold">Police</h5>
-        <div>Chandmari Police Station, Ph - 8888888888, 7878787878</div>
-      </div>
-      <div>
-        <h5 className="font-semibold">Event Security</h5>
-        <div>Ph - 8888888888, 7878787878</div>
-      </div>
-    </div>
-  );
-};
-
-const EventDetails = () => {
-  const items = [
-    {
-      key: "1",
-      label: "OFFICIAL SPONSORS",
-      children: <Sponsors />,
-    },
-    {
-      key: "2",
-      label: "INSTRUCTIONS",
-      children: <Instructions />,
-    },
-    {
-      key: "3",
-      label: "EMERGENCY",
-      children: <Emergency />,
-    },
-  ];
-  return (
     <div className="grid grid-cols-12 gap-6">
       <div className="col-span-8">
         <Image
@@ -110,9 +30,9 @@ const EventDetails = () => {
           className="w-full object-cover rounded-md"
           alt="Event Spotlight"
         />
-        <div className="py-6">
+        <div className="mt-6">
           <div className="font-medium text-xl">B Praak Live - Guwahati</div>
-          <div className="mt-6">
+          <div className="mt-3">
             <p>
               Simba Uproar is back for its highly anticipated second season of
               the country’s wildest experience. After a thrilling debut season,
@@ -133,7 +53,63 @@ const EventDetails = () => {
             </p>
           </div>
         </div>
-        <Collapse items={items} onChange={undefined} />
+        <div className="mt-12">
+          <div className="font-medium">INSTRUCTIONS</div>
+          <ul className="space-y-1 mt-3 list-disc list-inside">
+            <li>Please carry a valid ID proof along with you. </li>
+            <li>
+              No refunds on purchased ticket are possible, even in case of any
+              rescheduling.
+            </li>
+            <li>
+              Security procedures, including frisking remain the right of the
+              management.
+            </li>
+            <li>
+              No dangerous or potentially hazardous objects including but not
+              limited to weapons, knives, guns, fireworks, helmets, lazer
+              devices, bottles, musical instruments will be allowed in the venue
+              and may be ejected with or without the owner from the venue.
+            </li>
+          </ul>
+        </div>
+        <div className="mt-12">
+          <div className="font-medium">EMERGENCY</div>
+          <div className="flex flex-col mt-3 gap-1">
+            <div>
+              <h5 className="font-semibold">Police</h5>
+              <div>Chandmari Police Station, Ph - 8888888888, 7878787878</div>
+            </div>
+            <div>
+              <h5 className="font-semibold">Event Security</h5>
+              <div>Ph - 8888888888, 7878787878</div>
+            </div>
+          </div>
+        </div>
+        <div className="mt-12">
+          <div className="font-medium">OFFICIAL SPONSORS</div>
+          <div className="grid grid-cols-3 gap-6 mt-3">
+            {sponsors.map((item, i) => (
+              <div key={i} className="flex flex-col">
+                <Image
+                  width={480}
+                  height={360}
+                  src={item.imageUrl}
+                  className="w-full flex-1 rounded-md"
+                  alt="Event Spotlight"
+                />
+                <div className="py-2">
+                  <a href="#" target="_blank" className="text-gray-500">
+                    <div className="flex gap-2">
+                      <SquareArrowOutUpRightIcon className="w-3" />
+                      <span> {item.link}</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       <div className="col-span-4">
         <Card>
@@ -166,6 +142,23 @@ const EventDetails = () => {
           <div className="mt-3">
             <Tag>Music</Tag>
             <Tag>Cultural</Tag>
+          </div>
+        </Card>
+        <Card className="!mt-6">
+          <div className="font-medium">Organiser Info</div>
+          <div className="mt-3 flex flex-col gap-1">
+            <div className="grid grid-cols-3">
+              <div>Name:</div>
+              <div className="col-span-2">Pride East Entertainment pvt ltd</div>
+            </div>
+            <div className="grid grid-cols-3">
+              <div>Email:</div>
+              <div className="col-span-2">support@prideeast.com</div>
+            </div>
+            <div className="grid grid-cols-3">
+              <div>Contact:</div>
+              <div className="col-span-2">+91 3330008897</div>
+            </div>
           </div>
         </Card>
       </div>

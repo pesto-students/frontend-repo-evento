@@ -53,10 +53,6 @@ const page = () => {
                 type=""
                 icon={<PencilIcon className="w-3 h-3 text-blue-500" />}
               />
-              <Button
-                type=""
-                icon={<Trash2Icon className="w-3 h-3 text-red-500" />}
-              />
             </div>
           </div>
         </div>
