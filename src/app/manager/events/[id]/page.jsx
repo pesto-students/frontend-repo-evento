@@ -58,7 +58,7 @@ const page = () => {
         </div>
       </Card>
 
-      <Tabs defaultActiveKey="1" items={tabItems} onChange={undefined} />
+      <Tabs defaultActiveKey="3" items={tabItems} onChange={undefined} />
     </>
   );
 };
