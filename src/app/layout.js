@@ -3,9 +3,11 @@ import "./globals.css";
 import clsx from "clsx";
 import NextTopLoader from "nextjs-toploader";
 import AppLayout from "@/layouts/AppLayout";
-import Providers from "@/components/others/Providers";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
+import { SessionProvider } from "next-auth/react";
+import { AppProvider } from "@/context/AppContext";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="no-scrollbar">
       <body className={clsx(inter.className, "text-[14px]")}>
-        <Providers>
+        <SessionProvider>
           <NextTopLoader color="#DC2626" showSpinner={false} />
           <AntdRegistry>
             <ConfigProvider
@@ -28,10 +30,13 @@ export default function RootLayout({ children }) {
                 },
               }}
             >
-              <AppLayout>{children}</AppLayout>
+              <AppProvider>
+                <AppLayout>{children}</AppLayout>
+                <Toaster />
+              </AppProvider>
             </ConfigProvider>
           </AntdRegistry>
-        </Providers>
+        </SessionProvider>
       </body>
     </html>
   );

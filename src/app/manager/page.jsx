@@ -3,8 +3,20 @@ import { PencilIcon, Plus, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { Button, Segmented, Table, Tag } from "antd";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { NEXT_PUBLIC_API_BASE_URL } from "@/lib/config";
 
 export default function Dashboard() {
+  const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState([]);
+  const session = useSession();
+
+  const headers = {
+    Authorization: `Bearer ${session?.data?.user?.accessToken}`,
+  };
+
   const columns = [
     {
       title: "Thumbnail",
@@ -42,109 +54,23 @@ export default function Dashboard() {
       key: "actions",
     },
   ];
-  const events = [
-    {
-      title_venue: (
-        <>
-          <div>Simba Uproar 2024 | Guwahati</div>
-          <div>ACA Stadium Guwahati</div>
-        </>
-      ),
-      thumbnail: (
-        <Image
-          width={100}
-          height={100}
-          className="w-10 h-10 rounded"
-          alt=""
-          src="https://res.cloudinary.com/dv68nyejy/image/upload/v1712380563/Evento/thumbnail/zubin_a5pwbx.png"
-        />
-      ),
-      startDate: "1 March 2024, 3 PM",
-      endDate: "3 march 2024",
-      entryFee: 299,
-      status: <Tag color="green">Active</Tag>,
-      actions: (
-        <div className="flex gap-2">
-          <Link href="/manager/events/slug/edit">
-            <Button
-              type=""
-              icon={<PencilIcon className="w-3 h-3 text-blue-500" />}
-            />
-          </Link>
-          <Button
-            type=""
-            icon={<Trash2Icon className="w-3 h-3 text-red-500" />}
-          />
-        </div>
-      ),
-    },
-    {
-      title_venue: (
-        <>
-          <div>Simba Uproar 2024 | Guwahati</div>
-          <div>ACA Stadium Guwahati</div>
-        </>
-      ),
-      thumbnail: (
-        <Image
-          width={100}
-          height={100}
-          className="w-10 h-10 rounded"
-          alt=""
-          src="https://res.cloudinary.com/dv68nyejy/image/upload/v1712380563/Evento/thumbnail/arijit_rjqfpd.jpg"
-        />
-      ),
-      startDate: "1 March 2024",
-      endDate: "3 march 2024",
-      entryFee: 299,
-      status: <Tag color="red">Archived</Tag>,
-      actions: (
-        <div className="flex gap-2">
-          <Button
-            type=""
-            icon={<PencilIcon className="w-3 h-3 text-blue-500" />}
-          />
-          <Button
-            type=""
-            icon={<Trash2Icon className="w-3 h-3 text-red-500" />}
-          />
-        </div>
-      ),
-    },
-    {
-      title_venue: (
-        <>
-          <div>Simba Uproar 2024 | Guwahati</div>
-          <div>ACA Stadium Guwahati</div>
-        </>
-      ),
-      thumbnail: (
-        <Image
-          width={100}
-          height={100}
-          className="w-10 h-10 rounded"
-          alt=""
-          src="https://res.cloudinary.com/dv68nyejy/image/upload/v1712380563/Evento/thumbnail/arijit_rjqfpd.jpg"
-        />
-      ),
-      startDate: "1 March 2024",
-      endDate: "3 march 2024",
-      entryFee: <div className="text-green-600">Free</div>,
-      status: <Tag>Draft</Tag>,
-      actions: (
-        <div className="flex gap-2">
-          <Button
-            type=""
-            icon={<PencilIcon className="w-3 h-3 text-blue-500" />}
-          />
-          <Button
-            type=""
-            icon={<Trash2Icon className="w-3 h-3 text-red-500" />}
-          />
-        </div>
-      ),
-    },
-  ];
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get(`${NEXT_PUBLIC_API_BASE_URL}/events`, {
+          headers,
+        });
+        setEvents(res.data.data.events);
+        console.log(session);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <div className="flex items-center">
@@ -162,19 +88,6 @@ export default function Dashboard() {
         </Link>
       </div>
       <Table dataSource={events} columns={columns} />
-      {events.length === 0 && (
-        <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
-          <div className="flex flex-col items-center gap-1 text-center">
-            <h3 className="text-2xl font-bold tracking-tight">
-              You have no events
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Start with adding an event with our basic plan
-            </p>
-            <Button className="mt-4">Add Event</Button>
-          </div>
-        </div>
-      )}
     </>
   );
 }

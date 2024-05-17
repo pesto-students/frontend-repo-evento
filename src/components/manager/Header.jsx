@@ -31,12 +31,16 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from "next/navigation";
 import { Input } from "antd";
+import { signOut, useSession } from "next-auth/react";
+import { Avatar } from "antd";
+import { getAvatarName } from "@/lib/utils";
 
 const Header = () => {
   const router = useRouter();
+  const session = useSession();
 
   const handleLogout = async () => {
-    router.push("/login");
+    signOut({ callbackUrl: "/" });
   };
 
   return (
@@ -110,19 +114,18 @@ const Header = () => {
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="secondary"
-            size="icon"
-            className="rounded-full focus-visible:ring-0 focus-visible:ring-offset-0"
-          >
-            <CircleUser className="h-5 w-5" />
-            <span className="sr-only">Toggle user menu</span>
-          </Button>
+          <Avatar className="cursor-pointer !bg-gray-500">
+            {getAvatarName(session?.data?.user?.name)}
+          </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-[240px]">
           <DropdownMenuLabel>
             <div>{"Test"}</div>
             <div className="text-xs font-light mt-1">{"Test"}</div>
+            <div>{session?.data?.user?.name}</div>
+            <div className="text-xs font-light mt-1">
+              {session?.data?.user?.email}
+            </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Settings</DropdownMenuItem>

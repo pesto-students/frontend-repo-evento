@@ -4,7 +4,7 @@ const { createContext, useState, useContext } = require("react");
 
 const AppContext = createContext();
 
-export const AppWrapper = ({ children }) => {
+export const AppProvider = ({ children }) => {
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenuOpen] = useState(false);
 
