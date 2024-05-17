@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,53 +13,30 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { useDropzone } from "react-dropzone";
 import {
-  ImageIcon,
-  LoaderCircle,
   LoaderCircleIcon,
   PlusCircleIcon,
+  UploadCloudIcon,
 } from "lucide-react";
 import Image from "next/image";
 import { Button, Card, Input, Upload, message } from "antd";
 
-// Separate component for image upload
-const ImageUpload = ({ onFileUpload, type }) => {
-  const [isUploading, setIsUploading] = useState(false);
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-      setIsUploading(true);
-      const file = acceptedFiles[0];
-      // Upload to our own backend (Backend will upload it to cloudinary after processing)
-
-      const url =
-        "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380563/Evento/thumbnail/zubin_a5pwbx.png";
-
-      setTimeout(() => {
-        onFileUpload(url);
-        setIsUploading(false);
-      }, 3000);
-    },
-    [onFileUpload]
-  );
-
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: "image/*",
-  });
-
-  return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      <div className="h-20 w-20 rounded-lg border border-dashed cursor-pointer flex justify-center items-center">
-        {!isUploading ? (
-          <ImageIcon className="w-5 stroke-gray-300 stroke-1" />
-        ) : (
-          <LoaderCircle className="w-5 stroke-gray-300 stroke-1 animate-spin" />
-        )}
-      </div>
-    </div>
-  );
+const props = {
+  name: "file",
+  action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
+  headers: {
+    authorization: "authorization-text",
+  },
+  onChange(info) {
+    if (info.file.status !== "uploading") {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === "done") {
+      message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === "error") {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  },
 };
 
 const BannersForm = () => {
@@ -148,88 +125,51 @@ const BannersForm = () => {
       <Card className="!mt-12">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="grid grid-cols-12">
-              <div className="col-span-4">
-                <FormField
-                  control={form.control}
-                  name="thumbnail"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Square size image
-                        <br />
-                        (800x800 pixels)*
-                      </FormLabel>
-                      <FormControl>
-                        <div className="flex gap-3">
-                          <Upload
-                            name="avatar"
-                            listType="picture-card"
-                            className="avatar-uploader"
-                            showUploadList={false}
-                            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                            beforeUpload={beforeUpload}
-                            onChange={handleChange}
+            <div>
+              <FormField
+                control={form.control}
+                name="thumbnail"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Square size image (800x800 pixels)*</FormLabel>
+                    <FormControl>
+                      <div className="flex gap-3">
+                        <Upload {...props}>
+                          <Button
+                            icon={<UploadCloudIcon className="w-3.5 h-3.5" />}
                           >
-                            {uploadedThumbnail ? (
-                              <Image
-                                src={uploadedThumbnail}
-                                alt="avatar"
-                                width={100}
-                                height={100}
-                              />
-                            ) : (
-                              uploadButton
-                            )}
-                          </Upload>
-                        </div>
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="col-span-8">
-                <FormField
-                  control={form.control}
-                  name="thumbnail"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Banner image
-                        <br />
-                        (1200x800 pixels)*
-                      </FormLabel>
-                      <FormControl>
-                        <div className="flex gap-3">
-                          <Upload
-                            name="avatar"
-                            listType="picture-card"
-                            className="avatar-uploader"
-                            showUploadList={false}
-                            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                            beforeUpload={beforeUpload}
-                            onChange={handleChange}
+                            Click to Upload
+                          </Button>
+                        </Upload>
+                      </div>
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div>
+              <FormField
+                control={form.control}
+                name="thumbnail"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Banner image (1200x800 pixels)*</FormLabel>
+                    <FormControl>
+                      <div className="flex gap-3">
+                        <Upload {...props}>
+                          <Button
+                            icon={<UploadCloudIcon className="w-3.5 h-3.5" />}
                           >
-                            {uploadedBanner ? (
-                              <Image
-                                src={uploadedBanner}
-                                alt="avatar"
-                                width={100}
-                                height={100}
-                                className="w-full"
-                              />
-                            ) : (
-                              uploadButton
-                            )}
-                          </Upload>
-                        </div>
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                            Click to Upload
+                          </Button>
+                        </Upload>
+                      </div>
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
             </div>
             <div>
               <FormField
@@ -251,9 +191,7 @@ const BannersForm = () => {
               />
             </div>
             <div>
-              <Button type="primary">
-                Next
-              </Button>
+              <Button type="primary">Next</Button>
             </div>
           </form>
         </Form>
