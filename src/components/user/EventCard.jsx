@@ -17,7 +17,6 @@ const EventCard = ({ event, layout }) => {
           <Image
             width={480}
             height={360}
-            objectFit="cover"
             src={event.image}
             className={clsx("w-full transition-transform duration-300", {
               "rounded-t-md": layout === "vertical",
