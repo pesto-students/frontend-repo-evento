@@ -4,7 +4,7 @@ import EventDetails from "@/components/manager/EventDetails";
 import EventMap from "@/components/manager/EventMap";
 import Itinerary from "@/components/manager/Itinerary";
 import { Button, Card, Tabs } from "antd";
-import { ChevronLeftIcon, PencilIcon, Trash2Icon } from "lucide-react";
+import { ChevronLeftIcon, PencilIcon } from "lucide-react";
 import React from "react";
 
 const page = () => {
@@ -58,7 +58,7 @@ const page = () => {
         </div>
       </Card>
 
-      <Tabs defaultActiveKey="3" items={tabItems} onChange={undefined} />
+      <Tabs defaultActiveKey="1" items={tabItems} onChange={undefined} />
     </>
   );
 };

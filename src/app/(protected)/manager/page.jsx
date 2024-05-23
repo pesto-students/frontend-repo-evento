@@ -2,10 +2,8 @@
 import {
   ArrowRightCircleIcon,
   MapPinIcon,
-  PencilIcon,
   Plus,
   SquarePenIcon,
-  Trash2Icon,
 } from "lucide-react";
 import Link from "next/link";
 import { Button, Segmented, Table, Tag } from "antd";
@@ -124,7 +122,7 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
-    console.log("Render");
+    console.log(session?.data?.user?.accessToken);
 
     const headers = {
       Authorization: `Bearer ${session?.data?.user?.accessToken}`,

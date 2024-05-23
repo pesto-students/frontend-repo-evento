@@ -26,7 +26,7 @@ const items = [
 const Page = () => {
   return (
     <>
-      <Tabs defaultActiveKey="3" items={items} />
+      <Tabs defaultActiveKey="1" items={items} />
     </>
   );
 };

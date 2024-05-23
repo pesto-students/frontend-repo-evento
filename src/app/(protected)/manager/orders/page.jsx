@@ -1,59 +1,27 @@
-import { Table } from "antd";
+import { auth } from "@/auth";
 import React from "react";
 
-const dataSource = [
-  {
-    key: "1",
-    date: "20 March, 2024",
-    orderId: "EO-TZY345",
-    price: "499",
-    event: "10 Downing Street",
-  },
-  {
-    key: "1",
-    date: "20 March, 2024",
-    orderId: "EO-TZY345",
-    price: "499",
-    event: "10 Downing Street",
-  },
-  {
-    key: "1",
-    date: "20 March, 2024",
-    orderId: "EO-TZY345",
-    price: "499",
-    event: "10 Downing Street",
-  },
-];
+const getData = async () => {
+  const session = await auth();
+  const token = session?.user?.accessToken;
 
-const columns = [
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Order ID",
-    dataIndex: "orderId",
-    key: "orderId",
-  },
-  {
-    title: "Price",
-    dataIndex: "price",
-    key: "price",
-  },
-  {
-    title: "Event",
-    dataIndex: "event",
-    key: "event",
-  },
-];
+  const res = await fetch("http://localhost:8000/api/v1/auth/userInfo", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
 
-const page = () => {
-  return (
-    <div>
-      <Table dataSource={dataSource} columns={columns} />
-    </div>
-  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+};
+
+const page = async () => {
+  const data = await getData();
+  return <div>{data.data.name}</div>;
 };
 
 export default page;
