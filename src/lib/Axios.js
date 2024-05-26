@@ -3,7 +3,7 @@ import { NEXT_PUBLIC_API_BASE_URL } from "./config";
 
 const refreshAccessToken = () => {
   return axios.post(
-    `${NEXT_PUBLIC_API_BASE_URL}/auth/refresh`,
+    `/api/auth/refresh`,
     {},
     {
       withCredentials: true,
@@ -12,8 +12,10 @@ const refreshAccessToken = () => {
 };
 
 const clearTokensAndRedirectToLogin = () => {
-  // Clear localStorage
+  // Remove Tokens
   localStorage.removeItem("accessToken");
+  document.cookie =
+    "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   window.location.href = "/login";
 };
 
@@ -68,7 +70,6 @@ Axios.interceptors.response.use(
         originalRequest.__isRetryRequest = true;
         return Axios(originalRequest);
       } catch (refreshError) {
-        console.log("Refresh error", refreshError);
         clearTokensAndRedirectToLogin();
       }
     }

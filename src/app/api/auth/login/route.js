@@ -10,18 +10,12 @@ export async function POST(request) {
       requestBody
     );
 
-    const { refreshToken } = res.data.data;
-
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append(
-      "Set-Cookie",
-      `refreshToken=${refreshToken}; HttpOnly; Path=/; Secure; SameSite=Strict`
-    );
-
     return new Response(JSON.stringify(res.data), {
       status: 200,
-      headers: headers,
+      headers: {
+        "Content-Type": "application/json",
+        "Set-Cookie": `refreshToken=${res.data.data.refreshToken}`,
+      },
     });
   } catch (error) {
     return new Response(JSON.stringify({ error: "Invalid credentials!" }), {

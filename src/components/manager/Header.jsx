@@ -119,8 +119,6 @@ const Header = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-[240px]">
           <DropdownMenuLabel>
-            <div>{"Test"}</div>
-            <div className="text-xs font-light mt-1">{"Test"}</div>
             <div>{user?.name}</div>
             <div className="text-xs font-light mt-1">{user?.email}</div>
           </DropdownMenuLabel>

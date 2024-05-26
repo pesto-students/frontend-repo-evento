@@ -41,6 +41,7 @@ const LoginForm = () => {
   const onSubmit = async (values) => {
     try {
       const res = await axios.post("/api/auth/login", values);
+      localStorage.setItem("accessToken", res.data.data.accessToken);
       setUser(res.data.data.user);
       router.push("/manager");
     } catch (error) {
