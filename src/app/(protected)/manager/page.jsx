@@ -1,4 +1,5 @@
 "use client";
+
 import {
   ArrowRightCircleIcon,
   MapPinIcon,
@@ -18,6 +19,8 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
   const session = useSession();
+
+  console.log(session.status);
 
   const columns = [
     {
@@ -122,8 +125,7 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
-    console.log(session?.data?.user?.accessToken);
-
+    setLoading(true);
     const headers = {
       Authorization: `Bearer ${session?.data?.user?.accessToken}`,
     };
