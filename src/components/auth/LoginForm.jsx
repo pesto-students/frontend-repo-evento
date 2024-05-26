@@ -15,8 +15,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { signInAction } from "@/lib/actions";
 import { toast } from "sonner";
+import axios from "axios";
+import { useAppContext } from "@/context/AppContext";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -26,6 +27,9 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
+  const { setUser } = useAppContext();
+  const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,7 +40,9 @@ const LoginForm = () => {
 
   const onSubmit = async (values) => {
     try {
-      await signInAction(values.email, values.password);
+      const res = await axios.post("/api/auth/login", values);
+      setUser(res.data.data.user);
+      router.push("/manager");
     } catch (error) {
       toast("Error in login", {
         description: error.message,

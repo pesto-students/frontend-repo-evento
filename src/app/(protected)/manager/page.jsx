@@ -10,17 +10,12 @@ import Link from "next/link";
 import { Button, Segmented, Table, Tag } from "antd";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import axios from "axios";
-import { NEXT_PUBLIC_API_BASE_URL } from "@/lib/config";
 import { format } from "date-fns";
+import Axios from "@/lib/Axios";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
-  const session = useSession();
-
-  console.log(session.status);
 
   const columns = [
     {
@@ -124,30 +119,28 @@ export default function Dashboard() {
     },
   ];
 
-  useEffect(() => {
+  const fetchData = async () => {
     setLoading(true);
-    const headers = {
-      Authorization: `Bearer ${session?.data?.user?.accessToken}`,
-    };
-    (async () => {
-      try {
-        const res = await axios.get(`${NEXT_PUBLIC_API_BASE_URL}/events`, {
-          headers,
-        });
-        const events = res.data.data.events.map((item, i) => {
-          return {
-            key: i,
-            ...item,
-          };
-        });
-        setEvents(events);
-        console.log(session);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    })();
+    try {
+      const res = await Axios.get(`/events`);
+
+      const events = res.data.data.events.map((item, i) => {
+        return {
+          key: i,
+          ...item,
+        };
+      });
+
+      setEvents(events);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   return (

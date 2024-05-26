@@ -31,17 +31,16 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from "next/navigation";
 import { Input } from "antd";
-import { signOut, useSession } from "next-auth/react";
+
 import { Avatar } from "antd";
 import { getAvatarName } from "@/lib/utils";
+import { useAppContext } from "@/context/AppContext";
 
 const Header = () => {
+  const { user } = useAppContext();
   const router = useRouter();
-  const session = useSession();
 
-  const handleLogout = async () => {
-    signOut({ callbackUrl: "/" });
-  };
+  const handleLogout = async () => {};
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
@@ -115,17 +114,15 @@ const Header = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="cursor-pointer !bg-gray-500">
-            {getAvatarName(session?.data?.user?.name)}
+            {getAvatarName(user?.name)}
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-[240px]">
           <DropdownMenuLabel>
             <div>{"Test"}</div>
             <div className="text-xs font-light mt-1">{"Test"}</div>
-            <div>{session?.data?.user?.name}</div>
-            <div className="text-xs font-light mt-1">
-              {session?.data?.user?.email}
-            </div>
+            <div>{user?.name}</div>
+            <div className="text-xs font-light mt-1">{user?.email}</div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Settings</DropdownMenuItem>
