@@ -7,7 +7,7 @@ import {
   SquarePenIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { Button, Segmented, Table, Tag } from "antd";
+import { Button, Segmented, Skeleton, Table, Tag } from "antd";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
@@ -142,6 +142,8 @@ export default function Dashboard() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (loading) return <Skeleton active />;
 
   return (
     <>
