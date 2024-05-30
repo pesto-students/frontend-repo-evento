@@ -10,7 +10,9 @@ import {
   Package,
   Package2,
   Search,
+  SearchIcon,
   ShoppingCart,
+  User2Icon,
   Users,
 } from "lucide-react";
 
@@ -25,17 +27,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from "next/navigation";
+import { Input } from "antd";
+
+import { Avatar } from "antd";
+import { getAvatarName } from "@/lib/utils";
+import { useAppContext } from "@/context/AppContext";
 
 const Header = () => {
-  
+  const { user } = useAppContext();
   const router = useRouter();
 
-  const handleLogout = async () => {
-    router.push("/login");
-  };
+  const handleLogout = async () => {};
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
@@ -96,17 +101,11 @@ const Header = () => {
           </nav>
         </SheetContent>
       </Sheet>
-      <div className="w-full flex-1">
-        <form>
-          <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search events..."
-              className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-            />
-          </div>
-        </form>
+      <div className="w-[400px]">
+        <Input
+          placeholder="Search events..."
+          prefix={<SearchIcon className="w-3 h-4 text-gray-400" />}
+        />
       </div>
       <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
         <Bell className="h-4 w-4" />
@@ -114,21 +113,14 @@ const Header = () => {
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="secondary"
-            size="icon"
-            className="rounded-full focus-visible:ring-0 focus-visible:ring-offset-0"
-          >
-            <CircleUser className="h-5 w-5" />
-            <span className="sr-only">Toggle user menu</span>
-          </Button>
+          <Avatar className="cursor-pointer !bg-gray-500">
+            {getAvatarName(user?.name)}
+          </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-[240px]">
           <DropdownMenuLabel>
-            <div>{"Test"}</div>
-            <div className="text-xs font-light mt-1">
-              {"Test"}
-            </div>
+            <div>{user?.name}</div>
+            <div className="text-xs font-light mt-1">{user?.email}</div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Settings</DropdownMenuItem>

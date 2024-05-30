@@ -48,7 +48,7 @@ const PaymentForm = () => {
               Basic
             </h3>
             <div class="mt-4 flex items-baseline text-3xl font-bold tracking-tight text-gray-900">
-              <span> $25 </span>
+              <span> Rs 499 </span>
             </div>
             <p class="mt-6 text-xs leading-2 text-gray-600 dark:text-slate-200">
               The Basic plan is the perfect starting point for new users. Join
@@ -96,7 +96,7 @@ const PaymentForm = () => {
                 Premium
               </h3>
               <div class="mt-4 flex items-baseline text-3xl font-bold tracking-tight text-gray-900">
-                <span> $50 </span>
+                <span> Rs 999 </span>
               </div>
               <p class="mt-6 text-xs leading-2 text-gray-600 dark:text-slate-200">
                 The Basic plan is the perfect starting point for new users. Join
