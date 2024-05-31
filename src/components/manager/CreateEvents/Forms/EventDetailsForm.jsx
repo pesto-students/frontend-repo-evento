@@ -1,89 +1,101 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import React from "react";
 import { useCreateEventContext } from "@/context/manager/CreateEventContext";
 import { Button, Card, Input, Select, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
-
-const optionSchema = z.object({
-  label: z.string(),
-  value: z.number(),
-});
-
-const formSchema = z.object({
-  title: z.string().min(1).max(50),
-  description: z.string().min(1).max(50),
-  categories: z.array(optionSchema).min(1),
-});
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const EventDetailsForm = () => {
-  const [messageApi] = message.useMessage();
-  const { eventCategories } = useCreateEventContext();
+  const { eventCategories, event, setEvent } = useCreateEventContext();
 
-  // This is a temp fix for the react select package
-  const [isMounted, setIsMounted] = useState(false);
-
-  const categorySelectOptions = eventCategories.map((cat) => ({
-    label: cat.title,
-    value: cat.id,
-  }));
-
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      categories: [],
+  const formik = useFormik({
+    initialValues: {
+      title: event?.title || "",
+      categories: event?.categories || [],
+      description: event?.description || "",
+    },
+    validationSchema: Yup.object({
+      title: Yup.string().required("Title is required"),
+      categories: Yup.array().min(1, "At least one category is required"),
+      description: Yup.string().required("Description is required"),
+    }),
+    onSubmit: (values) => {
+      setEvent((prev) => {
+        return {
+          ...prev,
+          ...values,
+        };
+      });
+      message.success("Data saved successfully!");
     },
   });
-
-  const onSubmit = (values) => {
-    const categories = values.categories.map((cat) => cat.value);
-    values = { ...values, categories };
-    console.log(values);
-    // call api to save data
-    messageApi.open({
-      type: "success",
-      content: "Event details are saved. You can proceed to the next step now!",
-    });
-  };
-
-  const options = [];
 
   return (
     <>
       <div className="text-xs">Step 1 of 5</div>
       <div className="text-lg font-semibold">Event Details</div>
       <Card className="!mt-12">
-        <form onSubmit={() => {}} className="space-y-8">
+        <form onSubmit={formik.handleSubmit} className="space-y-8">
           <div>
             <label>Title*</label>
-            <Input placeholder="Type the event title here..." />
+            <Input
+              name="title"
+              placeholder="Type the event title here..."
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.title}
+            />
+            {formik.touched.title && formik.errors.title ? (
+              <div className="text-red-500 text-xs">{formik.errors.title}</div>
+            ) : null}
           </div>
 
           <div>
-            <label>Title*</label>
+            <label>Categories*</label>
             <Select
               mode="multiple"
               allowClear
               style={{ width: "100%" }}
               placeholder="Please select"
-              defaultValue={["a10", "c12"]}
-              onChange={() => {}}
-              options={options}
+              onChange={(value) => formik.setFieldValue("categories", value)}
+              onBlur={() => formik.setFieldTouched("categories", true)}
+              value={formik.values.categories}
+              options={eventCategories.map((c) => {
+                return {
+                  label: c.title,
+                  value: c.id,
+                };
+              })}
             />
+            {formik.touched.categories && formik.errors.categories ? (
+              <div className="text-red-500 text-xs">
+                {formik.errors.categories}
+              </div>
+            ) : null}
           </div>
 
           <div>
             <label>Description*</label>
-            <TextArea rows={8} />
+            <TextArea
+              name="description"
+              rows={8}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.description}
+            />
+            {formik.touched.description && formik.errors.description ? (
+              <div className="text-red-500 text-xs">
+                {formik.errors.description}
+              </div>
+            ) : null}
           </div>
 
           <div>
-            <Button type="primary">Next</Button>
+            <Button type="primary" htmlType="submit">
+              Save
+            </Button>
           </div>
         </form>
       </Card>

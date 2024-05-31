@@ -14,8 +14,9 @@ const { createContext, useState, useContext, useEffect } = require("react");
 const CreateEventContext = createContext();
 
 export const CreateEventProvider = ({ children }) => {
+  const [event, setEvent] = useState({});
   const [eventCategories, setEventCategories] = useState([]);
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(2);
   const [steps, setSteps] = useState([
     {
       id: 1,
@@ -91,6 +92,8 @@ export const CreateEventProvider = ({ children }) => {
         activeStep,
         setActiveStep,
         eventCategories,
+        event,
+        setEvent,
       }}
     >
       {children}
