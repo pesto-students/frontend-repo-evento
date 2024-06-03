@@ -21,7 +21,7 @@ const EventDetailsForm = () => {
       categories: Yup.array().min(1, "At least one category is required"),
       description: Yup.string().required("Description is required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
       setEvent((prev) => {
         return {
           ...prev,
@@ -39,7 +39,7 @@ const EventDetailsForm = () => {
       <Card className="!mt-12">
         <form onSubmit={formik.handleSubmit} className="space-y-8">
           <div>
-            <label>Title*</label>
+            <label className="text-xs">Title*</label>
             <Input
               name="title"
               placeholder="Type the event title here..."
@@ -53,7 +53,7 @@ const EventDetailsForm = () => {
           </div>
 
           <div>
-            <label>Categories*</label>
+            <label className="text-xs">Categories*</label>
             <Select
               mode="multiple"
               allowClear
@@ -77,7 +77,7 @@ const EventDetailsForm = () => {
           </div>
 
           <div>
-            <label>Description*</label>
+            <label className="text-xs">Description*</label>
             <TextArea
               name="description"
               rows={8}
@@ -93,7 +93,11 @@ const EventDetailsForm = () => {
           </div>
 
           <div>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={formik.isSubmitting}
+            >
               Save
             </Button>
           </div>

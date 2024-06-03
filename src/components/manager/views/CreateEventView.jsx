@@ -8,7 +8,6 @@ import BannersForm from "../CreateEvents/Forms/BannersForm";
 import VenueForm from "../CreateEvents/Forms/VenueForm";
 import HostInfoForm from "../CreateEvents/Forms/HostInfoForm";
 import PaymentForm from "../CreateEvents/Forms/PaymentForm";
-import Finish from "../CreateEvents/Forms/Finish";
 
 const CreateEventView = () => {
   const { activeStep } = useCreateEventContext();
@@ -23,7 +22,6 @@ const CreateEventView = () => {
         {activeStep === 3 && <VenueForm />}
         {activeStep === 4 && <HostInfoForm />}
         {activeStep === 5 && <PaymentForm />}
-        {activeStep === 6 && <Finish />}
       </div>
     </div>
   );

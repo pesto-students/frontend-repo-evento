@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  DollarSign,
-  ImageIcon,
-  MapPinned,
-  Phone,
-  Ticket,
-  Trophy,
-} from "lucide-react";
+import { DollarSign, ImageIcon, MapPinned, Phone, Ticket } from "lucide-react";
 
 const { createContext, useState, useContext, useEffect } = require("react");
 
@@ -52,13 +45,6 @@ export const CreateEventProvider = ({ children }) => {
       description: "Make the Payment",
       isComplete: false,
       icon: <DollarSign className="w-3.5 text-gray-500" />,
-    },
-    {
-      id: 6,
-      title: "Finish",
-      description: "Completed",
-      isComplete: false,
-      icon: <Trophy className="w-3.5 text-gray-500" />,
     },
   ]);
 

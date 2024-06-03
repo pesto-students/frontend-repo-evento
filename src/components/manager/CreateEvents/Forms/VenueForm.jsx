@@ -1,26 +1,111 @@
 "use client";
 
 import React, { useState } from "react";
-import { DatePicker, Input, Button, message, Card } from "antd";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import { DatePicker, AutoComplete, Input, Button, message, Card } from "antd";
 import Map, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { MapPin } from "lucide-react";
 
+const validateCoordinates = (coordinates) => {
+  if (!coordinates) return true; // If coordinates are not provided, skip validation
+  const [longitude, latitude] = coordinates;
+  const isValidLongitude = longitude >= -180 && longitude <= 180;
+  const isValidLatitude = latitude >= -90 && latitude <= 90;
+  return isValidLongitude && isValidLatitude;
+};
+
+const validationSchema = Yup.object({
+  venue: Yup.string().required("Venue is required"),
+  startDate: Yup.date().nullable().required("Start date is required"),
+  endDate: Yup.date().nullable(),
+  entryFee: Yup.string().required("Entry fee is required"),
+  coordinates: Yup.array()
+    .of(Yup.number())
+    .test("isValidCoordinates", "Invalid coordinates", validateCoordinates)
+    .required("Location is required"),
+});
+
 const VenueForm = () => {
   const [viewState, setViewState] = useState({
-    longitude: 91.77634,
-    latitude: 26.184169,
-    zoom: 18,
+    longitude: 78.9629,
+    latitude: 20.5937,
+    zoom: 4,
   });
 
-  const onSubmit = (values) => {
-    const categories = values.categories.map((cat) => cat.value);
-    values = { ...values, categories };
-    console.log(values);
-    // call api to save data
-    message.success(
-      "Event details are saved. You can proceed to the next step now!"
-    );
+  const [autoCompleteOptions, setAutoCompleteOptions] = useState([]);
+
+  const formik = useFormik({
+    initialValues: {
+      venue: "",
+      startDate: null,
+      endDate: null,
+      entryFee: null,
+      coordinates: null,
+    },
+    validationSchema,
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        console.log(values);
+        // call api to save data
+        message.success(
+          "Event details are saved. You can proceed to the next step now!"
+        );
+      } catch (error) {
+        message.error("Failed to save event details. Please try again.");
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
+
+  const handleSearch = async (value) => {
+    if (value) {
+      try {
+        const response = await axios.get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${value}.json`,
+          {
+            params: {
+              access_token: process.env.NEXT_PUBLIC_MAPBOX,
+              autocomplete: true,
+              limit: 5,
+            },
+          }
+        );
+        setAutoCompleteOptions(
+          response.data.features.map((feature) => ({
+            label: feature.place_name,
+            value: feature.geometry.coordinates,
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching location suggestions:", error);
+        setAutoCompleteOptions([]);
+      }
+    } else {
+      setAutoCompleteOptions([]);
+    }
+  };
+
+  const handleSelect = (value, option) => {
+    console.log(option);
+    formik.setFieldValue("coordinates", option.value);
+    setViewState({
+      ...viewState,
+      longitude: value[0],
+      latitude: value[1],
+      zoom: 16,
+    });
+  };
+
+  const handleMapMove = (evt) => {
+    setViewState(evt.viewState);
+    formik.setFieldValue("coordinates", [
+      evt?.viewState?.longitude,
+      evt?.viewState?.latitude,
+    ]);
   };
 
   return (
@@ -28,71 +113,123 @@ const VenueForm = () => {
       <div className="text-xs">Step 3 of 5</div>
       <div className="text-lg font-semibold">Set Venue & Time</div>
       <Card className="!mt-12">
-        <form className="space-y-8">
+        <form onSubmit={formik.handleSubmit} className="space-y-8">
           <div>
-            <label>Venue*</label>
-            <Input placeholder="Sarusajai stadium, Guwahati..." />
+            <label className="text-xs">Venue*</label>
+            <Input
+              name="venue"
+              placeholder="Sarusajai stadium, Guwahati..."
+              value={formik.values.venue}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              status={
+                formik.touched.venue && formik.errors.venue ? "error" : ""
+              }
+            />
+            {formik.touched.venue && formik.errors.venue ? (
+              <div className="text-red-600 text-xs">{formik.errors.venue}</div>
+            ) : null}
           </div>
-          <div className=" grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-4 gap-3">
             <div className="col-span-2 flex flex-col">
-              <label>Start Date</label>
+              <label className="text-xs">Start Date</label>
               <DatePicker
                 showTime
                 use12Hours
                 format={"YYYY-MM-DD hh:mm"}
-                onChange={(value, dateString) => {
-                  console.log("Selected Time: ", value);
-                  console.log("Formatted Selected Time: ", dateString);
-                }}
-                onOk={undefined}
+                onChange={(value) => formik.setFieldValue("startDate", value)}
+                value={formik.values.startDate}
               />
+              {formik.touched.startDate && formik.errors.startDate ? (
+                <div className="text-red-600 text-xs">
+                  {formik.errors.startDate}
+                </div>
+              ) : null}
             </div>
             <div className="col-span-2 flex flex-col">
-              <label>End Date</label>
+              <label className="text-xs">End Date</label>
               <DatePicker
                 showTime
                 use12Hours
                 format={"YYYY-MM-DD hh:mm"}
-                onChange={(value, dateString) => {
-                  console.log("Selected Time: ", value);
-                  console.log("Formatted Selected Time: ", dateString);
-                }}
-                onOk={undefined}
+                onChange={(value) => formik.setFieldValue("endDate", value)}
+                value={formik.values.endDate}
               />
+              {formik.touched.endDate && formik.errors.endDate ? (
+                <div className="text-red-600 text-xs">
+                  {formik.errors.endDate}
+                </div>
+              ) : null}
             </div>
           </div>
           <div>
-            <label>Minimum entry fee (Start from)</label>
-            <Input placeholder="Entry fee" />
+            <label className="text-xs">Minimum entry fee (Start from)</label>
+            <Input
+              name="entryFee"
+              placeholder="Entry fee"
+              value={formik.values.entryFee}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              status={
+                formik.touched.entryFee && formik.errors.entryFee ? "error" : ""
+              }
+            />
+            {formik.touched.entryFee && formik.errors.entryFee ? (
+              <div className="text-red-600 text-xs">
+                {formik.errors.entryFee}
+              </div>
+            ) : null}
           </div>
           <div>
-            <div>
-              <label>Select location</label>
-              <Input placeholder="Entry fee" />
-            </div>
+            <label className="text-xs">Select location</label>
+            <AutoComplete
+              options={autoCompleteOptions}
+              onSearch={handleSearch}
+              onSelect={handleSelect}
+              onChange={(value) => formik.setFieldValue("location", value)}
+              value={formik.values.location}
+              status={
+                formik.touched.location && formik.errors.location ? "error" : ""
+              }
+              className="w-full"
+            >
+              <Input
+                name="location"
+                placeholder="Type the location"
+                onBlur={formik.handleBlur}
+              />
+            </AutoComplete>
+            {formik.touched.coordinates && formik.errors.coordinates ? (
+              <div className="text-red-600 text-xs">
+                {formik.errors.coordinates}
+              </div>
+            ) : null}
             <div className="overflow-hidden mt-3 h-[300px] relative rounded-lg bg-gray-100">
               <Map
                 mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX}
                 {...viewState}
-                onMove={(evt) => setViewState(evt.viewState)}
+                onMove={handleMapMove}
                 mapStyle="mapbox://styles/mapbox/outdoors-v12"
                 attributionControl={false}
                 transitionDuration="200"
-                onViewportChange={(viewState) => setViewState(viewState)}
                 reuseMaps
               >
                 <Marker
-                  longitude={91.77634}
-                  latitude={26.184169}
+                  longitude={viewState.longitude}
+                  latitude={viewState.latitude}
                   anchor="bottom"
                 >
-                  <MapPin className="w-8 stroke-black stroke-1 fill-red-600" />
+                  <MapPin className="w-8 h-8 stroke-red-700 stroke-1 fill-red-400" />
                 </Marker>
               </Map>
             </div>
           </div>
           <div>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={formik.isSubmitting}
+            >
               Next
             </Button>
           </div>

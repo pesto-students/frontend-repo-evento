@@ -1,95 +1,99 @@
 "use client";
 import React from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Form, Input, Button, message } from "antd";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import axios from "axios";
 import { useAppContext } from "@/context/AppContext";
 
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters long" }),
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters long")
+    .required("Password is required"),
 });
 
 const LoginForm = () => {
   const { setUser } = useAppContext();
   const router = useRouter();
 
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
+  const formik = useFormik({
+    initialValues: {
       email: "john@mail.com",
       password: "test123",
     },
+    validationSchema,
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        const res = await axios.post("/api/auth/login", values);
+        localStorage.setItem("accessToken", res.data.data.accessToken);
+        setUser(res.data.data.user);
+        router.push("/manager");
+      } catch (error) {
+        message.error("Error in login: " + error.message);
+      } finally {
+        setSubmitting(false);
+      }
+    },
   });
-
-  const onSubmit = async (values) => {
-    try {
-      const res = await axios.post("/api/auth/login", values);
-      localStorage.setItem("accessToken", res.data.data.accessToken);
-      setUser(res.data.data.user);
-      router.push("/manager");
-    } catch (error) {
-      toast("Error in login", {
-        description: error.message,
-      });
-    }
-  };
 
   return (
     <div className="rounded-lg bg-white shadow-sm w-10/12 lg:w-10/12 xl:w-6/12 max-w-[400px] border">
       <div className="p-6">
         <div className="mb-6 text-primary font-semibold text-xl">Evento</div>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            <FormField
-              control={form.control}
+        <Form layout="vertical" onFinish={formik.handleSubmit}>
+          <Form.Item
+            label="Please enter your email to continue"
+            validateStatus={
+              formik.touched.email && formik.errors.email ? "error" : ""
+            }
+            help={
+              formik.touched.email && formik.errors.email
+                ? formik.errors.email
+                : null
+            }
+          >
+            <Input
+              type="email"
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Please enter your email to continue</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Type your email here..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              placeholder="Type your email here..."
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
-            <FormField
-              control={form.control}
+          </Form.Item>
+          <Form.Item
+            label="Please enter the password"
+            validateStatus={
+              formik.touched.password && formik.errors.password ? "error" : ""
+            }
+            help={
+              formik.touched.password && formik.errors.password
+                ? formik.errors.password
+                : null
+            }
+          >
+            <Input
+              type="password"
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Please enter the password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Type your password here..."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              placeholder="Type your password here..."
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
-            <Button type="submit" className="w-full">
-              Login
-            </Button>
-          </form>
+          </Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="w-full"
+            loading={formik.isSubmitting}
+          >
+            Login
+          </Button>
         </Form>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
