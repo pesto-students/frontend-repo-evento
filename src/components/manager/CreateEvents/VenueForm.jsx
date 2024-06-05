@@ -8,13 +8,16 @@ import { DatePicker, AutoComplete, Input, Button, message, Card } from "antd";
 import Map, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { MapPin } from "lucide-react";
+import { useCreateEventContext } from "@/context/manager/CreateEventContext";
 
-const validateCoordinates = (coordinates) => {
-  if (!coordinates) return true; // If coordinates are not provided, skip validation
-  const [longitude, latitude] = coordinates;
-  const isValidLongitude = longitude >= -180 && longitude <= 180;
-  const isValidLatitude = latitude >= -90 && latitude <= 90;
-  return isValidLongitude && isValidLatitude;
+const isValidLng = (lng) => {
+  if (!lng) return true;
+  return lng >= -180 && lng <= 180;
+};
+
+const isValidLat = (lat) => {
+  if (!lat) return true;
+  return lat >= -90 && lat <= 90;
 };
 
 const validationSchema = Yup.object({
@@ -22,42 +25,50 @@ const validationSchema = Yup.object({
   startDate: Yup.date().nullable().required("Start date is required"),
   endDate: Yup.date().nullable(),
   entryFee: Yup.string().required("Entry fee is required"),
-  coordinates: Yup.array()
-    .of(Yup.number())
-    .test("isValidCoordinates", "Invalid coordinates", validateCoordinates)
+  lng: Yup.number()
+    .test("isValidCoordinates", "Invalid coordinates", isValidLng)
+    .required("Location is required"),
+  lat: Yup.number()
+    .test("isValidCoordinates", "Invalid coordinates", isValidLat)
     .required("Location is required"),
 });
 
 const VenueForm = () => {
+  const { setEvent, event, setSteps } = useCreateEventContext();
+
   const [viewState, setViewState] = useState({
-    longitude: 78.9629,
-    latitude: 20.5937,
-    zoom: 4,
+    longitude: event?.lng || 78.9629,
+    latitude: event?.lat || 20.5937,
+    zoom: event?.lng ? 16 : 4,
   });
 
   const [autoCompleteOptions, setAutoCompleteOptions] = useState([]);
 
   const formik = useFormik({
     initialValues: {
-      venue: "",
-      startDate: null,
-      endDate: null,
-      entryFee: null,
-      coordinates: null,
+      venue: event.venue || "",
+      startDate: event.startDate || null,
+      endDate: event.endDate || null,
+      entryFee: event.entryFee || "",
+      lat: event.lat,
+      lng: event.lng,
     },
     validationSchema,
-    onSubmit: async (values, { setSubmitting }) => {
-      try {
-        console.log(values);
-        // call api to save data
-        message.success(
-          "Event details are saved. You can proceed to the next step now!"
-        );
-      } catch (error) {
-        message.error("Failed to save event details. Please try again.");
-      } finally {
-        setSubmitting(false);
-      }
+    onSubmit: (values, { setSubmitting }) => {
+      console.log(values);
+      setEvent((prev) => {
+        return {
+          ...prev,
+          ...values,
+        };
+      });
+      setSteps((prevSteps) =>
+        prevSteps.map((step) =>
+          step.id === 3 ? { ...step, isComplete: true } : step
+        )
+      );
+      message.success("Data saved successfully!");
+      setSubmitting(false);
     },
   });
 
@@ -90,8 +101,8 @@ const VenueForm = () => {
   };
 
   const handleSelect = (value, option) => {
-    console.log(option);
-    formik.setFieldValue("coordinates", option.value);
+    formik.setFieldValue("lng", option.value[0]);
+    formik.setFieldValue("lat", option.value[1]);
     setViewState({
       ...viewState,
       longitude: value[0],
@@ -102,10 +113,8 @@ const VenueForm = () => {
 
   const handleMapMove = (evt) => {
     setViewState(evt.viewState);
-    formik.setFieldValue("coordinates", [
-      evt?.viewState?.longitude,
-      evt?.viewState?.latitude,
-    ]);
+    formik.setFieldValue("lng", evt?.viewState?.longitude);
+    formik.setFieldValue("lat", evt?.viewState?.latitude);
   };
 
   return (
@@ -181,7 +190,7 @@ const VenueForm = () => {
             ) : null}
           </div>
           <div>
-            <label className="text-xs">Select location</label>
+            <label className="text-xs">Search location</label>
             <AutoComplete
               options={autoCompleteOptions}
               onSearch={handleSearch}
@@ -230,7 +239,7 @@ const VenueForm = () => {
               htmlType="submit"
               loading={formik.isSubmitting}
             >
-              Next
+              Save
             </Button>
           </div>
         </form>

@@ -19,8 +19,8 @@ const Stepper = () => {
               className={clsx(
                 "absolute flex items-center justify-center w-8 h-8 rounded-full -start-4 ring-4 ring-white",
                 {
+                  "bg-red-500": step.isComplete,
                   "bg-red-100": activeStep === step.id && !step.isComplete,
-                  "bg-red-500": !!step.isComplete,
                   "bg-gray-100": !step.isComplete && activeStep !== step.id,
                 }
               )}

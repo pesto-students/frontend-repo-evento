@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Form, Input, Button, message, Card } from "antd";
+import { Input, Button, message, Card } from "antd";
 import { useCreateEventContext } from "@/context/manager/CreateEventContext";
 
 const validationSchema = Yup.object({
@@ -15,26 +15,32 @@ const validationSchema = Yup.object({
 });
 
 const EmergencyInfoForm = () => {
-  const [messageApi] = message.useMessage();
+  const { setEvent, event, setSteps } = useCreateEventContext();
 
   // This is a temp fix for the react select package
   const [isMounted, setIsMounted] = useState(false);
 
   const formik = useFormik({
     initialValues: {
-      organizerName: "",
-      organizerEmail: "",
-      organizerPhone: "",
+      organizerName: event?.organizerName || "",
+      organizerEmail: event?.organizerEmail || "",
+      organizerPhone: event?.organizerPhone || "",
     },
     validationSchema,
     onSubmit: (values, { setSubmitting }) => {
-      console.log(values);
-      // call api to save data
-      messageApi.open({
-        type: "success",
-        content:
-          "Event details are saved. You can proceed to the next step now!",
+      setEvent((prev) => {
+        return {
+          ...prev,
+          ...values,
+        };
       });
+      setSteps((prevSteps) =>
+        prevSteps.map((step) =>
+          step.id === 4 ? { ...step, isComplete: true } : step
+        )
+      );
+      message.success("Data saved successfully!");
+      setSubmitting(false);
     },
   });
 
@@ -103,7 +109,7 @@ const EmergencyInfoForm = () => {
                   htmlType="submit"
                   loading={formik.isSubmitting}
                 >
-                  Next
+                  Save
                 </Button>
               </div>
             </form>

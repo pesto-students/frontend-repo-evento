@@ -3,11 +3,11 @@
 import { useCreateEventContext } from "@/context/manager/CreateEventContext";
 import React from "react";
 import Stepper from "../CreateEvents/Stepper";
-import EventDetailsForm from "../CreateEvents/Forms/EventDetailsForm";
-import BannersForm from "../CreateEvents/Forms/BannersForm";
-import VenueForm from "../CreateEvents/Forms/VenueForm";
-import HostInfoForm from "../CreateEvents/Forms/HostInfoForm";
-import PaymentForm from "../CreateEvents/Forms/PaymentForm";
+import EventDetailsForm from "../CreateEvents/EventDetailsForm";
+import BannersForm from "../CreateEvents/BannersForm";
+import VenueForm from "../CreateEvents/VenueForm";
+import HostInfoForm from "../CreateEvents/HostInfoForm";
+import PaymentForm from "../CreateEvents/PaymentForm";
 
 const CreateEventView = () => {
   const { activeStep } = useCreateEventContext();

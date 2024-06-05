@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const BannersForm = () => {
-  const { event, setEvent } = useCreateEventContext();
+  const { event, setEvent, setSteps } = useCreateEventContext();
 
   const [thumbnail, setThumbnail] = useState(null);
   const [banner, setBanner] = useState(null);
@@ -144,8 +144,7 @@ const BannersForm = () => {
     },
   };
 
-  const handleSubmit = (values) => {
-    console.log(values);
+  const handleSubmit = (values, { setSubmitting }) => {
     setEvent((prev) => {
       return {
         ...prev,
@@ -154,7 +153,13 @@ const BannersForm = () => {
         videoUrl: values.videoUrl,
       };
     });
+    setSteps((prevSteps) =>
+      prevSteps.map((step) =>
+        step.id === 2 ? { ...step, isComplete: true } : step
+      )
+    );
     message.success("Data saved successfully!");
+    setSubmitting(false);
   };
 
   return (
@@ -175,7 +180,7 @@ const BannersForm = () => {
             <Form className="space-y-6">
               <div className="grid grid-cols-12">
                 <div className="col-span-8 flex flex-col gap-1">
-                  <label htmlFor="thumbnail" className="text-gray-500 text-xs">
+                  <label htmlFor="thumbnail" className=" text-xs">
                     Upload Thumbnail*
                   </label>
                   <Upload
@@ -217,7 +222,7 @@ const BannersForm = () => {
               </div>
               <div className="grid grid-cols-12">
                 <div className="col-span-8 flex flex-col gap-1">
-                  <label htmlFor="banner" className="text-gray-500 text-xs">
+                  <label htmlFor="banner" className=" text-xs">
                     Upload Banner*
                   </label>
                   <Upload
@@ -253,7 +258,7 @@ const BannersForm = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-1">
-                <label htmlFor="videoUrl" className="text-gray-500 text-xs">
+                <label htmlFor="videoUrl" className="text-xs">
                   Youtube Video Link
                 </label>
                 <Field

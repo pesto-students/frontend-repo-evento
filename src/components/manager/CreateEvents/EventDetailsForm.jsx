@@ -8,7 +8,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const EventDetailsForm = () => {
-  const { eventCategories, event, setEvent } = useCreateEventContext();
+  const { eventCategories, event, setEvent, setSteps } =
+    useCreateEventContext();
 
   const formik = useFormik({
     initialValues: {
@@ -28,7 +29,13 @@ const EventDetailsForm = () => {
           ...values,
         };
       });
+      setSteps((prevSteps) =>
+        prevSteps.map((step) =>
+          step.id === 1 ? { ...step, isComplete: true } : step
+        )
+      );
       message.success("Data saved successfully!");
+      setSubmitting(false);
     },
   });
 
