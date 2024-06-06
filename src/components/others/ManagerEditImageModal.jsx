@@ -115,7 +115,7 @@ const ManagerEditImageModal = ({ event, isModalOpen, onModalCancel }) => {
 
   return (
     <Modal
-      title="Edit Banner & Thumbnail"
+      title="Update Banner & Thumbnail"
       open={isModalOpen}
       onOk={handleSubmit}
       onCancel={onModalCancel}

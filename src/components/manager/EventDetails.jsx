@@ -1,13 +1,18 @@
-import { Button, Card, Collapse, Table, Tag } from "antd";
+import { Button, Card, Tag } from "antd";
 import {
   CalendarDays,
   MapPinned,
-  PencilLineIcon,
   SquareArrowOutUpRightIcon,
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import ManagerEditImageModal from "../others/ManagerEditImageModal";
+import {
+  PictureOutlined,
+  YoutubeOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
+import ManagerEditTitleModal from "../others/ManagerEditTitleModal";
 
 const EventDetails = () => {
   const sponsors = [
@@ -24,6 +29,9 @@ const EventDetails = () => {
   ];
 
   const [event, setEvent] = useState({
+    title: "B Praak Live - Guwahati",
+    description:
+      "Simba Uproar is back for its highly anticipated second season of the country's wildest experience. After a thrilling debut season, Simba Uproar 2.0 promises to be bigger, bolder, and more captivating than ever before, as it expands to six vibrant cities across India. Mumbai, Delhi, Bengaluru, Pune, Guwahati and Panchkula - Simba Uproar 2.0 aims to unite music enthusiasts from all corners of the country for an unparalleled celebration of music and culture. The second season of Simba Uproar is set to take the country by storm, with a line-up of stellar performances by upcoming hip-hop artists, electrifying music acts, along with immersive experiences, including interactive installations, special performances, creating an atmosphere of fun and excitement. Join Simba Uproar's #THEWILDTRIBE & roar harder, Together!",
     thumbnailUrl:
       "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380759/Evento/thumbnail/b_praak2_opndqq.webp",
     bannerUrl:
@@ -31,7 +39,10 @@ const EventDetails = () => {
   });
 
   const [displayImageEdit, setDisplayImageEdit] = useState(false);
+  const [displayTitleEdit, setDisplayTitleEdit] = useState(false);
   const [isManagerEditImageModalOpen, setIsManagerEditImageModalOpen] =
+    useState(false);
+  const [isManagerEditTitleModalOpen, setIsManagerEditTitleModalOpen] =
     useState(false);
 
   return (
@@ -46,43 +57,46 @@ const EventDetails = () => {
             <Image
               width={480}
               height={360}
-              src="https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_1316/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1702288015%2Fdhlkrsbpopg5cfpnz23n.jpg"
+              src={event?.bannerUrl}
               className="w-full object-cover rounded-md"
               alt="Event Spotlight"
             />
+            <div className="mt-1  flex justify-between">
+              <Button type="link" icon={<PictureOutlined />} className="!pl-0">
+                View Thumbnail
+              </Button>
+              <Button type="link" icon={<YoutubeOutlined />} className="!pr-0">
+                Watch Video
+              </Button>
+            </div>
             {displayImageEdit && (
               <Button
                 type="primary"
                 shape="circle"
-                icon={<PencilLineIcon className="w-3.5" />}
+                size="small"
+                icon={<EditOutlined />}
                 className="!absolute top-1.5 right-1.5"
                 onClick={() => setIsManagerEditImageModalOpen(true)}
               />
             )}
           </div>
-          <div className="mt-6">
-            <div className="font-medium text-xl">B Praak Live - Guwahati</div>
-            <div className="mt-3">
-              <p>
-                Simba Uproar is back for its highly anticipated second season of
-                the country’s wildest experience. After a thrilling debut
-                season, Simba Uproar 2.0 promises to be bigger, bolder, and more
-                captivating than ever before, as it expands to six vibrant
-                cities across India.
-              </p>
-              <p>
-                Mumbai, Delhi, Bengaluru, Pune, Guwahati and Panchkula - Simba
-                Uproar 2.0 aims to unite music enthusiasts from all corners of
-                the country for an unparalleled celebration of music and
-                culture. The second season of Simba Uproar is set to take the
-                country by storm, with a line-up of stellar performances by
-                upcoming hip-hop artists, electrifying music acts, along with
-                immersive experiences, including interactive installations,
-                special performances, creating an atmosphere of fun and
-                excitement. Join Simba Uproar’s #THEWILDTRIBE & roar harder,
-                Together!
-              </p>
-            </div>
+          <div
+            className="mt-6 relative"
+            onMouseEnter={() => setDisplayTitleEdit(true)}
+            onMouseLeave={() => setDisplayTitleEdit(false)}
+          >
+            <div className="font-medium text-xl">{event?.title}</div>
+            <div className="mt-3">{event?.description}</div>
+            {displayTitleEdit && (
+              <Button
+                type="primary"
+                shape="circle"
+                size="small"
+                icon={<EditOutlined />}
+                className="!absolute top-0 right-1.5"
+                onClick={() => setIsManagerEditTitleModalOpen(true)}
+              />
+            )}
           </div>
           <div className="mt-12">
             <div className="font-medium">INSTRUCTIONS</div>
@@ -144,7 +158,7 @@ const EventDetails = () => {
           </div>
         </div>
         <div className="col-span-4">
-          <Card>
+          <Card className="">
             <div className="flex items-center ">
               <div className="bg-secondary rounded-lg p-2 inline-block">
                 <CalendarDays className="w-4 h-4 text-primary" />
@@ -201,6 +215,11 @@ const EventDetails = () => {
         event={event}
         isModalOpen={isManagerEditImageModalOpen}
         onModalCancel={() => setIsManagerEditImageModalOpen(false)}
+      />
+      <ManagerEditTitleModal
+        event={event}
+        isModalOpen={isManagerEditTitleModalOpen}
+        onModalCancel={() => setIsManagerEditTitleModalOpen(false)}
       />
     </>
   );
