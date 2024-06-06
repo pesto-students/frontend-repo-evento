@@ -48,7 +48,7 @@ const EditMap = () => {
       latitude: 26.183999,
       title: "Entrance Gate",
       desc: "Main entrance of the event",
-      img: "https://fastly.4sqi.net/img/general/600x600/6625889_dxoweN4qQ24hEEfQ8xgfY2CtYKjLv6dt7tofn9Evc8w.jpg",
+      img: "https://res.cloudinary.com/dv68nyejy/image/upload/v1717655678/Evento/others/delicious-food-restaurant-facebook-template_23-2150291427_p5bgvg.avif",
       type: "amenity",
     },
     {
@@ -57,7 +57,7 @@ const EditMap = () => {
       latitude: 26.184522,
       title: "Restaurant",
       desc: "Veg & non-veg restaurant",
-      img: "https://juantequila.net/wp-content/uploads/2020/03/Helpful-Tips-for-Planning-an-Upcoming-Party-or-Event-at-a-Restaurant-.jpg",
+      img: "https://res.cloudinary.com/dv68nyejy/image/upload/v1717655678/Evento/others/delicious-food-restaurant-facebook-template_23-2150291427_p5bgvg.avif",
       type: "shop",
     },
     {
@@ -66,7 +66,7 @@ const EditMap = () => {
       latitude: 26.184525,
       title: "GK Book stall",
       desc: "GK Book stall - GK, Govt Exam Preparaion, Previous question papers",
-      img: "https://content.jdmagicbox.com/comp/chennai/s3/044pxx44.xx44.170622142901.h3s3/catalogue/p-n-s-book-stall-choolaimedu-chennai-second-hand-book-shops-htutduklcm.jpg",
+      img: "https://res.cloudinary.com/dv68nyejy/image/upload/v1717655678/Evento/others/delicious-food-restaurant-facebook-template_23-2150291427_p5bgvg.avif",
       type: "shop",
     },
     {
@@ -84,7 +84,7 @@ const EditMap = () => {
       latitude: 26.18451,
       title: "Assam Book stall",
       desc: "GK Book stall - GK, Govt Exam Preparaion, Previous question papers",
-      img: "https://content.jdmagicbox.com/comp/chennai/s3/044pxx44.xx44.170622142901.h3s3/catalogue/p-n-s-book-stall-choolaimedu-chennai-second-hand-book-shops-htutduklcm.jpg",
+      img: "https://res.cloudinary.com/dv68nyejy/image/upload/v1717655678/Evento/others/delicious-food-restaurant-facebook-template_23-2150291427_p5bgvg.avif",
       type: "shop",
     },
   ]);
