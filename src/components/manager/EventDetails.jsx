@@ -13,6 +13,7 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import ManagerEditTitleModal from "../others/ManagerEditTitleModal";
+import ManagerEditVenueModal from "../others/ManagerEditVenueModal";
 
 const EventDetails = () => {
   const sponsors = [
@@ -28,6 +29,8 @@ const EventDetails = () => {
     },
   ];
 
+  const [allCategories, setAllCategories] = useState([]);
+
   const [event, setEvent] = useState({
     title: "B Praak Live - Guwahati",
     description:
@@ -40,9 +43,13 @@ const EventDetails = () => {
 
   const [displayImageEdit, setDisplayImageEdit] = useState(false);
   const [displayTitleEdit, setDisplayTitleEdit] = useState(false);
+  const [displayVenueEdit, setDisplayVenueEdit] = useState(false);
+
   const [isManagerEditImageModalOpen, setIsManagerEditImageModalOpen] =
     useState(false);
   const [isManagerEditTitleModalOpen, setIsManagerEditTitleModalOpen] =
+    useState(false);
+  const [isManagerEditVenueModalOpen, setIsManagerEditVenueModalOpen] =
     useState(false);
 
   return (
@@ -158,7 +165,11 @@ const EventDetails = () => {
           </div>
         </div>
         <div className="col-span-4">
-          <Card className="">
+          <Card
+            onMouseEnter={() => setDisplayVenueEdit(true)}
+            onMouseLeave={() => setDisplayVenueEdit(false)}
+            className="relative"
+          >
             <div className="flex items-center ">
               <div className="bg-secondary rounded-lg p-2 inline-block">
                 <CalendarDays className="w-4 h-4 text-primary" />
@@ -189,6 +200,16 @@ const EventDetails = () => {
               <Tag>Music</Tag>
               <Tag>Cultural</Tag>
             </div>
+            {displayVenueEdit && (
+              <Button
+                type="primary"
+                shape="circle"
+                size="small"
+                icon={<EditOutlined />}
+                className="!absolute top-1.5 right-1.5"
+                onClick={() => setIsManagerEditVenueModalOpen(true)}
+              />
+            )}
           </Card>
           <Card className="!mt-6">
             <div className="font-medium">Organiser Info</div>
@@ -220,6 +241,12 @@ const EventDetails = () => {
         event={event}
         isModalOpen={isManagerEditTitleModalOpen}
         onModalCancel={() => setIsManagerEditTitleModalOpen(false)}
+      />
+      <ManagerEditVenueModal
+        event={event}
+        allCategories={allCategories}
+        isModalOpen={isManagerEditVenueModalOpen}
+        onModalCancel={() => setIsManagerEditVenueModalOpen(false)}
       />
     </>
   );
