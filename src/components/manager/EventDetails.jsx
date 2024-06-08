@@ -12,7 +12,7 @@ import {
   YoutubeOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import ManagerEditTitleModal from "../others/ManagerEditTitleModal";
+import ManagerEditEventModal from "../others/ManagerEditEventModal";
 import ManagerEditVenueModal from "../others/ManagerEditVenueModal";
 
 const EventDetails = () => {
@@ -29,7 +29,20 @@ const EventDetails = () => {
     },
   ];
 
-  const [allCategories, setAllCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState([
+    {
+      id: 1,
+      title: "Music",
+    },
+    {
+      id: 2,
+      title: "Dance",
+    },
+    {
+      id: 3,
+      title: "Comedy",
+    },
+  ]);
 
   const [event, setEvent] = useState({
     title: "B Praak Live - Guwahati",
@@ -39,6 +52,13 @@ const EventDetails = () => {
       "https://res.cloudinary.com/dv68nyejy/image/upload/v1712380759/Evento/thumbnail/b_praak2_opndqq.webp",
     bannerUrl:
       "https://res.cloudinary.com/dwzmsvp7f/image/fetch/q_75,f_auto,w_1316/https%3A%2F%2Fmedia.insider.in%2Fimage%2Fupload%2Fc_crop%2Cg_custom%2Fv1702288015%2Fdhlkrsbpopg5cfpnz23n.jpg",
+    categories: [1, 2],
+    venue: "Khanapara Field",
+    startDate: "2024-06-05T18:30:00.000Z",
+    endDate: "2024-06-05T18:30:00.000Z",
+    entryFee: 200,
+    lng: 91.7086,
+    lat: 26.1158,
   });
 
   const [displayImageEdit, setDisplayImageEdit] = useState(false);
@@ -68,11 +88,11 @@ const EventDetails = () => {
               className="w-full object-cover rounded-md"
               alt="Event Spotlight"
             />
-            <div className="mt-1  flex justify-between">
+            <div className="mt-1 flex gap-3">
               <Button type="link" icon={<PictureOutlined />} className="!pl-0">
                 View Thumbnail
               </Button>
-              <Button type="link" icon={<YoutubeOutlined />} className="!pr-0">
+              <Button type="link" icon={<YoutubeOutlined />} className="!pl-0">
                 Watch Video
               </Button>
             </div>
@@ -94,6 +114,10 @@ const EventDetails = () => {
           >
             <div className="font-medium text-xl">{event?.title}</div>
             <div className="mt-3">{event?.description}</div>
+            <div className="mt-3">
+              <Tag>Music</Tag>
+              <Tag>Cultural</Tag>
+            </div>
             {displayTitleEdit && (
               <Button
                 type="primary"
@@ -196,10 +220,6 @@ const EventDetails = () => {
                 </span>
               </div>
             </div>
-            <div className="mt-3">
-              <Tag>Music</Tag>
-              <Tag>Cultural</Tag>
-            </div>
             {displayVenueEdit && (
               <Button
                 type="primary"
@@ -237,14 +257,14 @@ const EventDetails = () => {
         isModalOpen={isManagerEditImageModalOpen}
         onModalCancel={() => setIsManagerEditImageModalOpen(false)}
       />
-      <ManagerEditTitleModal
+      <ManagerEditEventModal
         event={event}
+        allCategories={allCategories}
         isModalOpen={isManagerEditTitleModalOpen}
         onModalCancel={() => setIsManagerEditTitleModalOpen(false)}
       />
       <ManagerEditVenueModal
         event={event}
-        allCategories={allCategories}
         isModalOpen={isManagerEditVenueModalOpen}
         onModalCancel={() => setIsManagerEditVenueModalOpen(false)}
       />

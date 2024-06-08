@@ -3,64 +3,48 @@ import {
   Modal,
   message,
   Input,
-  Select,
   DatePicker,
   InputNumber,
   AutoComplete,
 } from "antd";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import * as Yup from "yup";
 import Map, { Marker } from "react-map-gl";
-import { EnvironmentOutlined } from "@ant-design/icons";
+import { MapPinIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
+import dayjs from "dayjs";
+import { editVenueSchema } from "@/validationSchemas";
 
-const validationSchema = Yup.object().shape({
-  title: Yup.string().required(),
-  description: Yup.string().required(),
-});
-
-const ManagerEditVenueModal = ({
-  event,
-  allCategories,
-  isModalOpen,
-  onModalCancel,
-}) => {
-  const [isLoading, setIsLoading] = useState(false);
-
+const ManagerEditVenueModal = ({ event, isModalOpen, onModalCancel }) => {
   const [viewState, setViewState] = useState({
-    longitude: event?.lng || 78.9629,
-    latitude: event?.lat || 20.5937,
-    zoom: event?.lng ? 16 : 4,
+    longitude: event?.lng,
+    latitude: event?.lat,
+    zoom: 16,
   });
 
   const [autoCompleteOptions, setAutoCompleteOptions] = useState([]);
 
   const formik = useFormik({
     initialValues: {
-      title: event?.title || "",
-      description: event?.description || "",
+      venue: event.venue,
+      startDate: event.startDate,
+      endDate: event.endDate,
+      entryFee: event.entryFee,
+      lat: event.lat,
+      lng: event.lng,
     },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
+    validationSchema: editVenueSchema,
+    onSubmit: (values, { setSubmitting }) => {
       console.log(values);
+      message.success("Data saved successfully!");
+      setTimeout(() => setSubmitting(false), 2000);
     },
   });
 
-  const {
-    setFieldValue,
-    values,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    errors,
-    touched,
-  } = formik;
-
   const handleMapMove = (evt) => {
     setViewState(evt.viewState);
-    setFieldValue("lng", evt?.viewState?.longitude);
-    setFieldValue("lat", evt?.viewState?.latitude);
+    formik.setFieldValue("lng", evt?.viewState?.longitude);
+    formik.setFieldValue("lat", evt?.viewState?.latitude);
   };
 
   const handleSearch = async (value) => {
@@ -95,7 +79,6 @@ const ManagerEditVenueModal = ({
     formik.setFieldValue("lng", option.value[0]);
     formik.setFieldValue("lat", option.value[1]);
     setViewState({
-      ...viewState,
       longitude: value[0],
       latitude: value[1],
       zoom: 16,
@@ -106,31 +89,16 @@ const ManagerEditVenueModal = ({
     <Modal
       title="Update Venue & Date"
       open={isModalOpen}
-      onOk={handleSubmit}
+      onOk={formik.handleSubmit}
       onCancel={onModalCancel}
       okText="Save"
       cancelText="Cancel"
       okButtonProps={{
-        loading: isLoading,
+        loading: formik.isSubmitting,
       }}
+      centered
     >
       <div className="flex flex-col gap-3 my-6">
-        <div>
-          <label className="text-xs text-gray-500">Categories*</label>
-          <Select
-            mode="multiple"
-            allowClear
-            style={{ width: "100%" }}
-            placeholder="Please select"
-            defaultValue={["a10", "c12"]}
-            onChange={() => {}}
-            options={allCategories}
-            className="!mt-1"
-          />
-          {touched.title && errors.title ? (
-            <div className="text-red-500 text-xs">{errors.title}</div>
-          ) : null}
-        </div>
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="text-xs text-gray-500">Start Date*</label>
@@ -143,17 +111,22 @@ const ManagerEditVenueModal = ({
                 console.log("Selected Time: ", value);
                 console.log("Formatted Selected Time: ", dateString);
               }}
+              value={
+                formik.values.startDate ? dayjs(formik.values.startDate) : null
+              }
               onOk={() => {}}
               className="w-full !mt-1"
             />
-            {touched.title && errors.title ? (
-              <div className="text-red-500 text-xs">{errors.title}</div>
+            {formik.touched.startDate && formik.errors.startDate ? (
+              <div className="text-red-500 text-xs">
+                {formik.errors.startDate}
+              </div>
             ) : null}
           </div>
           <div>
             <label className="text-xs text-gray-500">End Date*</label>
             <DatePicker
-              id="startDate"
+              id="endDate"
               showTime
               use12Hours
               format={"YYYY-MM-DD hh:mm"}
@@ -161,20 +134,30 @@ const ManagerEditVenueModal = ({
                 console.log("Selected Time: ", value);
                 console.log("Formatted Selected Time: ", dateString);
               }}
+              value={
+                formik.values.endDate ? dayjs(formik.values.endDate) : null
+              }
               onOk={() => {}}
               className="w-full !mt-1"
             />
-            {touched.title && errors.title ? (
-              <div className="text-red-500 text-xs">{errors.title}</div>
+            {formik.touched.endDate && formik.errors.endDate ? (
+              <div className="text-red-500 text-xs">
+                {formik.errors.endDate}
+              </div>
             ) : null}
           </div>
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="text-xs text-gray-500">Venue</label>
-            <Input id="venue" placeholder="Type venue" className="!mt-1" />
-            {touched.title && errors.title ? (
-              <div className="text-red-500 text-xs">{errors.title}</div>
+            <Input
+              id="venue"
+              placeholder="Type venue"
+              className="!mt-1"
+              value={formik.values.venue}
+            />
+            {formik.touched.venue && formik.errors.venue ? (
+              <div className="text-red-500 text-xs">{formik.errors.venue}</div>
             ) : null}
           </div>
           <div>
@@ -183,9 +166,12 @@ const ManagerEditVenueModal = ({
               id="entryFee"
               placeholder="Basic usage"
               className="!w-full !mt-1"
+              value={formik.values.entryFee}
             />
-            {touched.title && errors.title ? (
-              <div className="text-red-500 text-xs">{errors.title}</div>
+            {formik.touched.entryFee && formik.errors.entryFee ? (
+              <div className="text-red-500 text-xs">
+                {formik.errors.entryFee}
+              </div>
             ) : null}
           </div>
         </div>
@@ -205,7 +191,7 @@ const ManagerEditVenueModal = ({
                 latitude={viewState.latitude}
                 anchor="bottom"
               >
-                <EnvironmentOutlined />
+                <MapPinIcon className="size-6 stroke-primary" />
               </Marker>
             </Map>
             <div className="w-full absolute top-0 flex justify-end p-1">
@@ -213,13 +199,6 @@ const ManagerEditVenueModal = ({
                 options={autoCompleteOptions}
                 onSearch={handleSearch}
                 onSelect={handleSelect}
-                onChange={(value) => formik.setFieldValue("location", value)}
-                value={formik.values.location}
-                status={
-                  formik.touched.location && formik.errors.location
-                    ? "error"
-                    : ""
-                }
                 className="!w-full"
               >
                 <Input
