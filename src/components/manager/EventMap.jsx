@@ -112,24 +112,28 @@ const EventMap = () => {
     },
   ]);
 
-  const [modalData, setModalData] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editMarkerModalData, setEditMarkerModalData] = useState(null);
   const [isMarkerEditmodalOpen, setIsMarkerEditModalOpen] = useState(false);
+  const [markerEditmodalMode, setMarkerEditModalMode] = useState("ADD");
 
   const [currentTab, setCurrentTab] = useState("amenity");
 
   const handleMarkerClick = (index) => {
-    setModalData(pins[index]);
+    setMarkerEditModalMode("EDIT");
+    setEditMarkerModalData(pins[index]);
   };
 
   const handleMapClick = (e) => {
     console.log(e.lngLat);
+    setMarkerEditModalMode("ADD");
     setIsMarkerEditModalOpen(true);
   };
 
   useEffect(() => {
-    if (modalData) setIsModalOpen(true);
-  }, [modalData]);
+    if (editMarkerModalData) {
+      setIsMarkerEditModalOpen(true);
+    }
+  }, [editMarkerModalData]);
 
   return (
     <>
@@ -150,7 +154,10 @@ const EventMap = () => {
               <div key={i}>
                 <Marker longitude={item.longitude} latitude={item.latitude}>
                   <button
-                    onClick={() => handleMarkerClick(i)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMarkerClick(i);
+                    }}
                     className={clsx(
                       "w-6 h-6 rounded-full text-white shadow text-[10px] flex items-center justify-center",
                       item.type === "amenity"
@@ -169,7 +176,7 @@ const EventMap = () => {
           </Map>
         </div>
         <div className="col-span-3 lg:col-span-1 h-[300px] lg:h-[600px]">
-          <Card className="text-content h-full overflow-auto no-scrollbar">
+          <div className="text-content h-full overflow-auto no-scrollbar">
             <Segmented
               options={[
                 {
@@ -229,18 +236,18 @@ const EventMap = () => {
                   </div>
                 ))}
             </div>
-          </Card>
+          </div>
         </div>
       </div>
-      <MapMarkerModal
-        isModalOpen={isModalOpen}
-        onModalCancel={() => setIsModalOpen(false)}
-        data={modalData}
-      />
 
       <ManagerEditMarkerModal
+        data={editMarkerModalData}
         isModalOpen={isMarkerEditmodalOpen}
-        handleModalCancel={() => setIsMarkerEditModalOpen(false)}
+        onModalCancel={() => {
+          setIsMarkerEditModalOpen(false);
+          setEditMarkerModalData(null);
+        }}
+        mode={markerEditmodalMode}
       />
     </>
   );

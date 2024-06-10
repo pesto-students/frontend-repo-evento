@@ -33,3 +33,18 @@ export const editItinerarySchema = Yup.object({
   title: Yup.string().required(),
   description: Yup.string().required(),
 });
+
+export const editMarkerSchema = Yup.object({
+  title: Yup.string()
+    .required("Title is required")
+    .max(100, "Title must be at most 100 characters"),
+  description: Yup.string()
+    .required("Description is required")
+    .max(500, "Description must be at most 500 characters"),
+  type: Yup.string().required("Type is required"),
+  number: Yup.number()
+    .required("Number is required")
+    .min(1, "Number must be at least 1")
+    .max(10, "Number must be at most 10"),
+  thumbnailUrl: Yup.string().required("Thumbnail is required"),
+});

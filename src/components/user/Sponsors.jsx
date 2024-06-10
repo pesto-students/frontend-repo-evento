@@ -6,12 +6,12 @@ const sponsors = [
   {
     link: "",
     image:
-      "https://dp6mhagng1yw3.cloudfront.net/entries/oeW_Jt_JBL_CordFail_Banner.jpg",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1717655272/Evento/others/jbl_fwm6qi.png",
   },
   {
     link: "",
     image:
-      "https://i.pinimg.com/564x/90/00/5b/90005b7e1e8f97de1b41269b0932c95b.jpg",
+      "https://res.cloudinary.com/dv68nyejy/image/upload/v1717655271/Evento/others/redfm_cnbrur.jpg",
   },
 ];
 

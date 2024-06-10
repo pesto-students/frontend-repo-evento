@@ -60,14 +60,14 @@ const LostAndFound = () => {
                 alt=""
                 width={100}
                 height={100}
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTKm3pi311sa6lxAsjnRr1BIvAnYWBamz4xA&usqp=CAU"
+                src="https://res.cloudinary.com/dv68nyejy/image/upload/v1717655271/Evento/others/redfm_cnbrur.jpg"
               />
               <Image
                 className="w-20 h-20 rounded object-cover border"
                 alt=""
                 width={100}
                 height={100}
-                src="https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2023%2F09%2Fiphone-15-pro-max-hands-on-review-1.jpg?cbr=1&q=90"
+                src="https://res.cloudinary.com/dv68nyejy/image/upload/v1717655271/Evento/others/redfm_cnbrur.jpg"
               />
             </div>
           </CardContent>
