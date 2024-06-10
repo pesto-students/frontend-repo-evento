@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Home, LineChart, Package2, ShoppingCart, Users } from "lucide-react";
 import { Menu } from "antd";
 import { useRouter } from "next/navigation";
+import { BellAlertIcon } from "@heroicons/react/24/outline";
 
 const items = [
   {
@@ -14,10 +15,10 @@ const items = [
     href: "/manager",
   },
   {
-    key: "Orders",
-    label: "Orders",
-    icon: <ShoppingCart className="h-4 w-4" />,
-    href: "/manager/orders",
+    key: "sub3",
+    label: "Notification",
+    icon: <BellAlertIcon className="h-4 w-4" />,
+    href: "/manager",
   },
   {
     key: "sub3",

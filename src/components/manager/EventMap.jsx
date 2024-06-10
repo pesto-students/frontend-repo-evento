@@ -14,6 +14,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import clsx from "clsx";
 import { Card, Segmented } from "antd";
 import MapMarkerModal from "../others/MapMarkerModal";
+import ManagerEditMarkerModal from "../others/ManagerEditMarkerModal";
 
 const RecenterButton = ({ className }) => {
   const { current: map } = useMap();
@@ -113,11 +114,17 @@ const EventMap = () => {
 
   const [modalData, setModalData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMarkerEditmodalOpen, setIsMarkerEditModalOpen] = useState(false);
 
   const [currentTab, setCurrentTab] = useState("amenity");
 
   const handleMarkerClick = (index) => {
     setModalData(pins[index]);
+  };
+
+  const handleMapClick = (e) => {
+    console.log(e.lngLat);
+    setIsMarkerEditModalOpen(true);
   };
 
   useEffect(() => {
@@ -137,6 +144,7 @@ const EventMap = () => {
             transitionDuration="200"
             onViewportChange={(viewState) => setViewState(viewState)}
             reuseMaps
+            onClick={handleMapClick}
           >
             {pins.map((item, i) => (
               <div key={i}>
@@ -228,6 +236,11 @@ const EventMap = () => {
         isModalOpen={isModalOpen}
         onModalCancel={() => setIsModalOpen(false)}
         data={modalData}
+      />
+
+      <ManagerEditMarkerModal
+        isModalOpen={isMarkerEditmodalOpen}
+        handleModalCancel={() => setIsMarkerEditModalOpen(false)}
       />
     </>
   );

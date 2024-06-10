@@ -1,12 +1,20 @@
-import { Card, Segmented } from "antd";
+import { Button, Card, Segmented } from "antd";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ChevronRight, Clock, HeartIcon, MapPinned } from "lucide-react";
 import ItineraryModal from "../others/ItineraryModal";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import ManagerEditItineraryModal from "../others/ManagerEditItineraryModal";
 
 const Itinerary = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [editModalData, setEditModalData] = useState(null);
+  const [isManagerEditItineraryModalOpen, setIsManagerEditItineraryModalOpen] =
+    useState(false);
+  const [managerEditItineraryModalMode, setManagerEditItineraryModalMode] =
+    useState("ADD");
 
   const itinerary = [
     {
@@ -40,20 +48,36 @@ const Itinerary = () => {
     console.log(modalData);
   }, [modalData]);
 
+  useEffect(() => {
+    if (editModalData) setIsManagerEditItineraryModalOpen(true);
+  }, [editModalData]);
+
   return (
     <>
-      <Segmented
-        options={[
-          "Mon, 23 June",
-          "Mon, 24 June",
-          "Mon, 25 June",
-          "Mon, 26 June",
-          "Mon, 27 June",
-        ]}
-        onChange={(value) => {
-          console.log(value); // string
-        }}
-      />
+      <div className="flex justify-between gap-6">
+        <Segmented
+          options={[
+            "Mon, 23 June",
+            "Mon, 24 June",
+            "Mon, 25 June",
+            "Mon, 26 June",
+            "Mon, 27 June",
+          ]}
+          onChange={(value) => {
+            console.log(value); // string
+          }}
+        />
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => {
+            setManagerEditItineraryModalMode("ADD");
+            setIsManagerEditItineraryModalOpen(true);
+          }}
+        >
+          Add
+        </Button>
+      </div>
       <div className="mt-6 grid grid-cols-2 gap-6">
         {itinerary.map((item, i) => (
           <Card
@@ -67,8 +91,22 @@ const Itinerary = () => {
                   {item.title}
                 </h4>
               </div>
-              <div className="w-5">
-                <HeartIcon className="w-full h-5 opacity-60" />
+              <div className="flex gap-2 justify-between">
+                <Button
+                  shape="circle"
+                  size="small"
+                  icon={<EditOutlined />}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setManagerEditItineraryModalMode("EDIT");
+                    setEditModalData(item);
+                  }}
+                />
+                <Button
+                  shape="circle"
+                  size="small"
+                  icon={<XMarkIcon className="w-3.5" />}
+                />
               </div>
             </div>
             <div className="mb-4 flex gap-3 items-center">
@@ -105,6 +143,12 @@ const Itinerary = () => {
         isModalOpen={isModalOpen}
         onModalCancel={() => setIsModalOpen(false)}
         data={modalData}
+      />
+      <ManagerEditItineraryModal
+        isModalOpen={isManagerEditItineraryModalOpen}
+        onModalCancel={() => setIsManagerEditItineraryModalOpen(false)}
+        itinerary={editModalData}
+        mode={managerEditItineraryModalMode}
       />
     </>
   );

@@ -11,7 +11,7 @@ const ManagerEditEventModal = ({
   isModalOpen,
   onModalCancel,
 }) => {
-  const categoryOptions = allCategories.map((item) => ({
+  const categoryOptions = allCategories?.map((item) => ({
     value: item.id,
     label: item.title,
   }));

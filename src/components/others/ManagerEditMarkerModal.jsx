@@ -4,7 +4,7 @@ import TextArea from "antd/es/input/TextArea";
 import { UploadIcon } from "lucide-react";
 import React from "react";
 
-const MapMarkerModal = ({ isModalOpen, handleModalCancel }) => {
+const ManagerEditMarkerModal = ({ isModalOpen, handleModalCancel }) => {
   return (
     <Modal
       title="Add Marker"
@@ -67,4 +67,4 @@ const MapMarkerModal = ({ isModalOpen, handleModalCancel }) => {
   );
 };
 
-export default MapMarkerModal;
+export default ManagerEditMarkerModal;

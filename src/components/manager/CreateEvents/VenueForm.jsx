@@ -78,6 +78,44 @@ const VenueForm = () => {
     formik.setFieldValue("lat", evt?.viewState?.latitude);
   };
 
+  const handleSearch = async (value) => {
+    if (value) {
+      try {
+        const response = await axios.get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${value}.json`,
+          {
+            params: {
+              access_token: process.env.NEXT_PUBLIC_MAPBOX,
+              autocomplete: true,
+              limit: 5,
+            },
+          }
+        );
+        setAutoCompleteOptions(
+          response.data.features.map((feature) => ({
+            label: feature.place_name,
+            value: feature.geometry.coordinates,
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching location suggestions:", error);
+        setAutoCompleteOptions([]);
+      }
+    } else {
+      setAutoCompleteOptions([]);
+    }
+  };
+
+  const handleSelect = (value, option) => {
+    formik.setFieldValue("lng", option.value[0]);
+    formik.setFieldValue("lat", option.value[1]);
+    setViewState({
+      longitude: value[0],
+      latitude: value[1],
+      zoom: 16,
+    });
+  };
+
   return (
     <>
       <div className="text-xs">Step 3 of 5</div>

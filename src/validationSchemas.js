@@ -28,3 +28,8 @@ export const editEventSchema = Yup.object({
   categories: Yup.array().min(1, "At least one category is required"),
   description: Yup.string().required(),
 });
+
+export const editItinerarySchema = Yup.object({
+  title: Yup.string().required(),
+  description: Yup.string().required(),
+});
