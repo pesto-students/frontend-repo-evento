@@ -15,19 +15,19 @@ const items = [
     href: "/manager",
   },
   {
-    key: "sub3",
+    key: "Notification",
     label: "Notification",
     icon: <BellAlertIcon className="h-4 w-4" />,
     href: "/manager",
   },
   {
-    key: "sub3",
+    key: "Visitors",
     label: "Visitors",
     icon: <Users className="h-4 w-4" />,
     href: "/manager",
   },
   {
-    key: "sub4",
+    key: "Analytics",
     label: "Analytics",
     icon: <LineChart className="h-4 w-4" />,
     href: "/manager",

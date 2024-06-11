@@ -1,7 +1,11 @@
 import { useCreateEventContext } from "@/context/manager/CreateEventContext";
-import { Alert, Badge, Button, Card, Modal, Spin } from "antd";
+import Axios from "@/lib/Axios";
+import { DEFAULT_ERROR_MESSAGE } from "@/lib/constants";
+import { createEventSchema } from "@/validationSchemas";
+import { Alert, Badge, Button, Card, Modal, Spin, message } from "antd";
+import { useFormik } from "formik";
 import { Check, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const lists = [
   {
@@ -36,14 +40,71 @@ const lists = [
 
 const PaymentForm = () => {
   const { event } = useCreateEventContext();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      title: event?.title || "",
+      categories: event?.categories,
+      description: event?.description,
+      thumbnail: event?.thumbnailUrl,
+      banner: event?.bannerUrl,
+      videoUrl: event?.videoUrl,
+      venue: event?.venue,
+      startDate: event?.startDate,
+      endDate: event?.endDate,
+      entryFee: event?.entryFee,
+      lat: event?.lat,
+      lng: event?.lng,
+      organizerName: event?.organizerName,
+      organizerEmail: event?.organizerEmail,
+      organizerPhone: event?.organizerPhone,
+      plan: "BASIC",
+
+      //   title: "Test title",
+      //   categories: [1],
+      //   description: "Test",
+      //   thumbnail:
+      //     "http://res.cloudinary.com/dv68nyejy/image/upload/v1718091388/evento/thumbnails/yn9uayc13x3jbbfy1kvg.jpg",
+      //   banner:
+      //     "http://res.cloudinary.com/dv68nyejy/image/upload/v1718091397/evento/banners/ls7bd8wmsrxhvzvfa5ci.png",
+      //   videoUrl: "",
+      //   venue: "AEI Field",
+      //   startDate: "2024-06-11T07:37:24.300Z",
+      //   endDate: "2024-06-11T07:37:26.300Z",
+      //   entryFee: "100",
+      //   lat: 26.183959,
+      //   lng: 91.743094,
+      //   organizerName: "News Live",
+      //   organizerEmail: "testssdsds@mail.com",
+      //   organizerPhone: "123123312",
+      //   plan: "BASIC",
+    },
+    validationSchema: createEventSchema,
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        const res = await Axios.post(`/events`, values);
+        // Redirect to payment gateway
+      } catch (error) {
+        message.error(error.message || DEFAULT_ERROR_MESSAGE);
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
   const handleBuyClick = async (plan) => {
-    setIsModalOpen(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(event);
-    setIsModalOpen(false);
+    formik.setFieldValue("plan", plan);
+    formik.validateForm().then((errors) => {
+      if (Object.keys(errors).length > 0) {
+        const firstErrorField = Object.keys(errors)[0];
+        const firstErrorMessage = errors[firstErrorField];
+        message.error(firstErrorMessage);
+      } else {
+        formik.handleSubmit();
+      }
+    });
   };
+
   return (
     <>
       <div className="text-xs">Step 4 of 5</div>
@@ -93,6 +154,7 @@ const PaymentForm = () => {
                 <Button
                   block
                   type="primary"
+                  loading={formik.isSubmitting}
                   onClick={() => handleBuyClick("BASIC")}
                 >
                   BUY NOW
@@ -145,21 +207,6 @@ const PaymentForm = () => {
           </Card>
         </Badge.Ribbon>
       </div>
-
-      <Modal
-        title={null}
-        open={isModalOpen}
-        centered
-        closable={false}
-        footer={null}
-      >
-        <div className="flex flex-col py-6 gap-3 items-center justify-center">
-          <Spin spinning={true} />
-          <p className="font-medium text-center">
-            Please wait we are saving data...
-          </p>
-        </div>
-      </Modal>
     </>
   );
 };
