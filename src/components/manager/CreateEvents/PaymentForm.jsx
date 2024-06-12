@@ -6,6 +6,7 @@ import { Alert, Badge, Button, Card, Modal, Spin, message } from "antd";
 import { useFormik } from "formik";
 import { Check, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js/pure";
 
 const lists = [
   {
@@ -43,47 +44,57 @@ const PaymentForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: event?.title || "",
-      categories: event?.categories,
-      description: event?.description,
-      thumbnail: event?.thumbnailUrl,
-      banner: event?.bannerUrl,
-      videoUrl: event?.videoUrl,
-      venue: event?.venue,
-      startDate: event?.startDate,
-      endDate: event?.endDate,
-      entryFee: event?.entryFee,
-      lat: event?.lat,
-      lng: event?.lng,
-      organizerName: event?.organizerName,
-      organizerEmail: event?.organizerEmail,
-      organizerPhone: event?.organizerPhone,
-      plan: "BASIC",
-
-      //   title: "Test title",
-      //   categories: [1],
-      //   description: "Test",
-      //   thumbnail:
-      //     "http://res.cloudinary.com/dv68nyejy/image/upload/v1718091388/evento/thumbnails/yn9uayc13x3jbbfy1kvg.jpg",
-      //   banner:
-      //     "http://res.cloudinary.com/dv68nyejy/image/upload/v1718091397/evento/banners/ls7bd8wmsrxhvzvfa5ci.png",
-      //   videoUrl: "",
-      //   venue: "AEI Field",
-      //   startDate: "2024-06-11T07:37:24.300Z",
-      //   endDate: "2024-06-11T07:37:26.300Z",
-      //   entryFee: "100",
-      //   lat: 26.183959,
-      //   lng: 91.743094,
-      //   organizerName: "News Live",
-      //   organizerEmail: "testssdsds@mail.com",
-      //   organizerPhone: "123123312",
+      //   title: event?.title || "",
+      //   categories: event?.categories,
+      //   description: event?.description,
+      //   thumbnail: event?.thumbnailUrl,
+      //   banner: event?.bannerUrl,
+      //   videoUrl: event?.videoUrl,
+      //   venue: event?.venue,
+      //   startDate: event?.startDate,
+      //   endDate: event?.endDate,
+      //   entryFee: event?.entryFee,
+      //   lat: event?.lat,
+      //   lng: event?.lng,
+      //   organizerName: event?.organizerName,
+      //   organizerEmail: event?.organizerEmail,
+      //   organizerPhone: event?.organizerPhone,
       //   plan: "BASIC",
+
+      title: "Test title",
+      categories: [1],
+      description: "Test",
+      thumbnail:
+        "http://res.cloudinary.com/dv68nyejy/image/upload/v1718091388/evento/thumbnails/yn9uayc13x3jbbfy1kvg.jpg",
+      banner:
+        "http://res.cloudinary.com/dv68nyejy/image/upload/v1718091397/evento/banners/ls7bd8wmsrxhvzvfa5ci.png",
+      videoUrl: "",
+      venue: "AEI Field",
+      startDate: "2024-06-11T07:37:24.300Z",
+      endDate: "2024-06-11T07:37:26.300Z",
+      entryFee: "100",
+      lat: 26.183959,
+      lng: 91.743094,
+      organizerName: "News Live",
+      organizerEmail: "testssdsds@mail.com",
+      organizerPhone: "123123312",
+      plan: "BASIC",
     },
     validationSchema: createEventSchema,
     onSubmit: async (values, { setSubmitting }) => {
       try {
         const res = await Axios.post(`/events`, values);
-        // Redirect to payment gateway
+
+        const stripe = await loadStripe(
+          "pk_test_51PQkOWSFh6CHFK6iw1xoOXpLj32MUXucdmYART6OTgYvKF50mQvgrdaVOWpmGXrguXwx2y68cUd5UiTMwORJnLGK00DAGsC3Ng"
+        );
+        const body = res.data.data.event;
+
+        const checkoutRes = await Axios.post(`/events/checkout-session`, body);
+
+        stripe.redirectToCheckout({
+          sessionId: checkoutRes.data.session.id,
+        });
       } catch (error) {
         message.error(error.message || DEFAULT_ERROR_MESSAGE);
       } finally {
