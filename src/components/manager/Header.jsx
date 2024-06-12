@@ -40,7 +40,10 @@ const Header = () => {
   const { user } = useAppContext();
   const router = useRouter();
 
-  const handleLogout = async () => {};
+  const handleLogout = async () => {
+    localStorage.removeItem("accessToken");
+    router.push("/");
+  };
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">

@@ -5,8 +5,9 @@ import Navbar from "@/components/user/navbar/Navbar";
 import { LocationModal } from "@/components/user/LocationModal";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
-import Spinner from "@/components/others/spinner";
 import { authRoutes } from "@/routes";
+import { useAppContext } from "@/context/AppContext";
+import { Spin } from "antd";
 
 Array.prototype.includesOneOf = function (array) {
   return this.some((item) => array.includes(item));
@@ -15,25 +16,31 @@ Array.prototype.includesOneOf = function (array) {
 const AppLayout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
+  const { user, loading } = useAppContext();
   const isAuthRoute = authRoutes.includes(pathname);
 
+  if (loading) {
+    return (
+      <div className="flex flex-col gap-3 items-center justify-center h-screen">
+        <Spin />
+        <div>
+          <span className="pl-2">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Login, Register
   if (isAuthRoute) {
     return <> {children}</>;
   }
 
-  // Manager
-  if (pathname.startsWith("/manager")) {
-    // if (session.status === "loading") {
-    //   return <Spinner />;
-    // }
-    // if (session.status === "authenticated") {
-    //   return <> {children}</>;
-    // }
-    // return router.push("/login");
+  // Manager Layout
+  if (user?.role === "MANAGER") {
     return <> {children}</>;
   }
 
-  // User layout
+  // User Layout
   return (
     <>
       <Navbar />

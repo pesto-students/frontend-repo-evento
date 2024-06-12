@@ -32,7 +32,11 @@ const LoginForm = () => {
         const res = await axios.post("/api/auth/login", values);
         localStorage.setItem("accessToken", res.data.data.accessToken);
         setUser(res.data.data.user);
-        router.push("/manager");
+        if (res.data.data.user.role === "MANAGER") {
+          router.push("/manager");
+        } else {
+          router.push("/");
+        }
       } catch (error) {
         message.error("Error in login: " + error.message);
       } finally {

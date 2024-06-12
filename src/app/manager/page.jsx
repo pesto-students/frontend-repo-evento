@@ -107,12 +107,6 @@ export default function Dashboard() {
                 type="primary"
               ></Button>
             </Link>
-            <Link href={`/manager/events/${record.id}/edit`}>
-              <Button
-                icon={<SquarePenIcon className="w-5 h-5" />}
-                type="primary"
-              ></Button>
-            </Link>
           </div>
         );
       },

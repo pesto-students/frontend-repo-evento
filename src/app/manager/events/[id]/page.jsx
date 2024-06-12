@@ -3,6 +3,7 @@
 import EventDetails from "@/components/manager/EventDetails";
 import EventMap from "@/components/manager/EventMap";
 import Itinerary from "@/components/manager/Itinerary";
+import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Card, Tabs } from "antd";
 import { ChevronLeftIcon, PencilIcon } from "lucide-react";
 import React from "react";
@@ -49,10 +50,7 @@ const page = () => {
           </div>
           <div>
             <div className="flex gap-2">
-              <Button
-                type=""
-                icon={<PencilIcon className="w-3 h-3 text-blue-500" />}
-              />
+              <Button icon={<DeleteOutlined />} />
             </div>
           </div>
         </div>
