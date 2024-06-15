@@ -45,6 +45,7 @@ export const AppProvider = ({ children }) => {
         user,
         setUser,
         loading,
+        setLoading,
       }}
     >
       {children}

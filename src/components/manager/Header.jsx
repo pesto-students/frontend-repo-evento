@@ -3,16 +3,13 @@
 import Link from "next/link";
 import {
   Bell,
-  CircleUser,
   Home,
   LineChart,
   Menu,
   Package,
   Package2,
-  Search,
   SearchIcon,
   ShoppingCart,
-  User2Icon,
   Users,
 } from "lucide-react";
 
@@ -31,19 +28,25 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from "next/navigation";
 import { Input } from "antd";
-
 import { Avatar } from "antd";
 import { getAvatarName } from "@/lib/utils";
 import { useAppContext } from "@/context/AppContext";
+import { useEffect } from "react";
 
 const Header = () => {
-  const { user } = useAppContext();
+  const { user, setUser } = useAppContext();
   const router = useRouter();
 
   const handleLogout = async () => {
     localStorage.removeItem("accessToken");
-    router.push("/");
+    setUser(null);
   };
+
+//   useEffect(() => {
+//     if (user === null) {
+//       router.push("/");
+//     }
+//   }, [user, router]);
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
