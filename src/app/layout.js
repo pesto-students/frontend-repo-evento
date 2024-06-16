@@ -7,6 +7,8 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import { AppProvider } from "@/context/AppContext";
 import { Toaster } from "@/components/ui/sonner";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,26 +17,29 @@ export const metadata = {
   description: "Explore nearby events",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await auth();
   return (
-    <html lang="en" className="no-scrollbar">
-      <body className={clsx(inter.className, "text-[14px]")}>
-        <NextTopLoader color="#DC2626" showSpinner={false} />
-        <AntdRegistry>
-          <ConfigProvider
-            theme={{
-              token: {
-                colorPrimary: "#ef4444",
-              },
-            }}
-          >
-            <AppProvider>
-              <AppLayout>{children}</AppLayout>
-              <Toaster />
-            </AppProvider>
-          </ConfigProvider>
-        </AntdRegistry>
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="en" className="no-scrollbar">
+        <body className={clsx(inter.className, "text-[14px]")}>
+          <NextTopLoader color="#DC2626" showSpinner={false} />
+          <AntdRegistry>
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorPrimary: "#ef4444",
+                },
+              }}
+            >
+              <AppProvider>
+                <AppLayout>{children}</AppLayout>
+                <Toaster />
+              </AppProvider>
+            </ConfigProvider>
+          </AntdRegistry>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

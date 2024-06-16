@@ -30,23 +30,16 @@ import { useRouter } from "next/navigation";
 import { Input } from "antd";
 import { Avatar } from "antd";
 import { getAvatarName } from "@/lib/utils";
-import { useAppContext } from "@/context/AppContext";
-import { useEffect } from "react";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
-  const { user, setUser } = useAppContext();
+  const { data: session } = useSession();
   const router = useRouter();
 
   const handleLogout = async () => {
-    localStorage.removeItem("accessToken");
-    setUser(null);
+    await signOut();
+    window.location.href = "/";
   };
-
-//   useEffect(() => {
-//     if (user === null) {
-//       router.push("/");
-//     }
-//   }, [user, router]);
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
@@ -120,13 +113,15 @@ const Header = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="cursor-pointer !bg-gray-500">
-            {getAvatarName(user?.name)}
+            {getAvatarName(session?.user?.name)}
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-[240px]">
           <DropdownMenuLabel>
-            <div>{user?.name}</div>
-            <div className="text-xs font-light mt-1">{user?.email}</div>
+            <div>{session?.user?.name}</div>
+            <div className="text-xs font-light mt-1">
+              {session?.user?.email}
+            </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Settings</DropdownMenuItem>

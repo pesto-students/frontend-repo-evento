@@ -4,9 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Form, Input, Button, message } from "antd";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { useAppContext } from "@/context/AppContext";
+import { signInAction } from "@/actions";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -18,9 +16,6 @@ const validationSchema = Yup.object({
 });
 
 const LoginForm = () => {
-  const { setUser } = useAppContext();
-  const router = useRouter();
-
   const formik = useFormik({
     initialValues: {
       email: "john@mail.com",
@@ -29,14 +24,8 @@ const LoginForm = () => {
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const res = await axios.post("/api/auth/login", values);
-        localStorage.setItem("accessToken", res.data.data.accessToken);
-        setUser(res.data.data.user);
-        if (res.data.data.user.role === "MANAGER") {
-          router.push("/manager");
-        } else {
-          router.push("/");
-        }
+        await signInAction(values);
+        window.location.href = "/";
       } catch (error) {
         message.error("Error in login: " + error.message);
       } finally {

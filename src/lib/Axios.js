@@ -1,23 +1,6 @@
 import axios from "axios";
 import { NEXT_PUBLIC_API_BASE_URL } from "./config";
-
-const refreshAccessToken = () => {
-  return axios.post(
-    `/api/auth/refresh`,
-    {},
-    {
-      withCredentials: true,
-    }
-  );
-};
-
-const clearTokensAndRedirectToLogin = () => {
-  // Remove Tokens
-  localStorage.removeItem("accessToken");
-  document.cookie =
-    "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  window.location.href = "/login";
-};
+import { getSession, signOut } from "next-auth/react";
 
 const Axios = axios.create({
   baseURL: NEXT_PUBLIC_API_BASE_URL,
@@ -29,10 +12,10 @@ const Axios = axios.create({
 });
 
 Axios.interceptors.request.use(
-  (config) => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+  async (config) => {
+    const session = await getSession();
+    if (session?.accessToken) {
+      config.headers.Authorization = `Bearer ${session.accessToken}`;
     }
     return config;
   },
@@ -45,35 +28,11 @@ Axios.interceptors.response.use(
   (response) => response,
 
   async (error) => {
-    if (error?.response?.status === 403) {
-      clearTokensAndRedirectToLogin();
+    if (error?.response?.status === 403 || error?.response?.status === 401) {
+      await signOut();
+      window.location.href = "/login";
       return Promise.reject(error);
     }
-    const originalRequest = error.config;
-
-    if (
-      originalRequest &&
-      error?.response?.status === 401 &&
-      !originalRequest?.__isRetryRequest
-    ) {
-      try {
-        const response = await refreshAccessToken();
-        const newAccessToken = response.data.data.accessToken;
-
-        // Store new access token in localStorage
-        localStorage.setItem("accessToken", newAccessToken);
-
-        // Update Axios default headers
-        Axios.defaults.headers.common["Authorization"] =
-          `Bearer ${newAccessToken}`;
-
-        originalRequest.__isRetryRequest = true;
-        return Axios(originalRequest);
-      } catch (refreshError) {
-        clearTokensAndRedirectToLogin();
-      }
-    }
-    if (error?.response?.status === 401) clearTokensAndRedirectToLogin();
     return Promise.reject(error);
   }
 );
