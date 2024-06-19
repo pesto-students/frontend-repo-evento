@@ -18,6 +18,7 @@ export async function GET(request) {
 
     // Throw an error if the iframe is not found
     if (!iframeElement) {
+      console.log("Iframe not found");
       throw new Error("Iframe not found");
     }
 
@@ -26,6 +27,7 @@ export async function GET(request) {
 
     // Throw an error if the iframe content frame is not available
     if (!iframe) {
+      console.log("Could not get iframe content frame");
       throw new Error("Could not get iframe content frame");
     }
 
@@ -50,6 +52,7 @@ export async function GET(request) {
     // Close the browser instance
   } catch (error) {
     // Send a JSON response with an error message in case of an exception
+    console.log(error);
     return Response.json({ error });
   }
 }
