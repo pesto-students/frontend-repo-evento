@@ -12,12 +12,12 @@ export default auth(async (req) => {
   // api auth routes - "/api/auth"
   if (isApiAuthRoute) NextResponse.next();
 
-  // can't o to manager routes without logged in
+  // can't go to manager routes without logged in
   if (!isLoggedIn && isManagerRoute) {
     return Response.redirect(new URL("/login", req.nextUrl));
   }
 
-  // logged in user & manager can't go to "/login" & "/register"
+  // logged in USER & MANAGER can't go to "/login" & "/register"
   if (isAuthRoute && isLoggedIn) {
     if (req.auth?.user?.role === "MANAGER") {
       return Response.redirect(new URL("/manager", req.nextUrl));
@@ -26,7 +26,7 @@ export default auth(async (req) => {
   }
 
   if (isLoggedIn) {
-    // logged in manager can't got to "/"
+    // logged in MANAGER can't got to "/"
     if (
       !isApiAuthRoute &&
       req.auth?.user?.role === "MANAGER" &&
@@ -34,8 +34,13 @@ export default auth(async (req) => {
     ) {
       return NextResponse.redirect(new URL("/manager", req.nextUrl));
     }
-    // only user can go to "/"
-    return NextResponse.next();
+    // logged in USER can't go to "/manager"
+    if (
+      req.auth?.user?.role === "USER" &&
+      req.nextUrl.pathname.startsWith(managerRoutePrefix)
+    ) {
+      return NextResponse.redirect(new URL("/", req.nextUrl));
+    }
   }
 });
 
