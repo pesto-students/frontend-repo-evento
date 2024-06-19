@@ -5,16 +5,13 @@ import { Bell, SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button, Dropdown, Input, Avatar } from "antd";
 import { getAvatarName } from "@/lib/utils";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { useAppContext } from "@/context/AppContext";
 
 const Header = () => {
   const { data: session } = useSession();
+  const { handleLogout } = useAppContext();
   const router = useRouter();
-
-  const handleLogout = async () => {
-    await signOut();
-    window.location.href = "/";
-  };
 
   const items = [
     {
