@@ -41,6 +41,7 @@
     "next-auth": "^5.0.0-beta.19",
     "next-themes": "^0.3.0",
     "nextjs-toploader": "^1.6.11",
+    "puppeteer": "^22.11.2",
     "react": "^18",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",

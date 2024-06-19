@@ -9,6 +9,8 @@ export default auth(async (req) => {
   const isAuthRoute = authRoutes.includes(req.nextUrl.pathname);
   const isManagerRoute = req.nextUrl.pathname.startsWith(managerRoutePrefix);
 
+  if (req.nextUrl.pathname === "/api/trustpilot") NextResponse.next();
+
   // api auth routes - "/api/auth"
   if (isApiAuthRoute) NextResponse.next();
 
