@@ -27,7 +27,7 @@ const LoginForm = () => {
         await signInAction(values);
         window.location.href = "/";
       } catch (error) {
-        message.error("Error in login: " + error.message);
+        message.error("Error: Invalid credentials!");
       } finally {
         setSubmitting(false);
       }
