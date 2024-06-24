@@ -1,29 +1,58 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { UploadCloudIcon } from "lucide-react";
 import Image from "next/image";
 import { Button, Card, Input, Upload, message } from "antd";
 import Axios from "@/lib/Axios";
 import * as Yup from "yup";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useFormik } from "formik";
 import { useCreateEventContext } from "@/context/manager/CreateEventContext";
 
 const validationSchema = Yup.object().shape({
-  thumbnail: Yup.string().url("Invalid URL").required("Thumbnail is required"),
-  banner: Yup.string().url("Invalid URL").required("Banner is required"),
+  thumbnailUrl: Yup.string()
+    .url("Invalid URL")
+    .required("Thumbnail is required"),
+  bannerUrl: Yup.string().url("Invalid URL").required("Banner is required"),
   videoUrl: Yup.string().url("Invalid URL"),
 });
 
 const BannersForm = () => {
-  const { event, setEvent, setSteps } = useCreateEventContext();
+  const { event, setEvent, setSteps, setActiveStep } = useCreateEventContext();
 
   const [thumbnail, setThumbnail] = useState(null);
   const [banner, setBanner] = useState(null);
   const [isThumbnailUploading, setIsThumbnailUploading] = useState(false);
   const [isBannerUploading, setIsBannerUploading] = useState(false);
 
-  const handleThumbnailUpload = async (file, setFieldValue) => {
+  const formik = useFormik({
+    initialValues: {
+      thumbnailUrl: event?.thumbnailUrl || "",
+      bannerUrl: event?.bannerUrl || "",
+      videoUrl: event?.videoUrl || "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values, { setSubmitting }) => {
+      console.log(values);
+      setEvent((prev) => {
+        return {
+          ...prev,
+          thumbnailUrl: values.thumbnailUrl,
+          bannerUrl: values.bannerUrl,
+          videoUrl: values.videoUrl,
+        };
+      });
+      setSteps((prevSteps) =>
+        prevSteps.map((step) =>
+          step.id === 2 ? { ...step, isComplete: true } : step
+        )
+      );
+      setActiveStep(3);
+      setSubmitting(false);
+    },
+  });
+
+  const handleThumbnailUpload = async (file) => {
     setIsThumbnailUploading(true);
 
     const formData = new FormData();
@@ -47,7 +76,7 @@ const BannersForm = () => {
           name: file?.name,
         };
       });
-      setFieldValue("thumbnail", res.data.data.url);
+      formik.setFieldValue("thumbnailUrl", res.data.data.url);
     } catch (error) {
       message.error(error.response?.data?.message || error.message);
       setThumbnail((prev) => {
@@ -62,7 +91,7 @@ const BannersForm = () => {
     }
   };
 
-  const handleBannerUpload = async (file, setFieldValue) => {
+  const handleBannerUpload = async (file) => {
     setIsBannerUploading(true);
 
     const formData = new FormData();
@@ -85,7 +114,7 @@ const BannersForm = () => {
           name: file?.name,
         };
       });
-      setFieldValue("banner", res.data.data.url);
+      formik.setFieldValue("bannerUrl", res.data.data.url);
     } catch (error) {
       message.error(error.response?.data?.message || error.message);
       setBanner((prev) => {
@@ -116,8 +145,8 @@ const BannersForm = () => {
       console.log(file);
       setThumbnail(null);
     },
-    beforeUpload: (file, fileList, event, setFieldValue) => {
-      handleThumbnailUpload(file, setFieldValue);
+    beforeUpload: (file) => {
+      handleThumbnailUpload(file);
       return false; // Prevents automatic upload by antd
     },
   };
@@ -138,28 +167,10 @@ const BannersForm = () => {
       console.log(file);
       setBanner(null);
     },
-    beforeUpload: (file, fileList, event, setFieldValue) => {
-      handleBannerUpload(file, setFieldValue);
+    beforeUpload: (file) => {
+      handleBannerUpload(file);
       return false; // Prevents automatic upload by antd
     },
-  };
-
-  const handleSubmit = (values, { setSubmitting }) => {
-    setEvent((prev) => {
-      return {
-        ...prev,
-        thumbnailUrl: values.thumbnail,
-        bannerUrl: values.banner,
-        videoUrl: values.videoUrl,
-      };
-    });
-    setSteps((prevSteps) =>
-      prevSteps.map((step) =>
-        step.id === 2 ? { ...step, isComplete: true } : step
-      )
-    );
-    message.success("Data saved successfully!");
-    setSubmitting(false);
   };
 
   return (
@@ -167,121 +178,96 @@ const BannersForm = () => {
       <div className="text-xs">Step 2 of 5</div>
       <div className="text-lg font-semibold">Upload Image</div>
       <Card className="!mt-12">
-        <Formik
-          initialValues={{
-            thumbnail: event?.thumbnailUrl || "",
-            banner: event?.bannerUrl || "",
-            videoUrl: event?.videoUrl || "",
-          }}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ setFieldValue, values }) => (
-            <Form className="space-y-6">
-              <div className="grid grid-cols-12">
-                <div className="col-span-8 flex flex-col gap-1">
-                  <label htmlFor="thumbnail" className=" text-xs">
-                    Upload Thumbnail*
-                  </label>
-                  <Upload
-                    {...thumbnailProps}
-                    beforeUpload={(file) =>
-                      thumbnailProps.beforeUpload(
-                        file,
-                        null,
-                        null,
-                        setFieldValue
-                      )
-                    }
-                  >
-                    <Button
-                      loading={isThumbnailUploading}
-                      disabled={isThumbnailUploading}
-                      icon={<UploadCloudIcon className="w-3 h-3" />}
-                    >
-                      Click to Upload
-                    </Button>
-                  </Upload>
-                  <ErrorMessage
-                    name="thumbnail"
-                    component="div"
-                    className="text-red-500 text-xs"
-                  />
-                </div>
-                <div className="col-span-4 flex justify-end">
-                  {values.thumbnail && (
-                    <Image
-                      width={100}
-                      height={100}
-                      alt="thumbnail"
-                      src={values.thumbnail}
-                      className="w-20 h-20 object-cover rounded-lg border"
-                    />
-                  )}
-                </div>
-              </div>
-              <div className="grid grid-cols-12">
-                <div className="col-span-8 flex flex-col gap-1">
-                  <label htmlFor="banner" className=" text-xs">
-                    Upload Banner*
-                  </label>
-                  <Upload
-                    {...bannerProps}
-                    beforeUpload={(file) =>
-                      bannerProps.beforeUpload(file, null, null, setFieldValue)
-                    }
-                  >
-                    <Button
-                      loading={isBannerUploading}
-                      disabled={isBannerUploading}
-                      icon={<UploadCloudIcon className="w-3 h-3" />}
-                    >
-                      Click to Upload
-                    </Button>
-                  </Upload>
-                  <ErrorMessage
-                    name="banner"
-                    component="div"
-                    className="text-red-500 text-xs"
-                  />
-                </div>
-                <div className="col-span-4 flex justify-end">
-                  {values.banner && (
-                    <Image
-                      width={100}
-                      height={100}
-                      alt="banner"
-                      src={values.banner}
-                      className="w-20 h-20 object-cover rounded-lg border"
-                    />
-                  )}
-                </div>
-              </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="videoUrl" className="text-xs">
-                  Youtube Video Link
-                </label>
-                <Field
-                  as={Input}
-                  id="videoUrl"
-                  name="videoUrl"
-                  placeholder="https://www.youtube.com/watch?v=ABCD123XYZ"
-                  className={`placeholder:text-gray-300`}
-                />
-                <ErrorMessage
-                  name="videoUrl"
-                  component="div"
-                  className="text-red-500 text-xs"
-                />
-              </div>
-              <div>
-                <Button type="primary" htmlType="submit">
-                  Save
+        <form onSubmit={formik.handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-12">
+            <div className="col-span-8 flex flex-col gap-1">
+              <label htmlFor="thumbnailUrl" className="text-xs">
+                Upload Thumbnail*
+              </label>
+              <Upload {...thumbnailProps}>
+                <Button
+                  loading={isThumbnailUploading}
+                  disabled={isThumbnailUploading}
+                  icon={<UploadCloudIcon className="w-3 h-3" />}
+                >
+                  Click to Upload
                 </Button>
+              </Upload>
+              {formik.touched.thumbnailUrl && formik.errors.thumbnailUrl && (
+                <div className="text-red-500 text-xs">
+                  {formik.errors.thumbnailUrl}
+                </div>
+              )}
+            </div>
+            <div className="col-span-4 flex justify-end">
+              {formik.values.thumbnailUrl && (
+                <Image
+                  width={100}
+                  height={100}
+                  alt="thumbnail"
+                  src={formik.values.thumbnailUrl}
+                  className="w-20 h-20 object-cover rounded-lg border"
+                />
+              )}
+            </div>
+          </div>
+          <div className="grid grid-cols-12">
+            <div className="col-span-8 flex flex-col gap-1">
+              <label htmlFor="bannerUrl" className="text-xs">
+                Upload Banner*
+              </label>
+              <Upload {...bannerProps}>
+                <Button
+                  loading={isBannerUploading}
+                  disabled={isBannerUploading}
+                  icon={<UploadCloudIcon className="w-3 h-3" />}
+                >
+                  Click to Upload
+                </Button>
+              </Upload>
+              {formik.touched.bannerUrl && formik.errors.bannerUrl && (
+                <div className="text-red-500 text-xs">
+                  {formik.errors.bannerUrl}
+                </div>
+              )}
+            </div>
+            <div className="col-span-4 flex justify-end">
+              {formik.values.bannerUrl && (
+                <Image
+                  width={100}
+                  height={100}
+                  alt="banner"
+                  src={formik.values.bannerUrl}
+                  className="w-20 h-20 object-cover rounded-lg border"
+                />
+              )}
+            </div>
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="videoUrl" className="text-xs">
+              Youtube Video Link
+            </label>
+            <Input
+              id="videoUrl"
+              name="videoUrl"
+              placeholder="https://www.youtube.com/watch?v=ABCD123XYZ"
+              className="placeholder:text-gray-300"
+              value={formik.values.videoUrl}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.videoUrl && formik.errors.videoUrl && (
+              <div className="text-red-500 text-xs">
+                {formik.errors.videoUrl}
               </div>
-            </Form>
-          )}
-        </Formik>
+            )}
+          </div>
+          <div>
+            <Button type="primary" htmlType="submit">
+              Next
+            </Button>
+          </div>
+        </form>
       </Card>
     </>
   );
