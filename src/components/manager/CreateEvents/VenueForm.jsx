@@ -87,7 +87,7 @@ const VenueForm = () => {
             params: {
               access_token: process.env.NEXT_PUBLIC_MAPBOX,
               autocomplete: true,
-              limit: 5,
+              limit: 10,
             },
           }
         );
@@ -189,30 +189,17 @@ const VenueForm = () => {
             ) : null}
           </div>
           <div>
-            <label className="text-xs">Search location</label>
-            <AutoComplete
-              options={autoCompleteOptions}
-              onSearch={handleSearch}
-              onSelect={handleSelect}
-              onChange={(value) => formik.setFieldValue("location", value)}
-              value={formik.values.location}
-              status={
-                formik.touched.location && formik.errors.location ? "error" : ""
-              }
-              className="w-full"
-            >
-              <Input
-                name="location"
-                placeholder="Type the location"
-                onBlur={formik.handleBlur}
-              />
-            </AutoComplete>
-            {formik.touched.coordinates && formik.errors.coordinates ? (
-              <div className="text-red-600 text-xs">
-                {formik.errors.coordinates}
+            <div className="overflow-hidden mt-3 h-[400px] relative rounded-lg bg-gray-100">
+              <div className="absolute w-full top-1 right-1 flex justify-end z-50">
+                <AutoComplete
+                  options={autoCompleteOptions}
+                  onSearch={handleSearch}
+                  onSelect={handleSelect}
+                  className="w-9/12"
+                >
+                  <Input name="location" placeholder="Search the location" />
+                </AutoComplete>
               </div>
-            ) : null}
-            <div className="overflow-hidden mt-3 h-[300px] relative rounded-lg bg-gray-100">
               <Map
                 mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX}
                 {...viewState}
