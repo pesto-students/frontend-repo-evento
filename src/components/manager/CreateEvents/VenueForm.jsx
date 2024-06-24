@@ -25,21 +25,21 @@ const validationSchema = Yup.object({
   startDate: Yup.date().nullable().required("Start date is required"),
   endDate: Yup.date().nullable(),
   entryFee: Yup.string().required("Entry fee is required"),
-  lng: Yup.number()
+  longitude: Yup.number()
     .test("isValidCoordinates", "Invalid coordinates", isValidLng)
     .required("Location is required"),
-  lat: Yup.number()
+  latitude: Yup.number()
     .test("isValidCoordinates", "Invalid coordinates", isValidLat)
     .required("Location is required"),
 });
 
 const VenueForm = () => {
-  const { setEvent, event, setSteps } = useCreateEventContext();
+  const { setEvent, event, setSteps, setActiveStep } = useCreateEventContext();
 
   const [viewState, setViewState] = useState({
-    longitude: event?.lng || 78.9629,
-    latitude: event?.lat || 20.5937,
-    zoom: event?.lng ? 16 : 4,
+    longitude: event?.longitude || 78.9629,
+    latitude: event?.latitude || 20.5937,
+    zoom: event?.longitude ? 16 : 4,
   });
 
   const [autoCompleteOptions, setAutoCompleteOptions] = useState([]);
@@ -50,8 +50,8 @@ const VenueForm = () => {
       startDate: event.startDate || null,
       endDate: event.endDate || null,
       entryFee: event.entryFee || "",
-      lat: event.lat,
-      lng: event.lng,
+      latitude: event.latitude,
+      longitude: event.longitude,
     },
     validationSchema,
     onSubmit: (values, { setSubmitting }) => {
@@ -67,15 +67,15 @@ const VenueForm = () => {
           step.id === 3 ? { ...step, isComplete: true } : step
         )
       );
-      message.success("Data saved successfully!");
+      setActiveStep(4);
       setSubmitting(false);
     },
   });
 
   const handleMapMove = (evt) => {
     setViewState(evt.viewState);
-    formik.setFieldValue("lng", evt?.viewState?.longitude);
-    formik.setFieldValue("lat", evt?.viewState?.latitude);
+    formik.setFieldValue("longitude", evt?.viewState?.longitude);
+    formik.setFieldValue("latitude", evt?.viewState?.latitude);
   };
 
   const handleSearch = async (value) => {
@@ -107,8 +107,8 @@ const VenueForm = () => {
   };
 
   const handleSelect = (value, option) => {
-    formik.setFieldValue("lng", option.value[0]);
-    formik.setFieldValue("lat", option.value[1]);
+    formik.setFieldValue("longitude", option.value[0]);
+    formik.setFieldValue("latitude", option.value[1]);
     setViewState({
       longitude: value[0],
       latitude: value[1],
@@ -238,7 +238,7 @@ const VenueForm = () => {
               htmlType="submit"
               loading={formik.isSubmitting}
             >
-              Save
+              Next
             </Button>
           </div>
         </form>
