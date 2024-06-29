@@ -1,6 +1,7 @@
 # Evento
 
-This is the backend api of the Evento app
+This is the frontend of the Evento app
+- [Live Demo](https://evento-ui.vercel.app/)
 - [PRD link](https://www.notion.so/Evento-fd078f47687545fa9f203e9467728e19)
 
 ---
