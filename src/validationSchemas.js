@@ -55,19 +55,21 @@ export const createEventSchema = Yup.object({
     .max(100, "Title must be at most 100 characters"),
   description: Yup.string()
     .required("Description is required")
-    .max(500, "Description must be at most 500 characters"),
+    .max(5000, "Description must be at most 5000 characters"),
   categories: Yup.array().min(1, "At least one category is required"),
-  thumbnail: Yup.string().url("Invalid URL").required("Thumbnail is required"),
-  banner: Yup.string().url("Invalid URL").required("Banner is required"),
+  thumbnailUrl: Yup.string()
+    .url("Invalid URL")
+    .required("Thumbnail is required"),
+  bannerUrl: Yup.string().url("Invalid URL").required("Banner is required"),
   videoUrl: Yup.string().url("Invalid URL"),
   venue: Yup.string().required("Venue is required"),
   startDate: Yup.date().nullable().required("Start date is required"),
   endDate: Yup.date().nullable(),
   entryFee: Yup.number().required("Entry fee is required"),
-  lng: Yup.number()
+  longitude: Yup.number()
     .test("isValidCoordinates", "Invalid coordinates", isValidLng)
     .required("Location is required"),
-  lat: Yup.number()
+  latitude: Yup.number()
     .test("isValidCoordinates", "Invalid coordinates", isValidLat)
     .required("Location is required"),
   organizerName: Yup.string().required("Organizer Name is required"),

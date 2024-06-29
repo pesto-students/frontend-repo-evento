@@ -2,10 +2,10 @@ import { useCreateEventContext } from "@/context/manager/CreateEventContext";
 import Axios from "@/lib/Axios";
 import { DEFAULT_ERROR_MESSAGE } from "@/lib/constants";
 import { createEventSchema } from "@/validationSchemas";
-import { Alert, Badge, Button, Card, Modal, Spin, message } from "antd";
+import { Badge, Button, Card, message } from "antd";
 import { useFormik } from "formik";
 import { Check, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { loadStripe } from "@stripe/stripe-js/pure";
 
 const lists = [
@@ -44,40 +44,21 @@ const PaymentForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      //   title: event?.title || "",
-      //   categories: event?.categories,
-      //   description: event?.description,
-      //   thumbnail: event?.thumbnailUrl,
-      //   banner: event?.bannerUrl,
-      //   videoUrl: event?.videoUrl,
-      //   venue: event?.venue,
-      //   startDate: event?.startDate,
-      //   endDate: event?.endDate,
-      //   entryFee: event?.entryFee,
-      //   lat: event?.lat,
-      //   lng: event?.lng,
-      //   organizerName: event?.organizerName,
-      //   organizerEmail: event?.organizerEmail,
-      //   organizerPhone: event?.organizerPhone,
-      //   plan: "BASIC",
-
-      title: "Test title",
-      categories: [1],
-      description: "Test",
-      thumbnail:
-        "http://res.cloudinary.com/dv68nyejy/image/upload/v1718091388/evento/thumbnails/yn9uayc13x3jbbfy1kvg.jpg",
-      banner:
-        "http://res.cloudinary.com/dv68nyejy/image/upload/v1718091397/evento/banners/ls7bd8wmsrxhvzvfa5ci.png",
-      videoUrl: "",
-      venue: "AEI Field",
-      startDate: "2024-06-11T07:37:24.300Z",
-      endDate: "2024-06-11T07:37:26.300Z",
-      entryFee: "100",
-      lat: 26.183959,
-      lng: 91.743094,
-      organizerName: "News Live",
-      organizerEmail: "testssdsds@mail.com",
-      organizerPhone: "123123312",
+      title: event?.title || "",
+      categories: event?.categories,
+      description: event?.description,
+      thumbnailUrl: event?.thumbnailUrl,
+      bannerUrl: event?.bannerUrl,
+      videoUrl: event?.videoUrl,
+      venue: event?.venue,
+      startDate: event?.startDate,
+      endDate: event?.endDate,
+      entryFee: event?.entryFee,
+      latitude: event?.latitude,
+      longitude: event?.longitude,
+      organizerName: event?.organizerName,
+      organizerEmail: event?.organizerEmail,
+      organizerPhone: event?.organizerPhone,
       plan: "BASIC",
     },
     validationSchema: createEventSchema,
@@ -165,7 +146,7 @@ const PaymentForm = () => {
                 <Button
                   block
                   type="primary"
-                  loading={formik.isSubmitting}
+                  disabled={formik.isSubmitting}
                   onClick={() => handleBuyClick("BASIC")}
                 >
                   BUY NOW
@@ -188,8 +169,8 @@ const PaymentForm = () => {
                 <span> Rs 999 </span>
               </div>
               <p className="mt-6 text-xs leading-2 text-gray-600 dark:text-slate-200">
-                The Basic plan is the perfect starting point for new users. Join
-                now to get a taste of all the features &amp; benefits that
+                The Premium plan is the perfect starting point for new users.
+                Join now to get a taste of all the features &amp; benefits that
                 Subtxt has to offer.
               </p>
             </div>
@@ -209,7 +190,12 @@ const PaymentForm = () => {
                   ))}
                 </ul>
                 <div className="mt-8">
-                  <Button block type="primary">
+                  <Button
+                    block
+                    type="primary"
+                    disabled={formik.isSubmitting}
+                    onClick={() => handleBuyClick("PREMIUM")}
+                  >
                     BUY NOW
                   </Button>
                 </div>

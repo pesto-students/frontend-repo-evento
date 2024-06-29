@@ -25,21 +25,21 @@ const validationSchema = Yup.object({
   startDate: Yup.date().nullable().required("Start date is required"),
   endDate: Yup.date().nullable(),
   entryFee: Yup.string().required("Entry fee is required"),
-  lng: Yup.number()
+  longitude: Yup.number()
     .test("isValidCoordinates", "Invalid coordinates", isValidLng)
     .required("Location is required"),
-  lat: Yup.number()
+  latitude: Yup.number()
     .test("isValidCoordinates", "Invalid coordinates", isValidLat)
     .required("Location is required"),
 });
 
 const VenueForm = () => {
-  const { setEvent, event, setSteps } = useCreateEventContext();
+  const { setEvent, event, setSteps, setActiveStep } = useCreateEventContext();
 
   const [viewState, setViewState] = useState({
-    longitude: event?.lng || 78.9629,
-    latitude: event?.lat || 20.5937,
-    zoom: event?.lng ? 16 : 4,
+    longitude: event?.longitude || 78.9629,
+    latitude: event?.latitude || 20.5937,
+    zoom: event?.longitude ? 16 : 4,
   });
 
   const [autoCompleteOptions, setAutoCompleteOptions] = useState([]);
@@ -50,8 +50,8 @@ const VenueForm = () => {
       startDate: event.startDate || null,
       endDate: event.endDate || null,
       entryFee: event.entryFee || "",
-      lat: event.lat,
-      lng: event.lng,
+      latitude: event.latitude,
+      longitude: event.longitude,
     },
     validationSchema,
     onSubmit: (values, { setSubmitting }) => {
@@ -67,15 +67,15 @@ const VenueForm = () => {
           step.id === 3 ? { ...step, isComplete: true } : step
         )
       );
-      message.success("Data saved successfully!");
+      setActiveStep(4);
       setSubmitting(false);
     },
   });
 
   const handleMapMove = (evt) => {
     setViewState(evt.viewState);
-    formik.setFieldValue("lng", evt?.viewState?.longitude);
-    formik.setFieldValue("lat", evt?.viewState?.latitude);
+    formik.setFieldValue("longitude", evt?.viewState?.longitude);
+    formik.setFieldValue("latitude", evt?.viewState?.latitude);
   };
 
   const handleSearch = async (value) => {
@@ -87,7 +87,7 @@ const VenueForm = () => {
             params: {
               access_token: process.env.NEXT_PUBLIC_MAPBOX,
               autocomplete: true,
-              limit: 5,
+              limit: 10,
             },
           }
         );
@@ -107,8 +107,8 @@ const VenueForm = () => {
   };
 
   const handleSelect = (value, option) => {
-    formik.setFieldValue("lng", option.value[0]);
-    formik.setFieldValue("lat", option.value[1]);
+    formik.setFieldValue("longitude", option.value[0]);
+    formik.setFieldValue("latitude", option.value[1]);
     setViewState({
       longitude: value[0],
       latitude: value[1],
@@ -189,30 +189,17 @@ const VenueForm = () => {
             ) : null}
           </div>
           <div>
-            <label className="text-xs">Search location</label>
-            <AutoComplete
-              options={autoCompleteOptions}
-              onSearch={handleSearch}
-              onSelect={handleSelect}
-              onChange={(value) => formik.setFieldValue("location", value)}
-              value={formik.values.location}
-              status={
-                formik.touched.location && formik.errors.location ? "error" : ""
-              }
-              className="w-full"
-            >
-              <Input
-                name="location"
-                placeholder="Type the location"
-                onBlur={formik.handleBlur}
-              />
-            </AutoComplete>
-            {formik.touched.coordinates && formik.errors.coordinates ? (
-              <div className="text-red-600 text-xs">
-                {formik.errors.coordinates}
+            <div className="overflow-hidden mt-3 h-[400px] relative rounded-lg bg-gray-100">
+              <div className="absolute w-full top-1 right-1 flex justify-end z-50">
+                <AutoComplete
+                  options={autoCompleteOptions}
+                  onSearch={handleSearch}
+                  onSelect={handleSelect}
+                  className="w-9/12"
+                >
+                  <Input name="location" placeholder="Search the location" />
+                </AutoComplete>
               </div>
-            ) : null}
-            <div className="overflow-hidden mt-3 h-[300px] relative rounded-lg bg-gray-100">
               <Map
                 mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX}
                 {...viewState}
@@ -238,7 +225,7 @@ const VenueForm = () => {
               htmlType="submit"
               loading={formik.isSubmitting}
             >
-              Save
+              Next
             </Button>
           </div>
         </form>

@@ -1,17 +1,13 @@
 "use client";
 
-import {
-  ArrowRightCircleIcon,
-  MapPinIcon,
-  Plus,
-  SquarePenIcon,
-} from "lucide-react";
+import { ArrowRightCircleIcon, MapPinIcon, Plus } from "lucide-react";
 import Link from "next/link";
-import { Button, Segmented, Skeleton, Table, Tag } from "antd";
+import { Button, Segmented, Skeleton, Table } from "antd";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Axios from "@/lib/Axios";
+import clsx from "clsx";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
@@ -45,24 +41,28 @@ export default function Dashboard() {
               <div>
                 <MapPinIcon className="w-3 h-3 text-primary" />
               </div>
-              <div>{record.venue}</div>
+              <div className="text-xs text-gray-500">{record.venue}</div>
             </div>
           </>
         );
       },
     },
     {
-      title: "Start & End Date",
+      title: "Timing",
       key: "startDate",
       render: (text, record, index) => {
         return (
           <>
             {record?.startDate && (
-              <div>{format(record.startDate, "d MMM, yyyy - h:mm a")}</div>
+              <div className="text-xs text-gray-500">
+                Starts: {format(record.startDate, "d MMM yyyy,  h:mm a")}
+              </div>
             )}
 
             {record?.endDate && (
-              <div>{format(record.endDate, "d MMM, yyyy - h:mm a")}</div>
+              <div className="text-xs text-gray-500">
+                Ends: {format(record.endDate, "d MMM yyyy,  h:mm a")}
+              </div>
             )}
           </>
         );
@@ -87,8 +87,14 @@ export default function Dashboard() {
       render: (text, record, index) => {
         return (
           <>
-            <span className="text-green-500 text-xs font-medium">
-              Published
+            <span
+              className={clsx("text-xs font-medium", {
+                "text-green-500": text === "LIVE",
+                "text-yellow-500":
+                  text === "PAYMENT_PENDING" || text === "UNDER_REVIEW",
+              })}
+            >
+              {text}
             </span>
           </>
         );

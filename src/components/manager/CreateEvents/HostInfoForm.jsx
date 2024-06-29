@@ -15,7 +15,7 @@ const validationSchema = Yup.object({
 });
 
 const EmergencyInfoForm = () => {
-  const { setEvent, event, setSteps } = useCreateEventContext();
+  const { setEvent, event, setSteps, setActiveStep } = useCreateEventContext();
 
   // This is a temp fix for the react select package
   const [isMounted, setIsMounted] = useState(false);
@@ -39,7 +39,7 @@ const EmergencyInfoForm = () => {
           step.id === 4 ? { ...step, isComplete: true } : step
         )
       );
-      message.success("Data saved successfully!");
+      setActiveStep(5);
       setSubmitting(false);
     },
   });
@@ -109,7 +109,7 @@ const EmergencyInfoForm = () => {
                   htmlType="submit"
                   loading={formik.isSubmitting}
                 >
-                  Save
+                  Next
                 </Button>
               </div>
             </form>

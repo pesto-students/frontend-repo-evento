@@ -8,7 +8,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const EventDetailsForm = () => {
-  const { eventCategories, event, setEvent, setSteps } =
+  const { eventCategories, event, setEvent, setSteps, setActiveStep } =
     useCreateEventContext();
 
   const formik = useFormik({
@@ -18,9 +18,13 @@ const EventDetailsForm = () => {
       description: event?.description || "",
     },
     validationSchema: Yup.object({
-      title: Yup.string().required("Title is required"),
+      title: Yup.string()
+        .required("Title is required")
+        .max(100, "Title must be at most 100 characters"),
       categories: Yup.array().min(1, "At least one category is required"),
-      description: Yup.string().required("Description is required"),
+      description: Yup.string()
+        .required("Description is required")
+        .max(2000, "Description must be at most 2000 characters"),
     }),
     onSubmit: (values, { setSubmitting }) => {
       setEvent((prev) => {
@@ -34,7 +38,7 @@ const EventDetailsForm = () => {
           step.id === 1 ? { ...step, isComplete: true } : step
         )
       );
-      message.success("Data saved successfully!");
+      setActiveStep(2);
       setSubmitting(false);
     },
   });
@@ -105,7 +109,7 @@ const EventDetailsForm = () => {
               htmlType="submit"
               loading={formik.isSubmitting}
             >
-              Save
+              Next
             </Button>
           </div>
         </form>
