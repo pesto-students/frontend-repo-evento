@@ -1,12 +1,36 @@
+"use client";
+
 import EventsThisWeek from "@/components/user/EventsThisWeek";
 import PopularCities from "@/components/user/PopularCities";
 import RecentEvents from "@/components/user/RecentEvents";
 import Spotlight from "@/components/user/Spotlight";
 import UpcomingEvents from "@/components/user/UpcomingEvents";
+import Axios from "@/lib/Axios";
+import { message } from "antd";
 import { Search, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState([]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await Axios.get(`/home`);
+      setEvents(res.data?.data?.events);
+    } catch (error) {
+      message.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <section className="relative">
@@ -35,7 +59,7 @@ export default function Home() {
             </div>
           </div>
           <div className="w-full flex items-center justify-between col-span-12">
-            <Spotlight />
+            <Spotlight loading={loading} events={events} />
           </div>
         </div>
       </section>
@@ -55,8 +79,8 @@ export default function Home() {
         </form>
       </section>
 
-      <UpcomingEvents />
-      <RecentEvents />
+      <UpcomingEvents loading={loading} events={events}/>
+      <RecentEvents loading={loading} events={events}/>
       <PopularCities />
       <EventsThisWeek />
     </>

@@ -1,6 +1,5 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { LayoutGrid } from "lucide-react";
 
 const data = [
   { title: "Music" },
