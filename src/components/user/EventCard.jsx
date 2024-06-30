@@ -6,18 +6,18 @@ import React from "react";
 
 const EventCard = ({ event, layout }) => {
   return (
-    <div className="w-full  grid grid-cols-12 border rounded-lg bg-white overflow-hidden">
+    <div className="w-full grid grid-cols-12 border rounded-lg bg-white overflow-hidden">
       <div
         className={clsx({
           "col-span-12": layout === "vertical",
           "col-span-12 md:col-span-4": layout === "horizontal",
         })}
       >
-        <Link href={event.slug}>
+        <Link href={"test"}>
           <Image
             width={480}
             height={360}
-            src={event.image}
+            src={event.thumbnailUrl}
             className={clsx("w-full transition-transform duration-300", {
               "rounded-t-md": layout === "vertical",
               "rounded-t-md md:rounded-t-none md:rounded-l-md":
